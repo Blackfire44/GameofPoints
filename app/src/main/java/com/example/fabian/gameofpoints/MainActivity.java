@@ -1,5 +1,5 @@
 package com.example.fabian.gameofpoints;
-//z
+
 import android.app.Activity;
 import android.graphics.drawable.TransitionDrawable;
 import android.media.MediaPlayer;
