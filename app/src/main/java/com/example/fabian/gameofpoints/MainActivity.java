@@ -63,8 +63,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 1:showstartfragment();
                 break;
-            case 2://showlevelfragment();
-                showgameoverfragment();
+            case 2:showlevelfragment();
                 break;
             case 3:showsettingfragment();
                 break;
