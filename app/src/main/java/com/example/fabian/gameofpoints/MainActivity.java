@@ -1,5 +1,5 @@
 package com.example.fabian.gameofpoints;
-//z
+
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.provider.ContactsContract;
