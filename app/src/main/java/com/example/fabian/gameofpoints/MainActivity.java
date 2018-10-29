@@ -129,7 +129,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         TextView tv = (TextView)findViewById(id);
         tv.setText(text);
     }
-int zahl = 0;
+    int zahl = 0;
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.start){
