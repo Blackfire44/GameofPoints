@@ -147,11 +147,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==R.id.l1){
             String si = ""+zahl;
             fillTextView(R.id.Design, si);
-            zahl++;
+            zahl--;
         }else if(view.getId()==R.id.r1){
             String si = ""+zahl;
             fillTextView(R.id.Design, si);
-            zahl--;
+            zahl++;
         }
     }
 }
