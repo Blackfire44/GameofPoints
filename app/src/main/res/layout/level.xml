@@ -76,8 +76,7 @@
                         android:id="@+id/imageView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/picture"
-                        android:src="@drawable/trius" />
+                        android:src="@drawable/rotate" />
                 </LinearLayout>
 
                 <!-- bis hier. Dann: LayoutId ändern, text ändern, src des Bildes ändern-->

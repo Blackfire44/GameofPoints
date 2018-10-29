@@ -1,17 +1,20 @@
 package com.example.fabian.gameofpoints;
 //z
 import android.app.Activity;
+import android.graphics.drawable.TransitionDrawable;
 import android.media.MediaPlayer;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private int layout;
     private int welt;
+    private ImageView imageView;
     private MediaPlayer music;
 
     @Override
@@ -134,6 +137,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         if(view.getId()==R.id.start){
             showlevelfragment();
+            //imageView = ((imageView)).findViewById(R.id.imageView4);
+            //((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
         }else if(view.getId()==R.id.zuruek){
             showstartfragment();
         }else if(view.getId()==R.id.Level1){
