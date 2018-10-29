@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
         }
     }
-
+    
     private void showstartfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
