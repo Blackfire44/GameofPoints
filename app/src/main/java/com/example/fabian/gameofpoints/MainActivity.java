@@ -1,5 +1,5 @@
 package com.example.fabian.gameofpoints;
-//C
+//d
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.provider.ContactsContract;
@@ -129,7 +129,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         TextView tv = (TextView)findViewById(id);
         tv.setText(text);
     }
-int zahl = 0;
+    int zahl = 0;
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.start){
