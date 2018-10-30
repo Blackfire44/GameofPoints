@@ -1,6 +1,6 @@
 package com.example.fabian.gameofpoints;
 
-import android.graphics.Color;
+import java.util.ArrayList;
 
 public class Objekt {
 
@@ -9,19 +9,24 @@ public class Objekt {
     private int attack;
     private int speed;
     private double direction;
-    private Color color;
+    private int color;
 
-    public Objekt(int memb2, int live2, int attack2, int speed2, Color color2){
-        membership = memb2;
-        live = live2;
-        attack = attack2;
-        speed = speed2;
-        color = color2;
+    private float x, y, w, h;
+
+    public static ArrayList<Objekt> liste = new ArrayList<>();   //bitte zugriffsrecht ändern, falls es nicht gebraucht wird!!
+
+    public Objekt(int x, int y, int w, int h, int membership, int live, int attack, int speed, int color){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.membership = membership;
+        this.live = live;
+        this.attack = attack;
+        this.speed = speed;
+        this.color = color;
         direction = Math.random()*4; //random: 0, 1, 2, 3
-    }
-
-    public void move(){
-
+        liste.add(this);
     }
 
     public int getMembership() {
@@ -40,8 +45,24 @@ public class Objekt {
         return speed;
     }
 
-    public Color getColor() {
+    public int getColor() {
         return color;
+    }
+
+    public float getX(){
+        return x;
+    }
+
+    public float getY(){
+        return y;
+    }
+
+    public float getW() {
+        return w;
+    }
+
+    public float getH() {
+        return h;
     }
 
     public void setMembership(int membership) {
@@ -60,7 +81,23 @@ public class Objekt {
         this.speed = speed;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
+    }
+
+    public void setX(float x){
+        this.x = x;
+    }
+
+    public void setY(float y){
+        this.y = y;
+    }
+
+    public void setW(float w) {
+        this.w = w;
+    }
+
+    public void setH(float h) {
+        this.h = h;
     }
 }

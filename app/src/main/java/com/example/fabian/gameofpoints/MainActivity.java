@@ -1,13 +1,16 @@
 package com.example.fabian.gameofpoints;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +19,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private int welt;
     private ImageView imageView;
     private MediaPlayer music;
+    private MasterView gameview;
+    private Engine engine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_main, null));
+
+        gameview = new MasterView(this);
+        gameview.setVisibility(View.VISIBLE);
+        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        float basedimension = gameview.getBaseDimension();
+
+        engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
+        engine.setRegion(basedimension/2, basedimension/2, container.getWidth()-basedimension/2, container.getHeight()-basedimension/2); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
+        /*for(int i = 0; i<Objekt.liste.size(); i++){
+            Objekt.liste.get(i).setX(x);
+            Objekt.liste.get(i).setY(y);
+        }*/
+        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
     }
 
@@ -106,6 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.r1).setOnClickListener(this);
         fillTextView(R.id.planetsettings, se);
         layout=2;
+        update();
     }
 
     /*private void showstopfragment(){
@@ -125,14 +144,28 @@ public class MainActivity extends Activity implements View.OnClickListener{
     }
 
     private void update(){
-
+        if(layout==2) {
+            String si = ""+zahl;
+            fillTextView(R.id.t1, si);
+            fillTextView(R.id.t2, si);
+            fillTextView(R.id.t3, si);
+            fillTextView(R.id.t4, si);
+        }
     }
 
     private void fillTextView(int id, String text){
         TextView tv = (TextView)findViewById(id);
         tv.setText(text);
     }
-    int zahl = 0;
+
+    private void countSettings(int id, int richtung){
+        zahl=zahl+richtung;
+        String si = ""+zahl;
+        fillTextView(id, si);
+    }
+
+    int zahl = 0;//statt Zahl dann speed, attack, live etc.
+
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.start){
@@ -150,13 +183,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==R.id.zuruek2){
             showlevelfragment();
         }else if(view.getId()==R.id.l1){
-            String si = ""+zahl;
-            fillTextView(R.id.Design, si);
-            zahl--;
+            countSettings(R.id.t1, -1);
         }else if(view.getId()==R.id.r1){
-            String si = ""+zahl;
-            fillTextView(R.id.Design, si);
-            zahl++;
+            countSettings(R.id.t1, 1);
         }
     }
 }

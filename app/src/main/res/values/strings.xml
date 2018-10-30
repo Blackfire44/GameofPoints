@@ -14,4 +14,6 @@
     <string name="Level8">Level8</string>
     <string name="picture">picture</string>
     <string name="Planetanzeige">Planet:</string>
+    <string name="Counter">Counter</string>
+    <string name="Speed">Speed</string>
 </resources>
