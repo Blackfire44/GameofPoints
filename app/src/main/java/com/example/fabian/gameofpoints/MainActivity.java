@@ -5,9 +5,13 @@ import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeImageTransform;
+import android.transition.Fade;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -28,7 +32,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showstartfragment();
-        ImageView imageView = (ImageView) findViewById(R.id.imageView4);
        // startMusic();
     }
 
@@ -112,9 +115,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruek).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView4);
         container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
         scroll();
+        ((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
     private void showsettingfragment(){
@@ -174,7 +179,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         if(view.getId()==R.id.start){
             showlevelfragment();
-            //((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
         }else if(view.getId()==R.id.zuruek){
             saveScrollWidth();
             showstartfragment();

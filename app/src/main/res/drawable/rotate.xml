@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transition xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/trius"/>
-    <item android:drawable="@drawable/quatron"/>
+    <item android:drawable="@drawable/trius1"></item>
+    <item android:drawable="@drawable/trius2"></item>
+    <item android:drawable="@drawable/trius3"></item>
+    <item android:drawable="@drawable/trius4"></item>
+    <item android:drawable="@drawable/trius5"></item>
+    <item android:drawable="@drawable/trius6"></item>
+
 </transition>
