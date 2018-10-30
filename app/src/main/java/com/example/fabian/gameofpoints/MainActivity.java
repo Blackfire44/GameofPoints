@@ -27,6 +27,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showstartfragment();
+        ImageView imageView = (ImageView) findViewById(R.id.imageView4);
        // startMusic();
     }
 
@@ -170,8 +171,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         if(view.getId()==R.id.start){
             showlevelfragment();
-            //imageView = ((imageView)).findViewById(R.id.imageView4);
-            //((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
+            ((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
         }else if(view.getId()==R.id.zuruek){
             showstartfragment();
         }else if(view.getId()==R.id.Level1){
