@@ -22,7 +22,7 @@ public class Engine implements SensorEventListener {
 
 
         for(int i = 0; i<10; i++){
-            Objekt a = new Objekt(100, 100, 20, 20, 0, 1, 3, 2, 0xffffff00);
+            Objekt a = new Objekt(100, 100, 20, 0, 1, 3, 2, 0xffffff00);
         }
     }
 

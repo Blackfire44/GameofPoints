@@ -11,15 +11,14 @@ public class Objekt {
     private double direction;
     private int color;
 
-    private float x, y, w, h;
+    private float x, y, r;
 
     public static ArrayList<Objekt> liste = new ArrayList<>();   //bitte zugriffsrecht ändern, falls es nicht gebraucht wird!!
 
-    public Objekt(int x, int y, int w, int h, int membership, int live, int attack, int speed, int color){
+    public Objekt(int x, int y, int r, int membership, int live, int attack, int speed, int color){
         this.x = x;
         this.y = y;
-        this.w = w;
-        this.h = h;
+        this.r = r;
         this.membership = membership;
         this.live = live;
         this.attack = attack;
@@ -57,12 +56,8 @@ public class Objekt {
         return y;
     }
 
-    public float getW() {
-        return w;
-    }
-
-    public float getH() {
-        return h;
+    public float getR() {
+        return r;
     }
 
     public void setMembership(int membership) {
@@ -93,11 +88,7 @@ public class Objekt {
         this.y = y;
     }
 
-    public void setW(float w) {
-        this.w = w;
-    }
-
-    public void setH(float h) {
-        this.h = h;
+    public void setR(float r) {
+        this.r = r;
     }
 }

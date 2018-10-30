@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements View.OnClickListener{
     private int layout;
     private int welt;
+    private int scrollWidth;
     private ImageView imageView;
     private MediaPlayer music;
     private MasterView gameview;
@@ -111,7 +112,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruek).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
+        container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
+        scroll();
     }
 
     private void showsettingfragment(){
@@ -171,14 +174,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         if(view.getId()==R.id.start){
             showlevelfragment();
-            ((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
+            //((TransitionDrawable) imageView.getDrawable()).startTransition(2000);
         }else if(view.getId()==R.id.zuruek){
+            saveScrollWidth();
             showstartfragment();
         }else if(view.getId()==R.id.Level1){
             welt=1;
+            saveScrollWidth();
             showsettingfragment();
         }else if(view.getId()==R.id.Level2){
             welt=2;
+            saveScrollWidth();
             showsettingfragment();
         }else if(view.getId()==R.id.zuruek2){
             showlevelfragment();
@@ -187,5 +193,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }else if(view.getId()==R.id.r1){
             countSettings(R.id.t1, 1);
         }
+    }
+
+    public void scroll(){
+        findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
+    }
+
+    public void saveScrollWidth(){
+        scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
 }
