@@ -115,7 +115,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruek).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
-        ImageView imageView = (ImageView) findViewById(R.id.imageView4);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
         scroll();
@@ -183,11 +183,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
             saveScrollWidth();
             showstartfragment();
         }else if(view.getId()==R.id.Level1){
-            welt=1;
+            welt=0;
             saveScrollWidth();
             showsettingfragment();
         }else if(view.getId()==R.id.Level2){
-            welt=2;
+            welt=1;
             saveScrollWidth();
             showsettingfragment();
         }else if(view.getId()==R.id.zuruek2){
@@ -200,6 +200,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     }
 
     public void scroll(){
+        zahl = scrollWidth;
         findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
     }
 
