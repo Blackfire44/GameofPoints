@@ -26,6 +26,10 @@ public class Engine implements SensorEventListener {
         }
     }
 
+    public void createObjekt(int x, int y, int r, int membership, int live, int attack, int speed, int color){
+        Objekt a = new Objekt(x, y, r, membership, live, attack, speed, color);
+    }
+
     public void moveObjects(){
         for(int i = 0; i<Objekt.liste.size(); i++){
 
@@ -36,8 +40,6 @@ public class Engine implements SensorEventListener {
             Objekt.liste.get(i).setY(1);
         }
     }
-
-
 
     public void setRegion(float minX, float minY, float maxX, float maxY){
         this.minX=minX;

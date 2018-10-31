@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(basedimension/2, basedimension/2, container.getWidth()-basedimension/2, container.getHeight()-basedimension/2); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
-        /*for(int i = 0; i<Objekt.liste.size(); i++){
+        /*for(int i = 0; i<Objekt.liste.size(); i++){                //aus Xml Datei die Anfangslage holen.
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
@@ -118,8 +118,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
-        scroll();
-        ((TransitionDrawable) imageView.getDrawable()).startTransition(200);
+            scroll();
+        //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
     private void showsettingfragment(){
