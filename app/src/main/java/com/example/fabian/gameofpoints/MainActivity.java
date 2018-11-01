@@ -196,8 +196,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
             countSettings(R.id.t1, -1);
         }else if(view.getId()==R.id.r1){
             countSettings(R.id.t1, 1);
-        }else if(view.getId()==R.id.levelauswahl){
-            startGame();
         }
     }
 
