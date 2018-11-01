@@ -42,16 +42,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         gameview = new MasterView(this);
         gameview.setVisibility(View.VISIBLE);
-        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         float basedimension = gameview.getBaseDimension();
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(basedimension/2, basedimension/2, container.getWidth()-basedimension/2, container.getHeight()-basedimension/2); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
-        /*for(int i = 0; i<Objekt.liste.size(); i++){                //aus Xml Datei die Anfangslage holen.
+        /*for(int i = 0; i<Objekt.liste.size(); i++){                aus Xml Datei die Anfangslage holen.
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
-        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        engine.moveObjects();
+        //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
     }
 
@@ -196,6 +196,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
             countSettings(R.id.t1, -1);
         }else if(view.getId()==R.id.r1){
             countSettings(R.id.t1, 1);
+        }else if(view.getId()==R.id.levelauswahl){
+            startGame();
         }
     }
 
