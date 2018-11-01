@@ -34,8 +34,8 @@ public class Engine implements SensorEventListener {
     public void moveObjects(){
         for(int i = 0; i<Objekt.liste.size(); i++){
             Objekt.liste.get(i).setDirection(Objekt.liste.get(i).getDirection() + (int)(Math.random() * directionChange - directionChange / 2));
-            Objekt.liste.get(i).setX((float)(Objekt.liste.get(i).getX() + Math.cos(Objekt.liste.get(i).getDirection()) * Objekt.liste.get(i).getSpeed()));
-            Objekt.liste.get(i).setY((float)(Objekt.liste.get(i).getY() + Math.sin(Objekt.liste.get(i).getDirection()) * Objekt.liste.get(i).getSpeed()));
+            Objekt.liste.get(i).setX((float)(Objekt.liste.get(i).getX() + Math.cos(Objekt.liste.get(i).getDirection()*Math.PI/180) * Objekt.liste.get(i).getSpeed()));
+            Objekt.liste.get(i).setY((float)(Objekt.liste.get(i).getY() + Math.sin(Objekt.liste.get(i).getDirection()*Math.PI/180) * Objekt.liste.get(i).getSpeed()));
         }
     }
 
