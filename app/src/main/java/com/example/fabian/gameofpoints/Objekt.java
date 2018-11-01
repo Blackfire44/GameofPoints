@@ -8,7 +8,7 @@ public class Objekt {
     private int live;
     private int attack;
     private int speed;
-    private double direction;
+    private int direction;
     private int color;
 
     private float x, y, r;
@@ -24,7 +24,7 @@ public class Objekt {
         this.attack = attack;
         this.speed = speed;
         this.color = color;
-        direction = Math.random()*4; //random: 0, 1, 2, 3
+        direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
         liste.add(this);
     }
 
@@ -60,6 +60,8 @@ public class Objekt {
         return r;
     }
 
+    public int getDirection(){ return direction; }
+
     public void setMembership(int membership) {
         this.membership = membership;
     }
@@ -91,4 +93,6 @@ public class Objekt {
     public void setR(float r) {
         this.r = r;
     }
+
+    public void setDirection(int direction){ this.direction = direction;}
 }

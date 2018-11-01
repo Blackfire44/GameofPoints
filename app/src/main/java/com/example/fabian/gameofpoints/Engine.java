@@ -9,6 +9,7 @@ public class Engine implements SensorEventListener {
     private float impactX;
     private float impactY;
     private float minX, maxX, minY, maxY;
+    private int directionChange = 45;
     private float scaleA = 100f;
 
     private MasterView masterview;
@@ -32,12 +33,9 @@ public class Engine implements SensorEventListener {
 
     public void moveObjects(){
         for(int i = 0; i<Objekt.liste.size(); i++){
-
-            //Rechnung für die Bewegung
-            //Mit einberechnet: Richtung(2), Richtungsänderung(Kann Teil von Speed sein), speed, Position(x,y)
-
-            Objekt.liste.get(i).setX(1);
-            Objekt.liste.get(i).setY(1);
+            Objekt.liste.get(i).setDirection(Objekt.liste.get(i).getDirection() + (int)(Math.random() * directionChange - directionChange / 2));
+            Objekt.liste.get(i).setX((float)(Objekt.liste.get(i).getX() + Math.cos(Objekt.liste.get(i).getDirection()) * Objekt.liste.get(i).getSpeed()));
+            Objekt.liste.get(i).setY((float)(Objekt.liste.get(i).getY() + Math.sin(Objekt.liste.get(i).getDirection()) * Objekt.liste.get(i).getSpeed()));
         }
     }
 
