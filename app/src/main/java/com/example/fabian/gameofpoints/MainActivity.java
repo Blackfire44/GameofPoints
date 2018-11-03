@@ -19,8 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements View.OnClickListener{
+    private int live = 1;
+    private int attack = 1;
+    private int speed = 1;
+    private int dontknow = 1;
+    private int upgradePoints = 20;
     private int layout;
-    private int welt;
+    private int world;
     private int scrollWidth;
     private ImageView imageView;
     private MediaPlayer music;
@@ -112,7 +117,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
-        container.findViewById(R.id.zuruek).setOnClickListener(this);
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
@@ -124,15 +129,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private void showsettingfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
-        TextView text = (TextView)findViewById(R.id.level1name);
-        String se = text.getText().toString();
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.settings, null));
-        container.findViewById(R.id.zuruek2).setOnClickListener(this);
+        container.findViewById(R.id.zuruekSettings).setOnClickListener(this);
         container.findViewById(R.id.l1).setOnClickListener(this);
         container.findViewById(R.id.r1).setOnClickListener(this);
-        fillTextView(R.id.planetsettings, se);
+        container.findViewById(R.id.l2).setOnClickListener(this);
+        container.findViewById(R.id.r2).setOnClickListener(this);
+        container.findViewById(R.id.l3).setOnClickListener(this);
+        container.findViewById(R.id.r3).setOnClickListener(this);
+        container.findViewById(R.id.l4).setOnClickListener(this);
+        container.findViewById(R.id.r4).setOnClickListener(this);
         layout=2;
+        setPlanet(R.id.planetsettings);
         update();
     }
 
@@ -152,13 +161,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=5;
     }
 
+    private void setPlanet(int id){
+        switch(world){
+            case 0:
+                fillTextView(id, "Trius");
+                break;
+            case 1:
+                fillTextView(id, "Quatron");
+                break;
+            default:
+        }
+    }
+
     private void update(){
         if(layout==2) {
-            String si = ""+zahl;
-            fillTextView(R.id.t1, si);
-            fillTextView(R.id.t2, si);
-            fillTextView(R.id.t3, si);
-            fillTextView(R.id.t4, si);
+            fillTextView(R.id.t1, "Live: "+live);
+            fillTextView(R.id.t2, "Attack: "+attack);
+            fillTextView(R.id.t3, "Speed: "+speed);
+            fillTextView(R.id.t4, "dont know: "+dontknow);
+            fillTextView(R.id.upgradePoints, "Upgradepoints left: "+upgradePoints);
         }
     }
 
@@ -167,44 +188,134 @@ public class MainActivity extends Activity implements View.OnClickListener{
         tv.setText(text);
     }
 
-    private void countSettings(int id, int richtung){
-        zahl=zahl+richtung;
-        String si = ""+zahl;
-        fillTextView(id, si);
-    }
-
-    int zahl = 0;//statt Zahl dann speed, attack, live etc.
-
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.start){
-            showlevelfragment();
-        }else if(view.getId()==R.id.zuruek){
-            saveScrollWidth();
-            showstartfragment();
-        }else if(view.getId()==R.id.Level1){
-            welt=0;
-            saveScrollWidth();
-            showsettingfragment();
-        }else if(view.getId()==R.id.Level2){
-            welt=1;
-            saveScrollWidth();
-            showsettingfragment();
-        }else if(view.getId()==R.id.zuruek2){
-            showlevelfragment();
-        }else if(view.getId()==R.id.l1){
-            countSettings(R.id.t1, -1);
-        }else if(view.getId()==R.id.r1){
-            countSettings(R.id.t1, 1);
+        switch(view.getId()){
+            case R.id.start:
+                showlevelfragment();
+                break;
+            case R.id.zuruekLevel:
+                saveScrollWidth();
+                showstartfragment();
+                break;
+            case R.id.Level1:
+                world=0;
+                saveScrollWidth();
+                showsettingfragment();
+                break;
+            case R.id.Level2:
+                world=1;
+                saveScrollWidth();
+                showsettingfragment();
+                break;
+            case R.id.zuruekSettings:
+                showlevelfragment();
+                break;
+            case R.id.l1:
+                proofSettings(11);
+                break;
+            case R.id.r1:
+                proofSettings(12);
+                break;
+            case R.id.l2:
+                proofSettings(21);
+                break;
+            case R.id.r2:
+                proofSettings(22);
+                break;
+            case R.id.l3:
+                proofSettings(31);
+                break;
+            case R.id.r3:
+                proofSettings(32);
+                break;
+            case R.id.l4:
+                proofSettings(41);
+                break;
+            case R.id.r4:
+                proofSettings(42);
+                break;
+            default:
         }
     }
 
-    public void scroll(){
-        zahl = scrollWidth;
+    private void proofSettings(int click){
+        switch(click){
+            case 11:
+                if(live>1) {
+                    live--;
+                    upgradePoints++;
+                }else{
+
+                }
+                break;
+            case 12:
+                if(upgradePoints>0) {
+                    live++;
+                    upgradePoints--;
+                }else{
+
+                }
+                break;
+            case 21:
+                if(attack>1) {
+                    attack--;
+                    upgradePoints++;
+                }else{
+
+                }
+                break;
+            case 22:
+                if(upgradePoints>0) {
+                    attack++;
+                    upgradePoints--;
+                }else{
+
+                }
+                break;
+            case 31:
+                if(speed>1) {
+                    speed--;
+                    upgradePoints++;
+                }else{
+
+                }
+                break;
+            case 32:
+                if(upgradePoints>0) {
+                    speed++;
+                    upgradePoints--;
+                }else{
+
+                }
+                break;
+            case 41:
+                if(dontknow>1) {
+                    dontknow--;
+                    upgradePoints++;
+                }else{
+
+                }
+                break;
+            case 42:
+                if(upgradePoints>0) {
+                    dontknow++;
+                    upgradePoints--;
+                }else{
+
+                }
+                break;
+            default:
+        }
+        update();
+        fillTextView(R.id.t1, "Live: "+live);
+    }
+
+    private void scroll(){
         findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
     }
 
-    public void saveScrollWidth(){
+    private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
 }

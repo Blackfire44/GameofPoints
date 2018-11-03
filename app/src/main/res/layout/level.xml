@@ -27,7 +27,7 @@
                 android:text="@string/Planetenauswahl" />
 
             <ImageView
-                android:id="@+id/zuruek"
+                android:id="@+id/zuruekLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
