@@ -2,6 +2,8 @@ package com.example.fabian.gameofpoints;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimatedImageDrawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -12,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.ChangeImageTransform;
 import android.transition.Fade;
+import android.transition.Transition;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,9 +124,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+        container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
         scroll();
-        //ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+       // ((AnimationDrawable) imageView.getDrawable()).start();
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
@@ -307,6 +313,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             default:
         }
         update();
+        fillTextView(R.id.t1, "Live: "+live);
     }
 
     private void scroll(){
