@@ -120,10 +120,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
-        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-        container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
-            scroll();
+        scroll();
+        //ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
@@ -308,7 +307,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
             default:
         }
         update();
-        fillTextView(R.id.t1, "Live: "+live);
     }
 
     private void scroll(){

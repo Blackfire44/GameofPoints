@@ -13,7 +13,7 @@ public class Objekt {
 
     private float x, y, r;
 
-    public static ArrayList<Objekt> liste = new ArrayList<>();   //bitte zugriffsrecht ändern, falls es nicht gebraucht wird!!
+    private static ArrayList<Objekt> liste = new ArrayList<>();
 
     public Objekt(int x, int y, int r, int membership, int live, int attack, int speed, int color){
         this.x = x;
@@ -27,6 +27,8 @@ public class Objekt {
         direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
         liste.add(this);
     }
+
+    public static ArrayList<Objekt> getListe() { return liste; }
 
     public int getMembership() {
         return membership;
