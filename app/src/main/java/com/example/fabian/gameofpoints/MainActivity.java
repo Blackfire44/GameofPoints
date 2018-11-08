@@ -124,11 +124,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
+        container.findViewById(R.id.Level3).setOnClickListener(this);
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         container.findViewById(R.id.levelauswahl).setOnClickListener(this);
         layout=1;
         scroll();
-       // ((AnimationDrawable) imageView.getDrawable()).start();
+        //((AnimationDrawable) imageView.getDrawable()).start();
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
@@ -174,6 +175,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
             case 1:
                 fillTextView(id, "Quatron");
                 break;
+            case 2:
+                fillTextView(id,"Planet3");
             default:
         }
     }
@@ -209,6 +212,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.Level2:
+                world=1;
+                saveScrollWidth();
+                showsettingfragment();
+                break;
+            case R.id.Level3:
                 world=1;
                 saveScrollWidth();
                 showsettingfragment();
