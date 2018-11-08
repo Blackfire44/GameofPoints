@@ -105,6 +105,27 @@
                         android:src="@drawable/quatron" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/Level3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/planet3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="40dp"
+                        android:text="@string/Level1" />
+
+                    <ImageView
+                        android:id="@+id/level3name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/p3b1" />
+                </LinearLayout>
 
             </LinearLayout>
 
