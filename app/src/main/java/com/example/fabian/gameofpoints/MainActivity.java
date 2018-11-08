@@ -150,14 +150,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
         update();
     }
 
-    /*private void showstopfragment(){
+    private void showstopfragment(){
             //stopgame();
             ViewGroup container = (ViewGroup)findViewById(R.id.container);
             container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
             container.findViewById(R.id.backtotitle).setOnClickListener(this);
             container.findViewById(R.id.Continue).setOnClickListener(this);
             layout=3;
-    }*/
+    }
 
     private void showgameoverfragment(){
         //stopgame();
@@ -222,6 +222,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.zuruekSettings:
                 showlevelfragment();
+                break;
+            case R.id.startgame:
+                startGame();
                 break;
             case R.id.l1:
                 proofSettings(11);
