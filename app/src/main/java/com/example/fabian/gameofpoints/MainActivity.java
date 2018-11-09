@@ -1,5 +1,6 @@
 package com.example.fabian.gameofpoints;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimatedImageDrawable;
@@ -127,8 +128,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level3).setOnClickListener(this);
         layout=1;
         scroll();
+
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-        //((AnimationDrawable) imageView.getDrawable()).start();
+       // ImageView mImageViewEmptying = (ImageView) findViewById(R.id.imageView1);
+       //((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+
+        (((AnimationDrawable) imageView.getDrawable())).start();
+
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 

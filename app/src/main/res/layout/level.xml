@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
-                        android:text="@string/Level1" />
+                        android:text="@string/Level3" />
 
                     <ImageView
                         android:id="@+id/level3name"
