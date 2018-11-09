@@ -129,11 +129,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-       // ImageView mImageViewEmptying = (ImageView) findViewById(R.id.imageView1);
-       //((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        //ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+        ImageView mImageViewEmptying = (ImageView) findViewById(R.id.rotate);
+       ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
 
-        (((AnimationDrawable) imageView.getDrawable())).start();
+        //(((AnimationDrawable) imageView.getDrawable())).start();
 
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }

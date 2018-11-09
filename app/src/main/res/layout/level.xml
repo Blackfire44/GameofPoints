@@ -56,6 +56,8 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
+
+
                 <!-- Von hier aus die nächsten Level kopieren-->
 
                 <LinearLayout
@@ -64,6 +66,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
 
                     <TextView
                         android:id="@+id/level1name"
@@ -74,10 +77,24 @@
                         android:text="@string/Level1" />
 
                     <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rotate"
+                        android:background="@drawable/rotate"
+                    />
+
+                  <!--  <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageview_animation_selector"
+                        android:background="@drawable/selector"/>
+-->
+                    <!-- Das Auskommentierte ist das Standart. DAs andere ist ein Test!
+                    <ImageView
                         android:id="@+id/imageView0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/trius1" />
+                        android:src="@drawable/trius1" /> -->
                 </LinearLayout>
 
                 <!-- bis hier. Dann: LayoutId ändern, text ändern, src des Bildes ändern-->
