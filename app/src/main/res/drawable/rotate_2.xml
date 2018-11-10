@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:duration="300" android:drawable="@drawable/quatron1"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron2"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron3"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron4"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron5"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron6"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron7"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron8"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron9"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron10"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron11"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron12"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron13"></item>
+    <item android:duration="300" android:drawable="@drawable/quatron14"></item>
 
 </selector>

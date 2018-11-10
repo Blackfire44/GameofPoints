@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="300" android:drawable="@drawable/p3b1"></item>
+    <item android:duration="300" android:drawable="@drawable/p3b2"></item>
+    <item android:duration="300" android:drawable="@drawable/p3b3"></item>
+    <item android:duration="300" android:drawable="@drawable/p3b4"></item>
+    <item android:duration="300" android:drawable="@drawable/p3b5"></item>
+</selector>

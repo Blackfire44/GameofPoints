@@ -8,11 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +59,6 @@
                 android:orientation="horizontal">
 
 
-
                 <!-- Von hier aus die nächsten Level kopieren-->
 
                 <LinearLayout
@@ -77,13 +78,12 @@
                         android:text="@string/Level1" />
 
                     <ImageView
+                        android:id="@+id/rotate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rotate"
-                        android:background="@drawable/rotate_1"
-                    />
+                        android:background="@drawable/rotate_1" />
 
-                  <!--  <ImageView
+                    <!--  <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageview_animation_selector"

@@ -138,6 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
     }
 
+
     private void showsettingfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
