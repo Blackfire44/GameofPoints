@@ -18,6 +18,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -122,6 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
+        findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
@@ -333,10 +335,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
     }
 
     private void scroll(){
-        findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
+        findViewById(R.id.scroll).post(new Runnable() {
+            public void run() {
+                findViewById(R.id.scroll).scrollTo(scrollWidth, 0);//vielleicht scrollBy?
+                findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
+        scrollWidth -= scrollWidth%1035;
     }
 }
