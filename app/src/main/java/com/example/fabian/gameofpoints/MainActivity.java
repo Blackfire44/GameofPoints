@@ -33,7 +33,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private int layout;
     private int world;
     private int scrollWidth;
-    private ImageView imageView;
     private MediaPlayer music;
     private MasterView gameview;
     private Engine engine;
@@ -131,13 +130,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
 
-        //ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-        ImageView mImageViewEmptying = (ImageView) findViewById(R.id.rotate);
-       ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-
-        //(((AnimationDrawable) imageView.getDrawable())).start();
-
-        //((TransitionDrawable) imageView.getDrawable()).startTransition(200);
+       // ImageView mImageViewEmptying1 = (ImageView) findViewById(R.id.rotate1);
+       // ImageView mImageViewEmptying2 = (ImageView) findViewById(R.id.rotate2);
+        //ImageView mImageViewEmptying3 = (ImageView) findViewById(R.id.rotate3);
+      //  ((AnimationDrawable) mImageViewEmptying1.getBackground()).start();
+        //((AnimationDrawable) mImageViewEmptying2.getBackground()).start();
+       // ((AnimationDrawable) mImageViewEmptying3.getBackground()).start();
     }
 
 

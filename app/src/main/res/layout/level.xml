@@ -58,7 +58,6 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-
                 <!-- Von hier aus die nächsten Level kopieren-->
 
                 <LinearLayout
@@ -78,7 +77,7 @@
                         android:text="@string/Level1" />
 
                     <ImageView
-                        android:id="@+id/rotate"
+                        android:id="@+id/rotate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rotate_1" />
@@ -103,11 +102,10 @@
                         android:text="@string/Level2" />
 
                     <ImageView
-                        android:id="@+id/imageView1"
-                        android:layout_width="match_parent"
+                        android:id="@+id/rotate2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/picture"
-                        android:src="@drawable/quatron1" />
+                        android:background="@drawable/rotate_2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -118,18 +116,18 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/planet3"
-                        android:layout_width="match_parent"
+                        android:id="@+id/level3name"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
                         android:text="@string/Level3" />
 
                     <ImageView
-                        android:id="@+id/level3name"
+                        android:id="@+id/rotate3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/p3b1" />
+                        android:background="@drawable/rotate_3" />
                 </LinearLayout>
 
             </LinearLayout>

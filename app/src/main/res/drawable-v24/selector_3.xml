@@ -4,18 +4,18 @@
         android:id="@+id/on"
         android:state_activated="true">
         <bitmap
-            android:src="@drawable/quatron1"/>
+            android:src="@drawable/p3b1"/>
     </item>
 
     <item
         android:id="@+id/off">
         <bitmap
-            android:src="@drawable/quatron14"/>
+            android:src="@drawable/p3b5"/>
     </item>
 
     <transition
         android:fromId="@+id/on"
         android:toId="@+id/off"
-        android:drawable="@drawable/rotate_2">
+        android:drawable="@drawable/rotate_3">
     </transition>
 </animated-selector>
