@@ -130,12 +130,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
 
-       // ImageView mImageViewEmptying1 = (ImageView) findViewById(R.id.rotate1);
-       // ImageView mImageViewEmptying2 = (ImageView) findViewById(R.id.rotate2);
-        //ImageView mImageViewEmptying3 = (ImageView) findViewById(R.id.rotate3);
-      //  ((AnimationDrawable) mImageViewEmptying1.getBackground()).start();
-        //((AnimationDrawable) mImageViewEmptying2.getBackground()).start();
-       // ((AnimationDrawable) mImageViewEmptying3.getBackground()).start();
+        ImageView mImageViewEmptying1 = (ImageView) findViewById(R.id.rotate1);
+
+        ((AnimationDrawable) mImageViewEmptying1.getBackground()).start();
+        mImageViewEmptying1 = (ImageView) findViewById(R.id.rotate2);
+        ((AnimationDrawable) mImageViewEmptying1.getBackground()).start();
+        mImageViewEmptying1 = (ImageView) findViewById(R.id.rotate3);
+        ((AnimationDrawable) mImageViewEmptying1.getBackground()).start();
     }
 
 
@@ -343,6 +344,5 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
-        scrollWidth -= scrollWidth%1035;
     }
 }

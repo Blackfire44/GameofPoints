@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
     <item android:duration="300" android:drawable="@drawable/quatron1"></item>
     <item android:duration="300" android:drawable="@drawable/quatron2"></item>
     <item android:duration="300" android:drawable="@drawable/quatron3"></item>
@@ -15,4 +16,4 @@
     <item android:duration="300" android:drawable="@drawable/quatron13"></item>
     <item android:duration="300" android:drawable="@drawable/quatron14"></item>
 
-</selector>
+</animation-list>
