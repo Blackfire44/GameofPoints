@@ -83,18 +83,6 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/rotate_1" />
 
-                    <!--  <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageview_animation_selector"
-                        android:background="@drawable/selector"/>
--->
-                    <!-- Das Auskommentierte ist das Standart. DAs andere ist ein Test!
-                    <ImageView
-                        android:id="@+id/imageView0"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/trius1" /> -->
                 </LinearLayout>
 
                 <!-- bis hier. Dann: LayoutId ändern, text ändern, src des Bildes ändern-->
