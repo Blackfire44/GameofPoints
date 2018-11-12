@@ -327,7 +327,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         update();
     }
 
-//hallo
     private void scroll(){
         findViewById(R.id.scroll).post(new Runnable() {
             public void run() {
