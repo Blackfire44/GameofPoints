@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
-    <item android:duration="300" android:drawable="@drawable/quatron1"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron2"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron3"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron4"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron5"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron6"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron7"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron8"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron9"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron10"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron11"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron12"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron13"></item>
-    <item android:duration="300" android:drawable="@drawable/quatron14"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron0"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron1"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron2"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron3"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron4"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron5"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron6"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron7"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron8"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron9"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron10"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron11"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron12"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron13"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron14"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron15"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron16"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron17"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron18"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron19"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron20"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron21"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron22"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron23"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron24"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron25"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron26"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron27"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron28"></item>
+    <item android:duration="50" android:drawable="@drawable/quatron29"></item>
 
 </animation-list>
