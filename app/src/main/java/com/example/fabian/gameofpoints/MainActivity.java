@@ -37,11 +37,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private MasterView gameview;
     private Engine engine;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showstartfragment();
+
        // startMusic();
     }
 
@@ -131,7 +133,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         scroll();
 
         ImageView mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
-
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
