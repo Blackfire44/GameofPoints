@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private MediaPlayer music;
     private MasterView gameview;
     private Engine engine;
-
+    ImageView mImageViewEmptying;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level3).setOnClickListener(this);
         layout=1;
         scroll();
-
-        ImageView mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
@@ -154,6 +153,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.r3).setOnClickListener(this);
         container.findViewById(R.id.l4).setOnClickListener(this);
         container.findViewById(R.id.r4).setOnClickListener(this);
+        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
+        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
+        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
+        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         layout=2;
         setPlanet(R.id.planetsettings);
         update();

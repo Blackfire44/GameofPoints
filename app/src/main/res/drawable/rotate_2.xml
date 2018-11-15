@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
+    <!-- Ich muss das nochmal machen! bin mit der Rotation nicht zufrieden. Es sollten mind. 40 Bilder sein. Das wird sich aber extrem auf die Größe unserer App auswirken! -->
     <item android:duration="50" android:drawable="@drawable/quatron0"></item>
     <item android:duration="50" android:drawable="@drawable/quatron1"></item>
     <item android:duration="50" android:drawable="@drawable/quatron2"></item>
