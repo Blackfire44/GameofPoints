@@ -4,13 +4,13 @@
         android:id="@+id/on"
         android:state_activated="true">
         <bitmap
-            android:src="@drawable/quatron1"/>
+            android:src="@drawable/quatron0"/>
     </item>
 
     <item
         android:id="@+id/off">
         <bitmap
-            android:src="@drawable/quatron14"/>
+            android:src="@drawable/quatron29"/>
     </item>
 
     <transition
