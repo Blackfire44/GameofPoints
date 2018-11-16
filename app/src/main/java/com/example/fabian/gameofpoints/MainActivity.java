@@ -141,6 +141,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 
     private void showsettingfragment(){
+        outoflevel();
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.settings, null));
@@ -153,12 +154,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.r3).setOnClickListener(this);
         container.findViewById(R.id.l4).setOnClickListener(this);
         container.findViewById(R.id.r4).setOnClickListener(this);
-        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
-        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
-        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
-        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
-        //mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
-        //((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        container.findViewById(R.id.startgame).setOnClickListener(this);
         layout=2;
         setPlanet(R.id.planetsettings);
         update();
@@ -194,6 +190,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
     }
 
+    private void outoflevel(){
+        stopanimation();
+        saveScrollWidth();
+    }
+
+    private void stopanimation(){
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+    }
+
     private void update(){
         if(layout==2) {
             fillTextView(R.id.t1, "Live: "+live);
@@ -216,22 +226,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 showlevelfragment();
                 break;
             case R.id.zuruekLevel:
-                saveScrollWidth();
+                outoflevel();
                 showstartfragment();
                 break;
             case R.id.Level1:
                 world=0;
-                saveScrollWidth();
                 showsettingfragment();
                 break;
             case R.id.Level2:
                 world=1;
-                saveScrollWidth();
                 showsettingfragment();
                 break;
             case R.id.Level3:
                 world=1;
-                saveScrollWidth();
                 showsettingfragment();
                 break;
             case R.id.zuruekSettings:
@@ -342,7 +349,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private void scroll(){
         findViewById(R.id.scroll).post(new Runnable() {
             public void run() {
-                findViewById(R.id.scroll).scrollTo(scrollWidth, 0);//vielleicht scrollBy?
+                findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
                 findViewById(R.id.scroll).setVisibility(View.VISIBLE);
             }
         });
