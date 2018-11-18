@@ -119,7 +119,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.start).setOnClickListener(this);
         layout=0;
     }
-
     private void showlevelfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();

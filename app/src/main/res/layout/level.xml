@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/Planetenauswahl" />
+                android:text="@string/Planetenauswahl"
+                android:textColor="@color/mainText"/>
 
             <ImageView
                 android:id="@+id/zuruekLevel"
@@ -77,7 +78,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
-                        android:text="@string/Level1" />
+                        android:text="@string/Level1"
+                        android:textColor="@color/mainText" />
 
                     <ImageView
                         android:id="@+id/rotate1"
@@ -105,7 +107,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
-                        android:text="@string/Level2" />
+                        android:text="@string/Level2"
+                        android:textColor="@color/mainText"/>
 
                     <ImageView
                         android:id="@+id/rotate2"
@@ -130,7 +133,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
-                        android:text="@string/Level3" />
+                        android:text="@string/Level3"
+                        android:textColor="@color/mainText" />
 
                     <ImageView
                         android:id="@+id/rotate3"
