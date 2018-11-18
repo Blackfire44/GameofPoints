@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sterne">
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/Planetenauswahl"
-                android:textColor="@color/mainText"/>
+                android:textColor="@color/mainText" />
 
             <ImageView
                 android:id="@+id/zuruekLevel"
@@ -40,24 +40,18 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/Platzhalter"
-            android:layout_weight="1" />
-
         <HorizontalScrollView
             android:id="@+id/scroll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:layout_height="match_parent">
 
 
             <LinearLayout
                 android:id="@+id/Level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:baselineAligned="true"
-                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <!-- Von hier aus die nächsten Level kopieren-->
@@ -66,10 +60,10 @@
                     android:id="@+id/Level1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
+                    android:layout_marginLeft="100dp"
                     android:layout_marginRight="100dp"
-                    android:layout_marginLeft="100dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
                     <!--margineRight|Left = (400-planetSize)/2-->
 
                     <TextView
@@ -85,7 +79,8 @@
                         android:id="@+id/rotate1"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:background="@drawable/rotate_1" />
+                        android:background="@drawable/rotate_1"
+                        android:contentDescription="@string/picture" />
 
                 </LinearLayout>
 
@@ -95,11 +90,11 @@
                     android:id="@+id/Level2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginRight="58dp"
+                    android:layout_marginBottom="100dp"
                     android:layout_marginLeft="58dp"
-                    android:layout_marginBottom="100dp">>
+                    android:layout_marginRight="58dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">>
 
                     <TextView
                         android:id="@+id/level2name"
@@ -108,24 +103,25 @@
                         android:gravity="center_horizontal"
                         android:paddingBottom="40dp"
                         android:text="@string/Level2"
-                        android:textColor="@color/mainText"/>
+                        android:textColor="@color/mainText" />
 
                     <ImageView
                         android:id="@+id/rotate2"
                         android:layout_width="284dp"
                         android:layout_height="284dp"
-                        android:background="@drawable/rotate_2" />
+                        android:background="@drawable/rotate_2"
+                        android:contentDescription="@string/picture" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Level3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="50dp"
                     android:layout_marginLeft="50dp"
-                    android:layout_marginBottom="50dp">>
+                    android:layout_marginRight="50dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">>
 
                     <TextView
                         android:id="@+id/level3name"
@@ -140,7 +136,8 @@
                         android:id="@+id/rotate3"
                         android:layout_width="250dp"
                         android:layout_height="250dp"
-                        android:background="@drawable/rotate_3" />
+                        android:background="@drawable/rotate_3"
+                        android:contentDescription="@string/picture" />
                 </LinearLayout>
 
             </LinearLayout>

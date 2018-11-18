@@ -12,8 +12,9 @@
     <string name="Level6">Level6</string>
     <string name="Level7">Level7</string>
     <string name="Level8">Level8</string>
-    <string name="picture">picture</string>
+
     <string name="Planetanzeige">Planet:</string>
     <string name="Counter">Counter</string>
+    <string name="picture">picture</string>
     <string name="String">String</string>
 </resources>

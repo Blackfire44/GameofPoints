@@ -130,12 +130,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level3).setOnClickListener(this);
         layout=1;
         scroll();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        startanimation();
     }
 
 
@@ -178,13 +173,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private void setPlanet(int id){
         switch(world){
             case 0:
-                fillTextView(id, "Trius");
+                fillTextView(id, "World 1: Trius");
                 break;
             case 1:
-                fillTextView(id, "Quatron");
+                fillTextView(id, "World 2: Quatron");
                 break;
             case 2:
-                fillTextView(id,"Planet3");
+                fillTextView(id,"World 3: Planet3");
             default:
         }
     }
@@ -192,6 +187,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private void outoflevel(){
         stopanimation();
         saveScrollWidth();
+    }
+
+    private void startanimation(){
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
     }
 
     private void stopanimation(){
