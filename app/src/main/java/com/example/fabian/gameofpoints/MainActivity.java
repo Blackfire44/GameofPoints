@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
@@ -23,7 +22,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -39,8 +37,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private MasterView gameview;
     private Engine engine;
     ImageView mImageViewEmptying;
-    private HintergrundTask hintergrundTask;
-    private ProgressBar progress = findViewById(R.id.progress);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +44,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         showstartfragment();
 
-       // startMusic();
+        // startMusic();
     }
 
     private void startGame(){
@@ -80,25 +76,22 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onPause(){
         super.onPause();
-       // if(music!=null){
-       //     music.pause();
-       // }
+        // if(music!=null){
+        //     music.pause();
+        // }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-       // music.start();
+        // music.start();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //stopgame();
         //music.stop();
-        if(hintergrundTask != null) {
-            hintergrundTask.cancel(true);
-        }
+        super.onDestroy();
     }
 
     @Override
@@ -131,10 +124,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
-
-        //container.findViewById(R.id.container).setVisibility(View.INVISIBLE);
-        //container.addView(getLayoutInflater().inflate(R.layout.load, null));
-
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
@@ -142,7 +131,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
         startanimation();
-        //container.removeViewAt(1);
+    }
+
+    private void showloadfragment(){
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.addView(getLayoutInflater().inflate(R.layout.load, null));
     }
 
 
@@ -167,12 +160,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
     }
 
     private void showstopfragment(){
-            //stopgame();
-            ViewGroup container = (ViewGroup)findViewById(R.id.container);
-            container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
-            container.findViewById(R.id.backtotitle).setOnClickListener(this);
-            container.findViewById(R.id.Continue).setOnClickListener(this);
-            layout=3;
+        //stopgame();
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
+        container.findViewById(R.id.backtotitle).setOnClickListener(this);
+        container.findViewById(R.id.Continue).setOnClickListener(this);
+        layout=3;
     }
 
     private void showgameoverfragment(){
@@ -376,28 +369,5 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
-    }
-
-    class HintergrundTask extends AsyncTask<ViewGroup, Integer, String> {
-
-        @Override
-        protected String doInBackground(ViewGroup... viewGroups) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progress.setProgress(0);
-        }
-
-        protected void onProgressUpdate(int weite) {
-            super.onProgressUpdate(weite);
-            progress.setProgress(weite);
-        }
-
-        protected void onPostExecute(String... result) {
-            super.onPostExecute(String.valueOf(result));
-        }
     }
 }
