@@ -128,6 +128,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
         container.findViewById(R.id.Level3).setOnClickListener(this);
+        container.findViewById(R.id.Level4).setOnClickListener(this);
         layout=1;
         scroll();
         startanimation();
@@ -185,7 +186,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case 2:
                 fillTextView(id,"World 3: Planet3");
+                break;
             default:
+                fillTextView(id, "World 4: Planet4");
         }
     }
 
@@ -250,6 +253,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.Level3:
+                world=1;
+                showsettingfragment();
+                break;
+            case R.id.Level4:
                 world=1;
                 showsettingfragment();
                 break;
