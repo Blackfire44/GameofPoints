@@ -140,6 +140,33 @@
                         android:contentDescription="@string/picture" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/Level4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/level4name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="40dp"
+                        android:text="@string/Level4"
+                        android:textColor="@color/mainText" />
+
+                    <ImageView
+                        android:id="@+id/rotate4"
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:background="@drawable/rotate_4"
+                        android:contentDescription="@string/picture" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

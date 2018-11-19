@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
@@ -22,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -37,6 +39,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private MasterView gameview;
     private Engine engine;
     ImageView mImageViewEmptying;
+    private HintergrundTask hintergrundTask;
+    private ProgressBar progress = findViewById(R.id.progress);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +93,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         //stopgame();
         //music.stop();
-        super.onDestroy();
+        if(hintergrundTask != null) {
+            hintergrundTask.cancel(true);
+        }
     }
 
     @Override
@@ -124,6 +131,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
+
+        //container.findViewById(R.id.container).setVisibility(View.INVISIBLE);
+        //container.addView(getLayoutInflater().inflate(R.layout.load, null));
+
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.Level1).setOnClickListener(this);
         container.findViewById(R.id.Level2).setOnClickListener(this);
@@ -131,6 +142,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
         startanimation();
+        //container.removeViewAt(1);
     }
 
 
@@ -196,6 +208,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
     }
 
     private void stopanimation(){
@@ -204,6 +218,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -360,5 +376,28 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
+    }
+
+    class HintergrundTask extends AsyncTask<ViewGroup, Integer, String> {
+
+        @Override
+        protected String doInBackground(ViewGroup... viewGroups) {
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setProgress(0);
+        }
+
+        protected void onProgressUpdate(int weite) {
+            super.onProgressUpdate(weite);
+            progress.setProgress(weite);
+        }
+
+        protected void onPostExecute(String... result) {
+            super.onPostExecute(String.valueOf(result));
+        }
     }
 }
