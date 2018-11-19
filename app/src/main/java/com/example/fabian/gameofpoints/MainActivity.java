@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
@@ -119,6 +120,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.start).setOnClickListener(this);
         layout=0;
     }
+
     private void showlevelfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
@@ -377,4 +379,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
+
+    /*class HintergrundTask extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        private void onProgressUpdate(int weite) {
+            super.onProgressUpdate(weite);
+        }
+
+        private void onPostExecute(String... result) {
+            super.onPostExecute(String.valueOf(result));
+        }
+    }*/
 }
