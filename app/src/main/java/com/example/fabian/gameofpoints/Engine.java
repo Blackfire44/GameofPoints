@@ -15,7 +15,7 @@ public class Engine implements SensorEventListener {
     private MasterView masterview;
     private SensorManager sensorManager;
 
-    public Engine(SensorManager sensorManager, MasterView masterview, MainActivity mainActivity){
+    public Engine(SensorManager sensorManager, MasterView masterview, GameActivity mainActivity){
         this.masterview = masterview;
         this.sensorManager = sensorManager;
 
