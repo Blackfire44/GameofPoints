@@ -138,6 +138,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     private void showloadfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.load, null));
     }
 
@@ -241,6 +242,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         switch(view.getId()){
             case R.id.start:
                 showlevelfragment();
+                //new HintergrundTask().execute();
                 break;
             case R.id.zuruekLevel:
                 outoflevel();
@@ -264,6 +266,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.zuruekSettings:
                 showlevelfragment();
+                //new HintergrundTask().execute();
                 break;
             case R.id.startgame:
                 startGame();
@@ -380,16 +383,28 @@ public class GameActivity extends Activity implements View.OnClickListener{
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
 
+
+
+
     /*class HintergrundTask extends AsyncTask<Void, Integer, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //showlevelfragment();
+            ViewGroup container = (ViewGroup)findViewById(R.id.container);
+            container.removeAllViews();
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+           showloadfragment();
         }
 
         private void onProgressUpdate(int weite) {
