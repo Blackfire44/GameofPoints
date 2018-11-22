@@ -28,6 +28,13 @@
             android:background="@android:color/holo_green_light"
             android:spinnerMode="dropdown" />
 
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left" />
+
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
