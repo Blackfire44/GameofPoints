@@ -46,6 +46,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_game);
         showstartfragment();
 
+
         // startMusic();
     }
 
