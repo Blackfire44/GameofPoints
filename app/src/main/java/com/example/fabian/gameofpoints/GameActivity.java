@@ -23,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements View.OnClickListener{
@@ -140,6 +141,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.load, null));
+        load();
     }
 
 
@@ -177,6 +179,20 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.gameover, null));
         layout=5;
+    }
+
+    private void load(){
+        findViewById(R.id.extracontainer).post(new Runnable() {
+            public void run() {
+                long l = System.currentTimeMillis();
+                showlevelfragment();
+                try {
+                    Thread.sleep(1500-System.currentTimeMillis()+l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setPlanet(int id){
@@ -241,8 +257,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.start:
-                showlevelfragment();
-                //new HintergrundTask().execute();
+                showloadfragment();
                 break;
             case R.id.zuruekLevel:
                 outoflevel();
@@ -265,8 +280,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.zuruekSettings:
-                showlevelfragment();
-                //new HintergrundTask().execute();
+                showloadfragment();
                 break;
             case R.id.startgame:
                 startGame();
@@ -382,37 +396,4 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void saveScrollWidth(){
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
-
-
-
-
-    /*class HintergrundTask extends AsyncTask<Void, Integer, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //showlevelfragment();
-            ViewGroup container = (ViewGroup)findViewById(R.id.container);
-            container.removeAllViews();
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-           showloadfragment();
-        }
-
-        private void onProgressUpdate(int weite) {
-            super.onProgressUpdate(weite);
-        }
-
-        private void onPostExecute(String... result) {
-            super.onPostExecute(String.valueOf(result));
-        }
-    }*/
 }
