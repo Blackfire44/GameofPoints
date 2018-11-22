@@ -30,10 +30,12 @@
 
         <ProgressBar
             android:id="@+id/progressBar2"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left" />
+            style="?android:progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|left"
+            android:progress="40"
+            android:progressDrawable="@drawable/progresscircle"/>
 
     </FrameLayout>
 
