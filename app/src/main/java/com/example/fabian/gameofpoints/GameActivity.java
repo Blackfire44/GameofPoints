@@ -259,6 +259,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         switch(view.getId()){
             case R.id.start:
                 showloadfragment();
+                //showlevelfragment();
                 break;
             case R.id.zuruekLevel:
                 outoflevel();
@@ -413,6 +414,5 @@ xml-Dateien mit Libary in GameActivity abrufen (Minigolf App)
 Eigene Viecher mahlen (Drehbewegung)
 Viecher symulieren
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
-Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
 */
