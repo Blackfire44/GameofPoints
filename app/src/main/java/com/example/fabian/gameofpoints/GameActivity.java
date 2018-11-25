@@ -65,7 +65,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
-        engine.moveObjects();
+        //engine.start();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
     }
@@ -183,12 +183,15 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void load(){
-        findViewById(R.id.extracontainer).post(new Runnable() {
+        findViewById(R.id.container).post(new Runnable() {
             public void run() {
                 long l = System.currentTimeMillis();
                 showlevelfragment();
                 try {
-                    Thread.sleep(1500-System.currentTimeMillis()+l);
+                    l = System.currentTimeMillis()-l;
+                    if(l<1500){
+                        Thread.sleep(1500-l);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

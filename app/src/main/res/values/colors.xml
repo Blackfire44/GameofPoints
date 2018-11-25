@@ -6,6 +6,13 @@
     <color name="mainText">#fdfdea</color>
     <color name="darklila">#270c2c</color>
     <color name="darkred">#9B221F</color>
-    <color name="yellowgreen">#E3FF16</color>
     <color name="türkis">#218C56</color>
+    <color name="yellow1">#DCFB16</color>
+    <color name="yellow2">#008000</color>
+    <color name="red1">#DD270B</color>
+    <color name="red2">#590C00</color>
+    <color name="start1">#8340E5</color>
+    <color name="start2">#27025D</color>
+    <color name="startback1">#000000</color>
+    <color name="startback2">#FFFFFF</color>
 </resources>
