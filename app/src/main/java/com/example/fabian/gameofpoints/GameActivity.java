@@ -199,18 +199,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         });
     }
 
-    class PrimeThread extends Thread {
-        public void run() {
-            long l = System.currentTimeMillis();
-            showlevelfragment();
-            try {
-                Thread.sleep(1500-System.currentTimeMillis()+l);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void setPlanet(int id){
         switch(world){
             case 0:
