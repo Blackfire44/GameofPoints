@@ -183,17 +183,32 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void load(){
-        findViewById(R.id.extracontainer).post(new Runnable() {
+        findViewById(R.id.container).post(new Runnable() {
             public void run() {
                 long l = System.currentTimeMillis();
                 showlevelfragment();
                 try {
-                    Thread.sleep(1500-System.currentTimeMillis()+l);
+                    l = System.currentTimeMillis()-l;
+                    if(l<1500){
+                        Thread.sleep(1500-l);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    class PrimeThread extends Thread {
+        public void run() {
+            long l = System.currentTimeMillis();
+            showlevelfragment();
+            try {
+                Thread.sleep(1500-System.currentTimeMillis()+l);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void setPlanet(int id){
