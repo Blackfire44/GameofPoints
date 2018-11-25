@@ -17,25 +17,43 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom|right"
+            android:gravity="bottom|end"
             android:text="@string/Counter" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="@dimen/spinner"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
+            android:layout_gravity="top|end"
             android:background="@android:color/holo_green_light"
             android:spinnerMode="dropdown" />
 
         <ProgressBar
             android:id="@+id/progressBar2"
             style="?android:progressBarStyleHorizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="bottom|left"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|start"
+            android:progress="100"
+            android:progressDrawable="@drawable/progress_full"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:progressBarStyleHorizontal"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|start"
             android:progress="40"
-            android:progressDrawable="@drawable/progresscircle"/>
+            android:progressDrawable="@drawable/progress_state"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:progress="40"
+            android:progressDrawable="@drawable/progress_start"/>
 
     </FrameLayout>
 

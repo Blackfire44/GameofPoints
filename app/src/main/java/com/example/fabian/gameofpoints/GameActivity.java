@@ -65,7 +65,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
-        engine.moveObjects();
+        //engine.start();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
     }
@@ -413,6 +413,5 @@ xml-Dateien mit Libary in GameActivity abrufen (Minigolf App)
 Eigene Viecher mahlen (Drehbewegung)
 Viecher symulieren
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
-Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
 */

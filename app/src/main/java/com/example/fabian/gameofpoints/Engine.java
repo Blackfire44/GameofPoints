@@ -5,17 +5,23 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class Engine implements SensorEventListener {
     private float impactX;
     private float impactY;
     private float minX, maxX, minY, maxY;
     private int directionChange = 44;
     private float scaleA = 100f;
+    private int msPerFrame;
 
     private MasterView masterview;
     private SensorManager sensorManager;
+    private ScheduledExecutorService service;
 
-    public Engine(SensorManager sensorManager, MasterView masterview, GameActivity mainActivity){
+    public Engine(SensorManager sensorManager, MasterView masterview, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
         this.masterview = masterview;
         this.sensorManager = sensorManager;
 
@@ -27,11 +33,19 @@ public class Engine implements SensorEventListener {
         }
     }
 
+    public void start(){
+        service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
+
+        Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+    }
+
     public void createObjekt(int x, int y, int r, int membership, int live, int attack, int speed, int color){
         Objekt a = new Objekt(x, y, r, membership, live, attack, speed, color);
     }
 
-    public void moveObjects(){
+    public void moveObjects(){ //aus eclipse einfügen
         for(int i = 0; i<Objekt.getListe().size(); i++){
             Objekt.getListe().get(i).setDirection(Objekt.getListe().get(i).getDirection() + (int)(Math.random() * directionChange - directionChange / 2));
             Objekt.getListe().get(i).setX((float)(Objekt.getListe().get(i).getX() + Math.cos(Objekt.getListe().get(i).getDirection()*Math.PI/180) * Objekt.getListe().get(i).getSpeed()));
@@ -45,6 +59,19 @@ public class Engine implements SensorEventListener {
         this.maxX=maxX;
         this.maxY=maxY;
     }
+
+    public void stop(){
+        service.shutdown();
+        sensorManager.unregisterListener(this);
+    }
+
+    private Runnable runnable = new Runnable(){
+        @Override
+        public void run() {
+            moveObjects();
+            //berechnung
+        }
+    };
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
