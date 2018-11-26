@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.transition.ChangeImageTransform;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.util.Log;
+import android.util.LogPrinter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -25,6 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import static android.util.Log.*;
 
 public class GameActivity extends Activity implements View.OnClickListener{
     private int live = 1;
@@ -38,6 +41,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private MediaPlayer music;
     private MasterView gameview;
     private Engine engine;
+    private MasterView.IGameView gameView;
     ImageView mImageViewEmptying;
 
     @Override
@@ -49,12 +53,20 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
         // startMusic();
     }
+    /*
+    public Engine(SensorManager sensorManager){
+        MasterView.IGameView gameView{
+            this.gameview = gameView;
+            ((MasterView.IGameView) this.gameview).clearOpstacles();
+            }
+        }
+    */
 
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
-
+        container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
         gameview = new MasterView(this);
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
@@ -68,6 +80,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         //engine.start();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
+
     }
 
     private void startMusic(){
@@ -108,7 +121,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 3:showsettingfragment();
                 break;
-            case 4://showstopfragment();
+            case 4: showsettingfragment();//showstopfragment();
                 break;
             case 5://Gameover
                 break;
@@ -136,6 +149,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         layout=1;
         scroll();
         startanimation();
+        //Log.d("CREATION", "Hallo Welt!");
+        //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS())+ " fps");
     }
 
     private void showloadfragment(){
@@ -229,6 +244,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+       // Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
+
     }
 
     private void stopanimation(){
@@ -290,6 +307,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case R.id.startgame:
                 startGame();
                 break;
+            case R.id.zuruekLevel2:
+                showloadfragment();
+                break;
             case R.id.l1:
                 proofSettings(11);
                 break;
@@ -314,7 +334,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case R.id.r4:
                 proofSettings(42);
                 break;
-            default:
+            default: showlevelfragment();
         }
     }
 
