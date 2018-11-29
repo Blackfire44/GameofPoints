@@ -162,6 +162,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level2).setOnClickListener(this);
         container.findViewById(R.id.Level3).setOnClickListener(this);
         container.findViewById(R.id.Level4).setOnClickListener(this);
+        container.findViewById(R.id.Level5).setOnClickListener(this);
         layout=1;
         scroll();
         startanimation();
@@ -232,17 +233,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     private void setPlanet(int id){
         switch(world){
-            case 0:
+            case 1:
                 fillTextView(id, "World 1: Trius");
                 break;
-            case 1:
+            case 2:
                 fillTextView(id, "World 2: Quatron");
                 break;
-            case 2:
+            case 3:
                 fillTextView(id,"World 3: Planet3");
                 break;
             default:
-                fillTextView(id, "World 4: Planet4");
+                fillTextView(id, "Irgendwas anderes!");
         }
     }
 
@@ -260,6 +261,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate5);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
        // Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
 
     }
@@ -272,6 +275,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate3);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate5);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -302,19 +307,23 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showstartfragment();
                 break;
             case R.id.Level1:
-                world=0;
+                world=1;
                 showsettingfragment();
                 break;
             case R.id.Level2:
-                world=1;
+                world=2;
                 showsettingfragment();
                 break;
             case R.id.Level3:
-                world=1;
+                world=3;
                 showsettingfragment();
                 break;
             case R.id.Level4:
-                world=1;
+                world=4;
+                showsettingfragment();
+                break;
+            case R.id.Level5:
+                world=5;
                 showsettingfragment();
                 break;
             case R.id.zuruekSettings:

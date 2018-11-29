@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:duration="70" android:drawable="@drawable/schnee0"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee1"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee2"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee3"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee4"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee5"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee6"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee7"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee8"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee9"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee10"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee11"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee12"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee13"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee14"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee15"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee16"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee17"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee18"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee19"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee20"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee21"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee22"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee23"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee24"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee25"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee26"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee27"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee28"></item>
+    <item android:duration="70" android:drawable="@drawable/schnee29"></item>
+</animation-list>
