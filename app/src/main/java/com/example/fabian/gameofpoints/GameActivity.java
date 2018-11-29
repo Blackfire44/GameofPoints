@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int world;
     private int scrollWidth;
     private MediaPlayer music;
-    private GameSurfaceView gameview;
+    private GameSurfaceView gameview; //Mal schauen was passiert!!!!
     private Engine engine;
     private GameSurfaceView.IGameView gameView;
     ImageView mImageViewEmptying;
