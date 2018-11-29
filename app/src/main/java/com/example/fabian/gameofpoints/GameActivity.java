@@ -43,6 +43,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private MasterView gameview;
     private Engine engine;
     private MasterView.IGameView gameView;
+    private GameSurfaceView surface;
     ImageView mImageViewEmptying;
 
     @Override
@@ -83,7 +84,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             public void surfaceDestroyd(SurfaceHolder surfaceHolder) {
 
             }
-        };                                                //ÄNDERRUNG ALS TEST!!!
+        };                                              //ÄNDERRUNG ALS TEST!!!!
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
 

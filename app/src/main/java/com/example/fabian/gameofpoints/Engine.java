@@ -15,7 +15,7 @@ public class Engine implements SensorEventListener {
     private float minX, maxX, minY, maxY;
     private int directionChange = 44;
     private float scaleA = 100f;
-    private int msPerFrame;
+    private int msPerFrame = 30;
 
     private MasterView masterview;
     private SensorManager sensorManager;
