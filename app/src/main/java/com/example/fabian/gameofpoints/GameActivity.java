@@ -19,6 +19,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
 import android.util.LogPrinter;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -67,7 +68,22 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
-        gameview = new GameSurfaceView(this);                                                //ÄNDERRUNG ALS TEST!!!
+        gameview = new MasterView(this) {
+            @Override
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void surfaceDestroyd(SurfaceHolder surfaceHolder) {
+
+            }
+        };                                                //ÄNDERRUNG ALS TEST!!!
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
 
