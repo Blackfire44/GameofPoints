@@ -24,10 +24,6 @@ public class Engine implements SensorEventListener {
     public Engine(SensorManager sensorManager, MasterView masterview, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
         this.masterview = masterview;
         this.sensorManager = sensorManager;
-
-
-
-
         for(int i = 0; i<10; i++){
             Objekt a = new Objekt(100, 100, 20, 0, 1, 3, 2, 0xffffff00);
         }

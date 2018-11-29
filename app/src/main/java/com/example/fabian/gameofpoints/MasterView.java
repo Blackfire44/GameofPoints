@@ -3,9 +3,11 @@ package com.example.fabian.gameofpoints;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
-public class MasterView extends View{
+public abstract class MasterView extends SurfaceView{
     private final static float size = 32;
     private float scale;
     private long t;
@@ -14,8 +16,14 @@ public class MasterView extends View{
     public MasterView(Context context){
         super(context);
         scale = getResources().getDisplayMetrics().density;
+        getHolder().addCallback((SurfaceHolder.Callback) this);
     }
 
+    public abstract void surfaceCreated(SurfaceHolder surfaceHolder);
+
+    public abstract void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3);
+
+    public abstract void surfaceDestroyd(SurfaceHolder surfaceHolder);
 
     public float getBaseDimension(){
         return(scale*size);
@@ -41,6 +49,13 @@ public class MasterView extends View{
         void setTotalPoints(int totalPoints);
         void setStars( int stars);
         void setTotalStars(int totalStars);
+
+        void surfaceCreated(SurfaceHolder surfaceHolder);
+
+        void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3);
+
+        void surfaceDestroyd(SurfaceHolder surfaceHolder);
+
         float getBaseDimension();
         void setTypeface(Typeface typeface);
         int getFpS();

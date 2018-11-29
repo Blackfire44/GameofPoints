@@ -67,7 +67,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
-        gameview = new MasterView(this);
+        gameview = new GameSurfaceView(this);                                                //ÄNDERRUNG ALS TEST!!!
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
 
