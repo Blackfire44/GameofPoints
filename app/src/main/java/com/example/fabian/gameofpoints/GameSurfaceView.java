@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static java.util.concurrent.Executor.*;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder, MasterView.IGameView {
+public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
 
     private final static float size = 32;
     private float scale;
@@ -31,48 +31,26 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Maste
         getHolder().addCallback((SurfaceHolder.Callback) this);
     }
 
-    @Override
-    public void clearOpstacles() {
+    public interface IGameView{
+        void clearOpstacles();
+        void setCount(int Count);
+        void setPoints(int Points);
+        void setTotalPoints(int totalPoints);
+        void setStars( int stars);
+        void setTotalStars(int totalStars);
+
+        void surfaceCreated(SurfaceHolder surfaceHolder);
+
+        void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3);
+
+        void surfaceDestroyd(SurfaceHolder surfaceHolder);
+
+        float getBaseDimension();
+        void setTypeface(Typeface typeface);
+        int getFpS();
 
     }
 
-    @Override
-    public void setCount(int Count) {
-
-    }
-
-    @Override
-    public void setPoints(int Points) {
-
-    }
-
-    @Override
-    public void setTotalPoints(int totalPoints) {
-
-    }
-
-    @Override
-    public void setStars(int stars) {
-
-    }
-
-    @Override
-    public void setTotalStars(int totalStars) {
-
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder){
-
-    }
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3){
-        t = System.currentTimeMillis();
-    }
-    @Override
-    public void surfaceDestroyd(SurfaceHolder surfaceHolder){
-        executorService.shutdown();;
-    }
     private Runnable renderer = new Runnable() {
         @Override
         public void run() {
@@ -104,10 +82,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Maste
         return(scale*size);
     }
 
-    @Override
-    public void setTypeface(Typeface typeface) {
-
-    }
 
     protected void onDraw(Canvas canvas){
         if(t==0) t = System.currentTimeMillis();

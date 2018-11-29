@@ -24,7 +24,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private MediaPlayer music;
     private GameSurfaceView gameview;
     private Engine engine;
-    private MasterView.IGameView gameView;
+    private GameSurfaceView.IGameView gameView;
     ImageView mImageViewEmptying;
 
     @Override
@@ -51,20 +51,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
         gameview = new GameSurfaceView(this) {
-            @Override
-            public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
-
-            }
-
-            @Override
-            public void surfaceDestroyd(SurfaceHolder surfaceHolder) {
-
-            }
         };                                                //ÄNDERRUNG ALS TEST!!!
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
@@ -99,6 +86,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
     protected void onResume(){
         super.onResume();
         // music.start();
+    }
+    protected void hideView(int i){              //als Variable R.id."   " eingeben, damit es ein int ist
+        findViewById(i).setVisibility(View.GONE);
+    }
+
+    protected void showView(int i){             //als Variable R.id."   " eingeben, damit es ein int ist
+        findViewById(i).setVisibility(View.VISIBLE);
     }
 
     @Override

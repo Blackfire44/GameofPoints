@@ -66,6 +66,7 @@ public class Engine implements SensorEventListener {
         public void run() {
             moveObjects();
             //berechnung
+
         }
     };
 
