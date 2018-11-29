@@ -1,34 +1,16 @@
 package com.example.fabian.gameofpoints;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.AnimatedImageDrawable;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.provider.ContactsContract;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.ChangeImageTransform;
-import android.transition.Fade;
-import android.transition.Transition;
-import android.util.Log;
-import android.util.LogPrinter;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import static android.util.Log.*;
 
 public class GameActivity extends Activity implements View.OnClickListener{
     private int live = 1;
@@ -40,7 +22,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int world;
     private int scrollWidth;
     private MediaPlayer music;
-    private MasterView gameview;
+    private GameSurfaceView gameview;
     private Engine engine;
     private MasterView.IGameView gameView;
     ImageView mImageViewEmptying;
@@ -68,7 +50,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
-        gameview = new MasterView(this) {
+        gameview = new GameSurfaceView(this) {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
