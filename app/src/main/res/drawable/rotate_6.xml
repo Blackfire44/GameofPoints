@@ -41,4 +41,6 @@
     <item android:duration="44" android:drawable="@drawable/lava37"></item>
     <item android:duration="44" android:drawable="@drawable/lava38"></item>
     <item android:duration="44" android:drawable="@drawable/lava39"></item>
+
+
 </animation-list>

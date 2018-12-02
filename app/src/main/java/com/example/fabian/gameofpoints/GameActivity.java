@@ -112,7 +112,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 1:showstartfragment();
                 break;
-            case 2:showlevelfragment();
+            case 2:showloadfragment();
                 break;
             case 3:showsettingfragment();
                 break;
@@ -451,4 +451,5 @@ Eigene Viecher mahlen (Drehbewegung)
 Viecher symulieren
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
+random die Höhe der Planeten ändern
 */
