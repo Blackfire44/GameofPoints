@@ -23,7 +23,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int world;
     private int scrollWidth;
     private MediaPlayer music;
-    private GameSurfaceView gameview; //Mal schauen was passiert!!!!
+    private GameSurfaceView gameview;
     private Engine engine;
     private GameSurfaceView.IGameView gameView;
     ImageView mImageViewEmptying;

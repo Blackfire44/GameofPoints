@@ -4,10 +4,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.ImageView;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.microedition.khronos.opengles.GL10;
 
 public class Engine implements SensorEventListener {
     private float impactX;
@@ -16,6 +19,7 @@ public class Engine implements SensorEventListener {
     private int directionChange = 44;
     private float scaleA = 100f;
     private int msPerFrame = 30;
+    private int anzViech = 10;
 
     private GameSurfaceView gameSurfaceView;
     private SensorManager sensorManager;
@@ -66,6 +70,7 @@ public class Engine implements SensorEventListener {
         public void run() {
             moveObjects();
             //berechnung
+            //Aufruf, dass er die Viecher mahlt an einem random Ort
 
         }
     };
