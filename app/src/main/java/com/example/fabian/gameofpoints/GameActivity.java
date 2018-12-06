@@ -6,11 +6,13 @@ import android.graphics.drawable.AnimationDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements View.OnClickListener{
@@ -110,7 +112,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 1:showstartfragment();
                 break;
-            case 2:showlevelfragment();
+            case 2:showloadfragment();
                 break;
             case 3:showsettingfragment();
                 break;
@@ -140,6 +142,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.Level3).setOnClickListener(this);
         container.findViewById(R.id.Level4).setOnClickListener(this);
         container.findViewById(R.id.Level5).setOnClickListener(this);
+        container.findViewById(R.id.Level6).setOnClickListener(this);
         layout=1;
         scroll();
         startanimation();
@@ -240,6 +243,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate5);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
        // Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
 
     }
@@ -254,6 +259,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate4);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate5);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -300,6 +307,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.Level5:
+                world=5;
+                showsettingfragment();
+                break;
+            case R.id.Level6:
                 world=5;
                 showsettingfragment();
                 break;
@@ -440,4 +451,5 @@ Eigene Viecher mahlen (Drehbewegung)
 Viecher symulieren
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
+random die Höhe der Planeten ändern
 */

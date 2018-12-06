@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:duration="44" android:drawable="@drawable/lava0"></item>
+    <item android:duration="44" android:drawable="@drawable/lava1"></item>
+    <item android:duration="44" android:drawable="@drawable/lava2"></item>
+    <item android:duration="44" android:drawable="@drawable/lava3"></item>
+    <item android:duration="44" android:drawable="@drawable/lava4"></item>
+    <item android:duration="44" android:drawable="@drawable/lava5"></item>
+    <item android:duration="44" android:drawable="@drawable/lava6"></item>
+    <item android:duration="44" android:drawable="@drawable/lava7"></item>
+    <item android:duration="44" android:drawable="@drawable/lava8"></item>
+    <item android:duration="44" android:drawable="@drawable/lava9"></item>
+    <item android:duration="44" android:drawable="@drawable/lava10"></item>
+    <item android:duration="44" android:drawable="@drawable/lava11"></item>
+    <item android:duration="44" android:drawable="@drawable/lava12"></item>
+    <item android:duration="44" android:drawable="@drawable/lava13"></item>
+    <item android:duration="44" android:drawable="@drawable/lava14"></item>
+    <item android:duration="44" android:drawable="@drawable/lava15"></item>
+    <item android:duration="44" android:drawable="@drawable/lava16"></item>
+    <item android:duration="44" android:drawable="@drawable/lava17"></item>
+    <item android:duration="44" android:drawable="@drawable/lava18"></item>
+    <item android:duration="44" android:drawable="@drawable/lava19"></item>
+    <item android:duration="44" android:drawable="@drawable/lava20"></item>
+    <item android:duration="44" android:drawable="@drawable/lava21"></item>
+    <item android:duration="44" android:drawable="@drawable/lava22"></item>
+    <item android:duration="44" android:drawable="@drawable/lava23"></item>
+    <item android:duration="44" android:drawable="@drawable/lava24"></item>
+    <item android:duration="44" android:drawable="@drawable/lava25"></item>
+    <item android:duration="44" android:drawable="@drawable/lava26"></item>
+    <item android:duration="44" android:drawable="@drawable/lava27"></item>
+    <item android:duration="44" android:drawable="@drawable/lava28"></item>
+    <item android:duration="44" android:drawable="@drawable/lava29"></item>
+    <item android:duration="44" android:drawable="@drawable/lava30"></item>
+    <item android:duration="44" android:drawable="@drawable/lava31"></item>
+    <item android:duration="44" android:drawable="@drawable/lava32"></item>
+    <item android:duration="44" android:drawable="@drawable/lava33"></item>
+    <item android:duration="44" android:drawable="@drawable/lava34"></item>
+    <item android:duration="44" android:drawable="@drawable/lava35"></item>
+    <item android:duration="44" android:drawable="@drawable/lava36"></item>
+    <item android:duration="44" android:drawable="@drawable/lava37"></item>
+    <item android:duration="44" android:drawable="@drawable/lava38"></item>
+    <item android:duration="44" android:drawable="@drawable/lava39"></item>
+
+
+</animation-list>
