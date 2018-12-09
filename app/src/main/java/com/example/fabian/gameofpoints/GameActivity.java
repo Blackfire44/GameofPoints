@@ -435,8 +435,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
 /*Hintergründe von GameActivity
 Surfaceview
 Time-Counter
-Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)
-Gravity
+Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)               \/
+Gravity                                                                          ?
 Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)
 	Nach x Sternen bekommt man y
 	Sterne bringen coins
@@ -445,8 +445,8 @@ Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)
 Musik
 xml-Dateien mit Libary in GameActivity abrufen (Minigolf App)
 Eigene Viecher mahlen (Drehbewegung)
-Viecher symulieren
+Viecher simulieren
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
-random die Höhe der Planeten ändern
+random die Höhe der Planeten ändern                                              ??
 */
