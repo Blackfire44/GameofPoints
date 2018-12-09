@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import static android.util.Log.d;
 
 public class GameActivity extends Activity implements View.OnClickListener{
     private int live = 1;
@@ -27,7 +30,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private MediaPlayer music;
     private GameSurfaceView gameview;
     private Engine engine;
-    private GameSurfaceView.IGameView gameView;
+
     ImageView mImageViewEmptying;
 
     @Override
@@ -39,14 +42,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
         // startMusic();
     }
-    /*
-    public Engine(SensorManager sensorManager){
-        MasterView.IGameView gameView{
-            this.gameview = gameView;
-            ((MasterView.IGameView) this.gameview).clearOpstacles();
-            }
-        }
-    */
 
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
@@ -55,7 +50,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
         gameview = new GameSurfaceView(this) {
 
-        };                                                //ÄNDERRUNG ALS TEST!!!
+        };
         gameview.setVisibility(View.VISIBLE);
         float basedimension = gameview.getBaseDimension();
 
@@ -245,7 +240,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-       // Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
+        //Log.d("CREATION", Integer.toString(gameview.getFpS()));
+        Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
+        Log.d(getClass().getSimpleName(), "Funktioniert das?");
 
     }
 

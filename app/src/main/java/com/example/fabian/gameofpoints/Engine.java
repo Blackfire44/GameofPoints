@@ -4,10 +4,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -20,6 +23,8 @@ public class Engine implements SensorEventListener {
     private float scaleA = 100f;
     private int msPerFrame = 30;
     private int anzViech = 10;
+    private float posx,posy,vx,vy,size;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private GameSurfaceView gameSurfaceView;
     private SensorManager sensorManager;
@@ -69,11 +74,34 @@ public class Engine implements SensorEventListener {
         @Override
         public void run() {
             moveObjects();
-            //berechnung
+            //berechnung 
+            /*
+            posx += vx;
+            posy += vy;
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) gameSurfaceView.getLayoutParams();
+            params.width = Math.round(size);
+            params.height = Math.round(size);
+            params.leftMargin = Math.round(posx);
+            params.rightMargin = Math.round(posy);
+            */
+            beepForAnHour();
             //Aufruf, dass er die Viecher mahlt an einem random Ort
 
         }
     };
+
+    private void beepForAnHour() {
+        final Runnable beeper = new Runnable() {
+            public void run() {
+                System.out.println("beep"); }
+                //Log.d("CREATION", "beep");
+        };
+        final ScheduledFuture<?> beeperHandle =
+                scheduler.scheduleAtFixedRate(beeper, 10, 10, TimeUnit.SECONDS);
+        scheduler.schedule(new Runnable() {
+            public void run() { beeperHandle.cancel(true); }
+        }, 60 * 60, TimeUnit.SECONDS);
+    }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {

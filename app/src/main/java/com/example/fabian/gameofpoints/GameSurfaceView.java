@@ -31,26 +31,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         getHolder().addCallback((SurfaceHolder.Callback) this);
     }
 
-    public interface IGameView{
-        void clearOpstacles();
-        void setCount(int Count);
-        void setPoints(int Points);
-        void setTotalPoints(int totalPoints);
-        void setStars( int stars);
-        void setTotalStars(int totalStars);
-
-        void surfaceCreated(SurfaceHolder surfaceHolder);
-
-        void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3);
-
-        void surfaceDestroyd(SurfaceHolder surfaceHolder);
-
-        float getBaseDimension();
-        void setTypeface(Typeface typeface);
-        int getFpS();
-
-    }
-
     private Runnable renderer = new Runnable() {
         @Override
         public void run() {
@@ -64,7 +44,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
             finally {
                 getHolder().unlockCanvasAndPost(canvas);
             }
-            Log.d(getClass().getSimpleName(), Integer.toString(getFpS()) + " fps");
+            //Log.d(getClass().getSimpleName(), Integer.toString(getFpS()) + " fps");
         }
     };
 
@@ -82,15 +62,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         return(scale*size);
     }
 
-
-    protected void onDraw(Canvas canvas){
-        if(t==0) t = System.currentTimeMillis();
-        frames++;
-    }
     public int getFpS(){
         long delta = System.currentTimeMillis() - t;
         if(delta<1000) {
-            return 0;
+            return 10;
         }
         else{
             return (int) (frames/(delta/1000));
