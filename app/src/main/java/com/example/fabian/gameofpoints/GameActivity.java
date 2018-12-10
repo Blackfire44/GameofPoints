@@ -241,9 +241,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         //Log.d("CREATION", Integer.toString(gameview.getFpS()));
-        Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
-        Log.d(getClass().getSimpleName(), "Funktioniert das?");
-
+        //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
+        //Log.d(getClass().getSimpleName(), "Funktioniert das?");
     }
 
     private void stopanimation(){
