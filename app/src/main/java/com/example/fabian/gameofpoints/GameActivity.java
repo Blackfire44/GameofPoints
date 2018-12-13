@@ -97,7 +97,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             }
         }
         e.commit();
-            for (int stern = 1; stern < 45; stern++) {
+            for (int stern = 1; stern < 5; stern++) {
                 if(sp.getBoolean("star" + stern + world, false)==true){ //stern41 4ter Stern der 1ten Welt
                     imageStar(0x7f0700a4, stern);
                 }
@@ -119,10 +119,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void imageStar(int stern, int vier){
         mImageViewEmptying =(ImageView) findViewById(stern);
         if(vier!=4) {
-            mImageViewEmptying.setImageResource(R.drawable.objekt_0);
+            mImageViewEmptying.setImageResource(R.drawable.star1);
         }else{
-            mImageViewEmptying.setImageResource(R.drawable.objekt_0);//4er Stern
+            mImageViewEmptying.setImageResource(R.drawable.star1);//4er Stern
         }
+    }
+
+    private void showToast(){
+
     }
 
     private void startMusic(){
