@@ -35,6 +35,7 @@ public class Engine implements SensorEventListener {
         this.sensorManager = sensorManager;
         for(int i = 0; i<10; i++){
             Objekt a = new Objekt(100, 100, 20, 0, 1, 3, 2, 0xffffff00);
+            beepForAnHour();
         }
     }
 
@@ -74,7 +75,7 @@ public class Engine implements SensorEventListener {
         @Override
         public void run() {
             moveObjects();
-            //berechnung 
+            //berechnung
             /*
             posx += vx;
             posy += vy;
@@ -83,14 +84,14 @@ public class Engine implements SensorEventListener {
             params.height = Math.round(size);
             params.leftMargin = Math.round(posx);
             params.rightMargin = Math.round(posy);
-            */
+         */
             beepForAnHour();
             //Aufruf, dass er die Viecher mahlt an einem random Ort
 
         }
     };
 
-    private void beepForAnHour() {
+    public void beepForAnHour() {
         final Runnable beeper = new Runnable() {
             public void run() {
                 System.out.println("beep"); }
