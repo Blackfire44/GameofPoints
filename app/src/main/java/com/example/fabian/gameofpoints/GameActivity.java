@@ -2,6 +2,7 @@ package com.example.fabian.gameofpoints;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -25,18 +26,29 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int dontknow = 1;
     private int upgradePoints = 20;
     private int layout;
-    private int world;
+    private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
     private int scrollWidth;
     private MediaPlayer music;
     private GameSurfaceView gameview;
     private Engine engine;
 
-    ImageView mImageViewEmptying;
+    private ImageView mImageViewEmptying;
+
+    private int anzahlWelten = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        switch((int)(Math.random()*3+1)){
+            case 1:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
+                break;
+            case 2:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund2);
+                break;
+            case 3:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund3);
+                break;
+            default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
+        }
         showstartfragment();
 
 
@@ -64,6 +76,53 @@ public class GameActivity extends Activity implements View.OnClickListener{
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
 
+    }
+
+    private void endGame(){
+        prüfeStars();
+    }
+
+    private void prüfeStars() { //nur nach Levelende!!!!
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor e = sp.edit();
+        world = 1; //weg machen, nur zu Testzwecken
+        //get Time
+        int time = 15;
+        int timergrenze1 = 10;
+        //getLevel(welt).getZeitMissionen
+
+        for(int stern = 1; stern<5; stern++) {
+            if (time <= timergrenze1 && sp.getBoolean("star" + stern + world, false) == false) {
+                e.putBoolean("star" + stern + world, true);
+            }
+        }
+        e.commit();
+            for (int stern = 1; stern < 45; stern++) {
+                if(sp.getBoolean("star" + stern + world, false)==true){ //stern41 4ter Stern der 1ten Welt
+                    imageStar(0x7f0700a4, stern);
+                }
+            }
+
+    }
+
+    private void setStars(){
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        for(int welt = 1; welt<=anzahlWelten; welt++) {
+            for (int stern = 1; stern < 5; stern++) {
+                if(sp.getBoolean("star" + stern + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
+                    imageStar(0x7f0700a4, stern);
+                }
+            }
+        }
+    }
+
+    private void imageStar(int stern, int vier){
+        mImageViewEmptying =(ImageView) findViewById(stern);
+        if(vier!=4) {
+            mImageViewEmptying.setImageResource(R.drawable.objekt_0);
+        }else{
+            mImageViewEmptying.setImageResource(R.drawable.objekt_0);//4er Stern
+        }
     }
 
     private void startMusic(){
@@ -132,13 +191,15 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
-        container.findViewById(R.id.Level1).setOnClickListener(this);
-        container.findViewById(R.id.Level2).setOnClickListener(this);
-        container.findViewById(R.id.Level3).setOnClickListener(this);
-        container.findViewById(R.id.Level4).setOnClickListener(this);
-        container.findViewById(R.id.Level5).setOnClickListener(this);
-        container.findViewById(R.id.Level6).setOnClickListener(this);
+        container.findViewById(R.id.rotate1).setOnClickListener(this);
+        container.findViewById(R.id.rotate2).setOnClickListener(this);
+        container.findViewById(R.id.rotate3).setOnClickListener(this);
+        container.findViewById(R.id.rotate4).setOnClickListener(this);
+        container.findViewById(R.id.rotate5).setOnClickListener(this);
+        container.findViewById(R.id.rotate6).setOnClickListener(this);
+        container.findViewById(R.id.star41).setOnClickListener(this);
         layout=1;
+        setStars();
         scroll();
         startanimation();
         //Log.d("CREATION", "Hallo Welt!");
@@ -286,29 +347,33 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 outoflevel();
                 showstartfragment();
                 break;
-            case R.id.Level1:
+            case R.id.rotate1:
                 world=1;
                 showsettingfragment();
                 break;
-            case R.id.Level2:
+            case R.id.rotate2:
                 world=2;
                 showsettingfragment();
                 break;
-            case R.id.Level3:
+            case R.id.rotate3:
                 world=3;
                 showsettingfragment();
                 break;
-            case R.id.Level4:
+            case R.id.rotate4:
                 world=4;
                 showsettingfragment();
                 break;
-            case R.id.Level5:
+            case R.id.rotate5:
                 world=5;
                 showsettingfragment();
                 break;
-            case R.id.Level6:
+            case R.id.rotate6:
                 world=5;
                 showsettingfragment();
+                break;
+            case R.id.star41:
+                prüfeStars();
+                //toast zur Erklärung der Mission
                 break;
             case R.id.zuruekSettings:
                 showloadfragment();

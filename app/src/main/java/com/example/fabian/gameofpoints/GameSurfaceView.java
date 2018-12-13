@@ -53,7 +53,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
             t = System.currentTimeMillis();
             frames++;
         }
-        BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.sterne);
+        BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.hintergrund1);
         sterneField.setBounds(0,0,sterne.getBitmap().getWidth(), sterne.getBitmap().getHeight());
         //canvas.drawBitmap(sterne.getBitmap(), sterneField, canvas.getClipBounds(), paintBitmap);
 
