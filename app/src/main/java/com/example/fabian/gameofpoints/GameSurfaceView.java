@@ -28,7 +28,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
     public GameSurfaceView (Context context){
         super(context);
         scale = getResources().getDisplayMetrics().density;
-        getHolder().addCallback((SurfaceHolder.Callback) this);
+        //getHolder().addCallback((SurfaceHolder.Callback) this);
     }
 
     private Runnable renderer = new Runnable() {
