@@ -104,7 +104,7 @@
                             android:src="@drawable/star" />
 
                         <ImageView
-                            android:id="@+id/star12"
+                            android:id="@+id/star21"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_weight="1"
@@ -263,5 +263,4 @@
 
         </HorizontalScrollView>
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

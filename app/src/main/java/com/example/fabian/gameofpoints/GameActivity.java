@@ -1,21 +1,30 @@
 package com.example.fabian.gameofpoints;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.util.Log.d;
 
@@ -40,6 +49,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        löscheShared();
+
         switch((int)(Math.random()*3+1)){
             case 1:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
                 break;
@@ -88,18 +100,19 @@ public class GameActivity extends Activity implements View.OnClickListener{
         world = 1; //weg machen, nur zu Testzwecken
         //get Time
         int time = 15;
-        int timergrenze1 = 10;
+        int timergrenze = 30;
         //getLevel(welt).getZeitMissionen
 
         for(int stern = 1; stern<5; stern++) {
-            if (time <= timergrenze1 && sp.getBoolean("star" + stern + world, false) == false) {
+            if (time <= timergrenze && sp.getBoolean("star" + stern + world, false) == false) {
                 e.putBoolean("star" + stern + world, true);
             }
+            timergrenze-=10;
         }
         e.commit();
-            for (int stern = 1; stern < 5; stern++) {
-                if(sp.getBoolean("star" + stern + world, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(0x7f0700a4, stern);
+            for (int rubin = 1; rubin < 5; rubin++) {
+                if(sp.getBoolean("star" + rubin + world, false)==true){ //stern41 4ter Stern der 1ten Welt
+                    imageStar(0x7f0700a3+rubin, rubin);
                 }
             }
 
@@ -108,16 +121,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setStars(){
         SharedPreferences sp = getPreferences(MODE_PRIVATE);
         for(int welt = 1; welt<=anzahlWelten; welt++) {
-            for (int stern = 1; stern < 5; stern++) {
-                if(sp.getBoolean("star" + stern + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(0x7f0700a4, stern);
+            for (int rubin = 1; rubin < 5; rubin++) {
+                if(sp.getBoolean("star" + rubin + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
+                    imageStar(0x7f0700a3+rubin, rubin);
                 }
             }
         }
     }
 
-    private void imageStar(int stern, int vier){
-        mImageViewEmptying =(ImageView) findViewById(stern);
+    private void imageStar(int rubin, int vier){
+        mImageViewEmptying =(ImageView) findViewById(rubin);
         if(vier!=4) {
             mImageViewEmptying.setImageResource(R.drawable.star1);
         }else{
@@ -125,8 +138,27 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void showToast(){
+    private void löscheShared(){ //noch entfernen beim Start
+        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        sp.edit().clear().commit();
+    }
 
+
+    private void showDialog(){
+        CustomDialog customDialog = new CustomDialog(this, "Special Medal:", "Use just 10 Upgradepoints to win this match.");
+    }
+
+    private void showToast(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        /*Toast toast = new Toast(this);
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextColor(getResources().getColor(R.color.black));
+        textView.setTextSize(40);
+        toast.setView(textView);
+        toast.show();*/
     }
 
     private void startMusic(){
@@ -201,6 +233,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.rotate4).setOnClickListener(this);
         container.findViewById(R.id.rotate5).setOnClickListener(this);
         container.findViewById(R.id.rotate6).setOnClickListener(this);
+        container.findViewById(R.id.star11).setOnClickListener(this);
+        container.findViewById(R.id.star21).setOnClickListener(this);
+        container.findViewById(R.id.star31).setOnClickListener(this);
         container.findViewById(R.id.star41).setOnClickListener(this);
         layout=1;
         setStars();
@@ -375,9 +410,18 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 world=5;
                 showsettingfragment();
                 break;
+            case R.id.star11:
+                showToast("try to finish within 0 seconds");
+                break;
+            case R.id.star21:
+                showToast("try to finish within 10 seconds");
+                break;
+            case R.id.star31:
+                showToast("try to finish within 20 seconds");
+                break;
             case R.id.star41:
                 prüfeStars();
-                //toast zur Erklärung der Mission
+                showDialog();
                 break;
             case R.id.zuruekSettings:
                 showloadfragment();
