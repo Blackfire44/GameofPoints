@@ -35,7 +35,7 @@ public class Engine implements SensorEventListener {
         this.sensorManager = sensorManager;
         for(int i = 0; i<10; i++){
             Objekt a = new Objekt(100, 100, 20, 0, 1, 3, 2, 0xffffff00);
-            beepForAnHour();
+            repaintAction();
         }
     }
 
@@ -85,13 +85,13 @@ public class Engine implements SensorEventListener {
             params.leftMargin = Math.round(posx);
             params.rightMargin = Math.round(posy);
          */
-            beepForAnHour();
+            repaintAction();
             //Aufruf, dass er die Viecher mahlt an einem random Ort
 
         }
     };
 
-    public void beepForAnHour() {
+    public void repaintAction() {
         final Runnable beeper = new Runnable() {
             public void run() {
                 System.out.println("beep"); }
@@ -101,7 +101,7 @@ public class Engine implements SensorEventListener {
                 scheduler.scheduleAtFixedRate(beeper, 10, 10, TimeUnit.SECONDS);
         scheduler.schedule(new Runnable() {
             public void run() { beeperHandle.cancel(true); }
-        }, 60 * 60, TimeUnit.SECONDS);
+        }, 60 * 60, TimeUnit.SECONDS); //alle X Milisekunden aufgerufen; ruft Funktion auf, die alles Zeichnet
     }
 
     @Override
