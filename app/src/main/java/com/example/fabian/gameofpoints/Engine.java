@@ -91,14 +91,16 @@ public class Engine implements SensorEventListener {
         }
     };
 
+
     public void repaintAction() {
+        int fps = gameSurfaceView.getFpS();
         final Runnable beeper = new Runnable() {
             public void run() {
                 System.out.println("beep"); }
                 //Log.d("CREATION", "beep");
         };
         final ScheduledFuture<?> beeperHandle =
-                scheduler.scheduleAtFixedRate(beeper, 10, 10, TimeUnit.SECONDS);
+                scheduler.scheduleAtFixedRate(beeper, fps, fps, TimeUnit.SECONDS);
         scheduler.schedule(new Runnable() {
             public void run() { beeperHandle.cancel(true); }
         }, 60 * 60, TimeUnit.SECONDS); //alle X Milisekunden aufgerufen; ruft Funktion auf, die alles Zeichnet
