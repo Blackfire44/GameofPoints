@@ -15,6 +15,11 @@
 
     <string name="Planetanzeige">Planet:</string>
     <string name="Counter">Counter</string>
+
+    <string name="navigationitem1">item1</string>
+    <string name="navigationitem2">item2</string>
+    <string name="navigationitem3">item3</string>
+
     <string name="picture">picture</string>
     <string name="String">String</string>
 </resources>

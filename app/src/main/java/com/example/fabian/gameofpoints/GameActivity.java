@@ -42,6 +42,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private Engine engine;
 
     private ImageView mImageViewEmptying;
+    SharedPreferences sp;
+    SharedPreferences.Editor e;
+    CustomDialog customDialog;
 
     private int anzahlWelten = 1;
 
@@ -95,35 +98,35 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void prüfeStars() { //nur nach Levelende!!!!
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
+        sp = getPreferences(MODE_PRIVATE);
+        e = sp.edit();
         world = 1; //weg machen, nur zu Testzwecken
         //get Time
         int time = 15;
         int timergrenze = 30;
         //getLevel(welt).getZeitMissionen
 
-        for(int stern = 1; stern<5; stern++) {
+        for(int stern = 0; stern<4; stern++) {
             if (time <= timergrenze && sp.getBoolean("star" + stern + world, false) == false) {
                 e.putBoolean("star" + stern + world, true);
             }
             timergrenze-=10;
         }
         e.commit();
-            for (int rubin = 1; rubin < 5; rubin++) {
+            for (int rubin = 0; rubin < 4; rubin++) {
                 if(sp.getBoolean("star" + rubin + world, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(0x7f0700a3+rubin, rubin);
+                    imageStar(R.id.star11+rubin, rubin);
                 }
             }
 
     }
 
     private void setStars(){
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        sp = getPreferences(MODE_PRIVATE);
         for(int welt = 1; welt<=anzahlWelten; welt++) {
-            for (int rubin = 1; rubin < 5; rubin++) {
+            for (int rubin = 0; rubin < 4; rubin++) {
                 if(sp.getBoolean("star" + rubin + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(0x7f0700a3+rubin, rubin);
+                    imageStar(R.id.star11+rubin, rubin);
                 }
             }
         }
@@ -139,13 +142,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void löscheShared(){ //noch entfernen beim Start
-        SharedPreferences sp = getPreferences(MODE_PRIVATE);
+        sp = getPreferences(MODE_PRIVATE);
         sp.edit().clear().commit();
     }
 
 
     private void showDialog(){
-        CustomDialog customDialog = new CustomDialog(this, "Special Medal:", "Use just 10 Upgradepoints to win this match.");
+        customDialog = new CustomDialog(this, "Special Medal:", "Use just 10 Upgradepoints to win this match.");
     }
 
     private void showToast(String text){
