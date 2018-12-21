@@ -4,16 +4,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import javax.microedition.khronos.opengles.GL10;
 
 public class Engine implements SensorEventListener {
     private float impactX;
@@ -74,8 +70,6 @@ public class Engine implements SensorEventListener {
     private Runnable runnable = new Runnable(){
         @Override
         public void run() {
-            moveObjects();
-            //berechnung
             /*
             posx += vx;
             posy += vy;
@@ -93,17 +87,23 @@ public class Engine implements SensorEventListener {
 
 
     public void repaintAction() {
-        int fps = gameSurfaceView.getFpS();
+        int fps = 3;
         final Runnable beeper = new Runnable() {
             public void run() {
-                System.out.println("beep"); }
-                //Log.d("CREATION", "beep");
+                //int zähler = 0;
+                System.out.println("beep"); //+ zähler); DAS WIRD NICHT GESTOPPT; WENN APP NICHTMEHR IM VORDERGRUND IST ODER SO!!! MUSS NOOCH GEÄNDERT WERDEN!!!!!
+                //ähler++;
+                moveObjects(); // stimmt die Methode?´bzw. reicht die?
+            } //AUFRUFE Für Doku: 21.12.18 ca. eine Stunde für das zu verwirklichen und mich in Programm eunzulesen, das Fabi geschrieben hat. APK wollte mal wieder nicht auf mein Handy. Ich weiß noch nicht so ganz in wie fern ich die Liste einbinden solll
         };
         final ScheduledFuture<?> beeperHandle =
-                scheduler.scheduleAtFixedRate(beeper, fps, fps, TimeUnit.SECONDS);
+                //scheduler.scheduleAtFixedRate(beeper, gameSurfaceView.getFpS(), gameSurfaceView.getFpS(), TimeUnit.MILLISECONDS);
+                scheduler.scheduleAtFixedRate(beeper, 1, 1, TimeUnit.MILLISECONDS);
         scheduler.schedule(new Runnable() {
-            public void run() { beeperHandle.cancel(true); }
-        }, 60 * 60, TimeUnit.SECONDS); //alle X Milisekunden aufgerufen; ruft Funktion auf, die alles Zeichnet
+            public void run() {
+                beeperHandle.cancel(true);
+            }
+        }, 1, TimeUnit.HOURS); //länge derausführung
     }
 
     @Override

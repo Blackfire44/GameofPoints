@@ -548,7 +548,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 }
 /*Hintergründe von GameActivity
-Surfaceview
 Time-Counter
 Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)               \/
 Gravity                                                                          ?
