@@ -89,10 +89,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
-        engine.start();
+        //loadBackground();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
+        for(int i  = 0; i<10; i++){
+            int x = container.getHeight();
+            int y = container.getWidth();
+            engine.createObjekt(x,y,1,2,3,4,5);
 
+        engine.start();
+
+    }
     }
 
     private void endGame(){
@@ -237,7 +244,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         setStars();
         scroll();
         startanimation();
-        //Log.d("CREATION", "Hallo Welt!");
         //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS())+ " fps");
     }
 
@@ -315,6 +321,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             default:
                 fillTextView(id, "Irgendwas anderes!");
+        }
+    }
+    private void loadBackground(){
+        switch (world){
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+
         }
     }
 
