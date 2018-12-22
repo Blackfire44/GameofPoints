@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,22 +148,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
         sp.edit().clear().commit();
     }
 
-
-    private void showDialog(){
-        customDialog = new CustomDialog(this, "Special Medal:", "Use just 10 Upgradepoints to win this match.");
+    public void setDiagramm(int stamm1, int stammgesamt){
+        ProgressBar progress = findViewById(R.id.progressBar4);
+        progress.setProgress((int)stamm1/stammgesamt*100);
     }
 
-    private void showToast(String text){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-        /*Toast toast = new Toast(this);
-        toast.setGravity(Gravity.CENTER,0,0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        TextView textView = new TextView(this);
-        textView.setText(text);
-        textView.setTextColor(getResources().getColor(R.color.black));
-        textView.setTextSize(40);
-        toast.setView(textView);
-        toast.show();*/
+    private void showDialog(String titel, String text){
+        customDialog = new CustomDialog(this, titel, text);
     }
 
     private void startMusic(){
@@ -414,17 +406,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.star11:
-                showToast("try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
             case R.id.star21:
-                showToast("try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
             case R.id.star31:
-                showToast("try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
             case R.id.star41:
                 prüfeStars();
-                showDialog();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.zuruekSettings:
                 showloadfragment();

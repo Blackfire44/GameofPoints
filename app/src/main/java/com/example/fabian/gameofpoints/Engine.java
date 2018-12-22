@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class Engine implements SensorEventListener {
     private float impactX;
     private float impactY;
+    private int stamm1;// lieb == 1
+    private int stamm2;// böse == 2
     private float minX, maxX, minY, maxY;
     private int directionChange = 44;
     private float scaleA = 100f;
@@ -62,6 +64,7 @@ public class Engine implements SensorEventListener {
 
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+        aktualisiereDiagramm();
     }
 
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
@@ -241,6 +244,8 @@ public class Engine implements SensorEventListener {
     }
 
     private void aktualisiereDiagramm(){
+        stamm1 = 0;
+        stamm2 = 0;
         for(int i = 0; i<Objekt.getListe().size(); i++) {
             switch(Objekt.getObjekt(i).getMembership()) {
                 case 1:stamm1++;
@@ -249,7 +254,7 @@ public class Engine implements SensorEventListener {
                     break;
                 default:
             }
-           gameActivity.setDiagramm();
+           gameActivity.setDiagramm(stamm1, stamm2+stamm1);
         }
     }
 }
