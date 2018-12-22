@@ -159,7 +159,7 @@ public class Engine implements SensorEventListener {
                                                         }
                                                     }
                                                 }
-                                                aktualisiereDiagramm();
+                                                //aktualisiereDiagramm();
                                             }
                                             Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
                                             if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){
@@ -239,7 +239,7 @@ public class Engine implements SensorEventListener {
         Objekt.getObjekt(i).setDirection(Objekt.getObjekt(i).getDirection()-180);//das und das untendrunter mit setObjektToBorder ersetzen!!
         touched = 1;
     }
-
+/*
     private void aktualisiereDiagramm(){
         for(int i = 0; i<Objekt.getListe().size(); i++) {
             switch(Objekt.getObjekt(i).getMembership()) {
@@ -251,5 +251,5 @@ public class Engine implements SensorEventListener {
             }
            gameActivity.setDiagramm();
         }
-    }
+    }*/
 }
