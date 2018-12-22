@@ -1,9 +1,15 @@
 package com.example.fabian.gameofpoints;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.text.style.UpdateLayout;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -44,20 +50,11 @@ public class Engine implements SensorEventListener {
     public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
         Runnable runnable = new Runnable(){
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void run() {
-            /*
-            posx += vx;
-            posy += vy;
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) gameSurfaceView.getLayoutParams();
-            params.width = Math.round(size);
-            params.height = Math.round(size);
-            params.leftMargin = Math.round(posx);
-            params.rightMargin = Math.round(posy);
-            */
-                repaintAction();
-                //Aufruf, dass er die Viecher mahlt an einem random Ort
-
+               moveObjects();
+               repaintAction();
             }
         };
         service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
@@ -83,24 +80,18 @@ public class Engine implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void repaintAction() {
-        int fps = 3;
-        final Runnable beeper = new Runnable() {
-            public void run() {
-                //int zähler = 0;
-                System.out.println("beep"); //+ zähler); DAS WIRD NICHT GESTOPPT; WENN APP NICHTMEHR IM VORDERGRUND IST ODER SO!!! MUSS NOOCH GEÄNDERT WERDEN!!!!!
-                //ähler++;
-                moveObjects(); // stimmt die Methode?´bzw. reicht die?
-            } //AUFRUFE Für Doku: 21.12.18 ca. eine Stunde für das zu verwirklichen und mich in Programm eunzulesen, das Fabi geschrieben hat. APK wollte mal wieder nicht auf mein Handy. Ich weiß noch nicht so ganz in wie fern ich die Liste einbinden solll
-        };
-        final ScheduledFuture<?> beeperHandle =
-                //scheduler.scheduleAtFixedRate(beeper, gameSurfaceView.getFpS(), gameSurfaceView.getFpS(), TimeUnit.MILLISECONDS);
-                scheduler.scheduleAtFixedRate(beeper, 1, 1, TimeUnit.MILLISECONDS);
-        scheduler.schedule(new Runnable() {
-            public void run() {
-                beeperHandle.cancel(true);
-            }
-        }, 1, TimeUnit.HOURS); //länge derausführung
+        System.out.println("beep");
+        for(int i = 0; i<Objekt.getListe().size();i++){
+            float a = (float) Objekt.getObjekt(i).getX();
+            float b = (float) Objekt.getObjekt(i).getY();
+            float c = (float) Objekt.getObjekt(i).getR();
+            gameSurfaceView.draw(a, b, c);
+
+            //  draw.drawCircle(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), Objekt.getObjekt(i).getR(), paint);
+       }
+
     }
 
     @Override
@@ -162,7 +153,7 @@ public class Engine implements SensorEventListener {
                                                         }
                                                     }
                                                 }
-                                                //aktualisiereDiagramm();
+                                                aktualisiereDiagramm();
                                             }
                                             Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
                                             if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){

@@ -6,6 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -31,23 +34,33 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         //getHolder().addCallback((SurfaceHolder.Callback) this);
 
     }
-
+/*
     private Runnable renderer = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void run() {
-            Canvas canvas = null;
-            try {
-                canvas = getHolder().lockCanvas();
-                synchronized (getHolder()){
-                    doDraw(canvas);
-                }
-            }
-            finally {
-                getHolder().unlockCanvasAndPost(canvas);
-            }
+
+
             //Log.d(getClass().getSimpleName(), Integer.toString(getFpS()) + " fps");
         }
     };
+    */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected void draw(float f, float a, float g){
+        Canvas canvas = null;
+        try {
+            canvas = getHolder().lockCanvas();
+            synchronized (getHolder()){
+                doDraw(canvas);
+            }
+        }
+        finally {
+            getHolder().unlockCanvasAndPost(canvas);
+        }
+        Drawable drawable = getResources().getDrawable(R.drawable.krokotest, null);
+        drawable.setBounds(2,3,4,5);
+        drawable.draw(canvas);
+    }
 
     protected void doDraw(Canvas canvas){
         if(t == 0){
