@@ -239,10 +239,10 @@ public class Engine implements SensorEventListener {
     }
 
     private void setObjektToBorder(int i){
-        Objekt.getObjekt(i).setDirection(Objekt.getObjekt(i).getDirection()-180);//das und das untendrunter mit setObjektToBorder ersetzen!!
+        Objekt.getObjekt(i).setDirection(Objekt.getObjekt(i).getDirection()-180);
         touched = 1;
     }
-/*
+
     private void aktualisiereDiagramm(){
         stamm1 = 0;
         stamm2 = 0;
@@ -256,5 +256,5 @@ public class Engine implements SensorEventListener {
             }
            gameActivity.setDiagramm(stamm1, stamm2+stamm1);
         }
-    }*/
+    }
 }
