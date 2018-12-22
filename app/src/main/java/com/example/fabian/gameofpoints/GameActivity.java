@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
@@ -82,12 +83,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
         float basedimension = gameview.getBaseDimension();
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
-        engine.setRegion(basedimension/2, basedimension/2, container.getWidth()-basedimension/2, container.getHeight()-basedimension/2); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
+        engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
         /*for(int i = 0; i<Objekt.liste.size(); i++){                aus Xml Datei die Anfangslage holen.
             Objekt.liste.get(i).setX(x);
             Objekt.liste.get(i).setY(y);
         }*/
-        //engine.start();
+        engine.start();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=4;
 
@@ -383,7 +384,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         switch(view.getId()){
             case R.id.start:
                 showloadfragment();
-                //showlevelfragment();
                 break;
             case R.id.zuruekLevel:
                 outoflevel();
