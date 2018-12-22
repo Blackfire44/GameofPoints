@@ -37,10 +37,28 @@ public class Engine implements SensorEventListener {
 
     public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+            /*
+            posx += vx;
+            posy += vy;
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) gameSurfaceView.getLayoutParams();
+            params.width = Math.round(size);
+            params.height = Math.round(size);
+            params.leftMargin = Math.round(posx);
+            params.rightMargin = Math.round(posy);
+         */
+                repaintAction();
+                //Aufruf, dass er die Viecher mahlt an einem random Ort
+
+            }
+        };
         service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
 
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     public void createObjekt(int x, int y, int r, int membership, int live, int attack, int speed, int color){
@@ -67,23 +85,6 @@ public class Engine implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    private Runnable runnable = new Runnable(){
-        @Override
-        public void run() {
-            /*
-            posx += vx;
-            posy += vy;
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) gameSurfaceView.getLayoutParams();
-            params.width = Math.round(size);
-            params.height = Math.round(size);
-            params.leftMargin = Math.round(posx);
-            params.rightMargin = Math.round(posy);
-         */
-            repaintAction();
-            //Aufruf, dass er die Viecher mahlt an einem random Ort
-
-        }
-    };
 
 
     public void repaintAction() {
@@ -98,7 +99,7 @@ public class Engine implements SensorEventListener {
         };
         final ScheduledFuture<?> beeperHandle =
                 //scheduler.scheduleAtFixedRate(beeper, gameSurfaceView.getFpS(), gameSurfaceView.getFpS(), TimeUnit.MILLISECONDS);
-                scheduler.scheduleAtFixedRate(beeper, 1, 1, TimeUnit.MILLISECONDS);
+                scheduler.scheduleAtFixedRate(beeper, 3, 3, TimeUnit.MILLISECONDS);
         scheduler.schedule(new Runnable() {
             public void run() {
                 beeperHandle.cancel(true);

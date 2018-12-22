@@ -38,23 +38,6 @@
             android:background="@android:color/holo_green_light"
             android:spinnerMode="dropdown" />
 
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom|start"
-            android:progress="100"
-            android:progressDrawable="@drawable/progress_full"/>
-
-        <ProgressBar
-            android:id="@+id/progressBar3"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom|start"
-            android:progress="40"
-            android:progressDrawable="@drawable/progress_state"/>
 
         <ProgressBar
             android:id="@+id/progressBar4"
