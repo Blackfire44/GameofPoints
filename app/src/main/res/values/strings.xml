@@ -2,7 +2,7 @@
     <string name="app_name">Game of Points</string>
     <string name="Start">Start</string>
     <string name="Wappen">Blackbird / Duck / Wolf</string>
-    <string name="Planetenauswahl">Weltenauswahl:</string>
+    <string name="Planetenauswahl">Level selection:</string>
 
     <string name="Level1">Trius:</string>
     <string name="Level2">Quatron:</string>
@@ -22,4 +22,13 @@
 
     <string name="picture">picture</string>
     <string name="String">String</string>
+    <string name="shop">Shop:</string>
+    <string name="character">Characters:</string>
+    <string name="Credits">Credits:</string>
+    <string name="Settings">Settings:</string>
+    <string name="Developers">Developers</string>
+    <string name="Nano">Naomi Remmlinger</string>
+    <string name="Fabi">Fabian Walliser</string>
+    <string name="Music">Music</string>
+    <string name="Tommi">Thomas Lohfink</string>
 </resources>

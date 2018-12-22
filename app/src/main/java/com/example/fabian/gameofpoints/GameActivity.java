@@ -91,13 +91,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }*/
         //loadBackground();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        layout=4;
+        layout=7;
         for(int i = 0; i <10; i++ ){
             int x = (int) (Math.random() * (container.getHeight()));
             int y = (int) (Math.random() * (container.getWidth()));
             engine.createObjekt(x, y, 1, 2, 3, 4, 5);
         }
-        engine.repaintAction();
+        //engine.repaintAction();
         engine.start();
 
     }
