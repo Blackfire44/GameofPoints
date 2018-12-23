@@ -71,6 +71,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         // startMusic();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
@@ -229,7 +231,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void showlevel1fragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level1, null));
+        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level1
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -241,7 +243,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void showlevel2fragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level2, null));
+        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level2
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -280,7 +282,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void showlevel4fragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level4, null));
+        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level4
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
@@ -292,7 +294,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void showlevel5fragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level5, null));
+        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level5
+
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
@@ -502,7 +505,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showloadfragment();
                 break;
             case R.id.startgame:
-                startGame();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startGame();
+                }
                 break;
             case R.id.zuruekLevel2:
                 showloadfragment();

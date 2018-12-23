@@ -1,5 +1,7 @@
 package com.example.fabian.gameofpoints;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -50,7 +52,6 @@ public class Engine implements SensorEventListener {
     public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
         Runnable runnable = new Runnable(){
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void run() {
                moveObjects();
@@ -80,14 +81,20 @@ public class Engine implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void repaintAction() {
         System.out.println("beep");
-        for(int i = 0; i<Objekt.getListe().size();i++){
+        for(int i = 0; i<10;i++){ //Objekt.getListe().size()
+            System.out.print("beep2");
             float a = (float) Objekt.getObjekt(i).getX();
             float b = (float) Objekt.getObjekt(i).getY();
             float c = (float) Objekt.getObjekt(i).getR();
-            gameSurfaceView.draw(a, b, c);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                gameSurfaceView.draw(a,b,c);
+                System.out.print("IRGENDWIE FUNKTIONIERT ES; ABER DANN WIEDER DOCH NCIHT :(!!!!");
+            }
+            else{
+                System.out.print("DAA DRAW ZEUG IST DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF!!!");
+            }
 
             //  draw.drawCircle(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), Objekt.getObjekt(i).getR(), paint);
        }
