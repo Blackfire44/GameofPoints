@@ -8,13 +8,13 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginBottom="56dp">
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/charakter"
@@ -39,7 +39,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/leiste"
+        android:background="@drawable/gradient_leiste"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 

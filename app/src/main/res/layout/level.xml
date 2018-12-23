@@ -290,49 +290,85 @@
 
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/gradient_leiste"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
+
     <ImageView
         android:id="@+id/item1"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/itemdeath2"
-        android:layout_marginLeft="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/item2"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/itemdeath3"
-        android:layout_marginLeft="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/items3"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/itemdeath1"
-        android:layout_marginLeft="164dp"
+        android:id="@+id/item3"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/itemlive1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/items4"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:id="@+id/item4"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/itemdeath3"
-        android:layout_marginLeft="246dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/items5"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:id="@+id/item5"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/itemdeath3"
-        android:layout_marginLeft="328dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

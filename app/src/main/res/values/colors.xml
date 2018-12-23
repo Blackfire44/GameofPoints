@@ -3,12 +3,15 @@
     <color name="mainText">#ffffff</color>
     <color name="black">#000000</color>
     <color name="greyblue">#528B8B</color>
-    <color name="leiste">#380B61</color>
 
     <color name="start1">#8340E5</color>
     <color name="start2">#27025D</color>
     <color name="startback1">#000000</color>
     <color name="startback2">#FFFFFF</color>
+
+    <color name="leistestart">#2F0B3A</color>
+    <color name="leistecenter">#088A85</color>
+    <color name="leisteend">#2F0B3A</color>
 
     <color name="darklila">#270c2c</color>
     <color name="darkred">#9B221F</color>

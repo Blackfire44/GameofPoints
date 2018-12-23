@@ -13,7 +13,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomNavigationView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
@@ -184,13 +183,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         super.onResume();
         // music.start();
     }
-    protected void hideView(int i){              //als Variable R.id."   " eingeben, damit es ein int ist
-        findViewById(i).setVisibility(View.GONE);
-    }
-
-    protected void showView(int i){             //als Variable R.id."   " eingeben, damit es ein int ist
-        findViewById(i).setVisibility(View.VISIBLE);
-    }
 
     @Override
     protected void onDestroy() {
@@ -206,14 +198,23 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 1:showstartfragment();
                 break;
-            case 2:showloadfragment();
+            case 2:showstartfragment();
                 break;
-            case 3:showsettingfragment();
+            case 3:showstartfragment();
                 break;
-            case 4: showsettingfragment();//showstopfragment();
+            case 4:showstartfragment();
                 break;
-            case 5://Gameover
+            case 5:showstartfragment();
                 break;
+            case 6:showloadfragment();
+                break;
+            case 7:showsettingfragment();//showstopfragment();
+                break;
+            case 8://Weiter spielen
+                break;
+            case 9:showloadfragment();//Game Over
+                break;
+            default:showstartfragment();
         }
     }
 
@@ -225,7 +226,31 @@ public class GameActivity extends Activity implements View.OnClickListener{
         layout=0;
     }
 
-    private void showlevelfragment(){
+    private void showlevel1fragment(){
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
+        container.addView(getLayoutInflater().inflate(R.layout.level1, null));
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.item2).setOnClickListener(this);
+        container.findViewById(R.id.item3).setOnClickListener(this);
+        container.findViewById(R.id.item4).setOnClickListener(this);
+        container.findViewById(R.id.item5).setOnClickListener(this);
+        layout=1;
+    }
+
+    private void showlevel2fragment(){
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
+        container.addView(getLayoutInflater().inflate(R.layout.level2, null));
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item3).setOnClickListener(this);
+        container.findViewById(R.id.item4).setOnClickListener(this);
+        container.findViewById(R.id.item5).setOnClickListener(this);
+        layout=1;
+    }
+
+    private void showlevel3fragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
@@ -241,17 +266,53 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.star21).setOnClickListener(this);
         container.findViewById(R.id.star31).setOnClickListener(this);
         container.findViewById(R.id.star41).setOnClickListener(this);
-        layout=1;
+        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item2).setOnClickListener(this);
+        container.findViewById(R.id.item4).setOnClickListener(this);
+        container.findViewById(R.id.item5).setOnClickListener(this);
+        layout=3;
         setStars();
         scroll();
         startanimation();
         //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS())+ " fps");
     }
 
+    private void showlevel4fragment(){
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
+        container.addView(getLayoutInflater().inflate(R.layout.level4, null));
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item2).setOnClickListener(this);
+        container.findViewById(R.id.item3).setOnClickListener(this);
+        container.findViewById(R.id.item5).setOnClickListener(this);
+        layout=4;
+    }
+
+    private void showlevel5fragment(){
+        ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
+        container.addView(getLayoutInflater().inflate(R.layout.level5, null));
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item2).setOnClickListener(this);
+        container.findViewById(R.id.item3).setOnClickListener(this);
+        container.findViewById(R.id.item4).setOnClickListener(this);
+        layout=5;
+    }
+
     private void showloadfragment(){
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.load, null));
+        if(layout!=1&&layout!=2&&layout!=4&&layout!=5){
+            container.findViewById(R.id.item1).setVisibility(View.INVISIBLE);
+            container.findViewById(R.id.item2).setVisibility(View.INVISIBLE);
+            container.findViewById(R.id.item3).setVisibility(View.INVISIBLE);
+            container.findViewById(R.id.item4).setVisibility(View.INVISIBLE);
+            container.findViewById(R.id.item5).setVisibility(View.INVISIBLE);
+            container.findViewById(R.id.leiste).setVisibility(View.INVISIBLE);
+        }
         load();
     }
 
@@ -271,7 +332,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.l4).setOnClickListener(this);
         container.findViewById(R.id.r4).setOnClickListener(this);
         container.findViewById(R.id.startgame).setOnClickListener(this);
-        layout=2;
+        layout=6;
         setPlanet(R.id.planetsettings);
         update();
     }
@@ -282,21 +343,21 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
         container.findViewById(R.id.backtotitle).setOnClickListener(this);
         container.findViewById(R.id.Continue).setOnClickListener(this);
-        layout=3;
+        layout=8;
     }
 
     private void showgameoverfragment(){
         //stopgame();
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.gameover, null));
-        layout=5;
+        layout=9;
     }
 
     private void load(){
         findViewById(R.id.container).post(new Runnable() {
             public void run() {
                 long l = System.currentTimeMillis();
-                showlevelfragment();
+                showlevel3fragment();
                 try {
                     l = System.currentTimeMillis()-l;
                     if(l<1500){
@@ -395,7 +456,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showloadfragment();
                 break;
             case R.id.zuruekLevel:
-                outoflevel();
+                if(layout!=1&&layout!=2&&layout!=4&&layout!=5) {
+                    outoflevel();
+                }
                 showstartfragment();
                 break;
             case R.id.rotate1:
@@ -468,7 +531,22 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case R.id.r4:
                 proofSettings(42);
                 break;
-            default: showlevelfragment();
+            case R.id.item1:
+                showlevel1fragment();
+                break;
+            case R.id.item2:
+                showlevel2fragment();
+                break;
+            case R.id.item3:
+                showloadfragment();
+                break;
+            case R.id.item4:
+                showlevel4fragment();
+                break;
+            case R.id.item5:
+                showlevel5fragment();
+                break;
+            default:
         }
     }
 

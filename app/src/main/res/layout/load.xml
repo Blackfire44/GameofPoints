@@ -30,7 +30,7 @@
         android:id="@+id/leiste"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/leiste"
+        android:background="@drawable/gradient_leiste"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 
