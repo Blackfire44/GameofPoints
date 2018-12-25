@@ -21,6 +21,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,6 +38,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int upgradePoints = 20;
     private int layout;
     private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
+    private int player = 0;
     private int scrollWidth;
     private MediaPlayer music;
     private GameSurfaceView gameview;
@@ -137,7 +139,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         for(int welt = 1; welt<=anzahlWelten; welt++) {
             for (int rubin = 0; rubin < 4; rubin++) {
                 if(sp.getBoolean("star" + rubin + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(R.id.star11+rubin, rubin);
+                    imageStar(R.id.star11+rubin, rubin);//noch mit welt verrechnen
                 }
             }
         }
@@ -229,9 +231,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void showlevel1fragment(){
+        if(layout==3){
+            outoflevel();
+        }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level1
+        container.addView(getLayoutInflater().inflate(R.layout.level1, null)); //level1
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -241,14 +246,19 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void showlevel2fragment(){
+        if(layout==3){
+            outoflevel();
+        }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level2
+        container.addView(getLayoutInflater().inflate(R.layout.level2, null)); //level2
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
+        container.findViewById(R.id.leftplayer).setOnClickListener(this);
+        container.findViewById(R.id.rightplayer).setOnClickListener(this);
         layout=1;
     }
 
@@ -258,6 +268,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item2).setOnClickListener(this);
+        container.findViewById(R.id.item4).setOnClickListener(this);
+        container.findViewById(R.id.item5).setOnClickListener(this);
         container.findViewById(R.id.rotate1).setOnClickListener(this);
         container.findViewById(R.id.rotate2).setOnClickListener(this);
         container.findViewById(R.id.rotate3).setOnClickListener(this);
@@ -268,10 +282,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.star21).setOnClickListener(this);
         container.findViewById(R.id.star31).setOnClickListener(this);
         container.findViewById(R.id.star41).setOnClickListener(this);
-        container.findViewById(R.id.item1).setOnClickListener(this);
-        container.findViewById(R.id.item2).setOnClickListener(this);
-        container.findViewById(R.id.item4).setOnClickListener(this);
-        container.findViewById(R.id.item5).setOnClickListener(this);
+
         layout=3;
         setStars();
         scroll();
@@ -280,9 +291,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void showlevel4fragment(){
+        if(layout==3){
+            outoflevel();
+        }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level4
+        container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
@@ -292,10 +306,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void showlevel5fragment(){
+        if(layout==3){
+            outoflevel();
+        }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level, null)); //level5
-
+        container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5
         container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
@@ -388,14 +404,21 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 fillTextView(id, "Irgendwas anderes!");
         }
     }
-    private void loadBackground(){
-        switch (world){
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
 
+    private void changePlayer(boolean direction){
+        mImageViewEmptying = findViewById(R.id.player2);
+        if(direction){
+            mImageViewEmptying.setImageResource(R.drawable.lava0);
+            mImageViewEmptying = findViewById(R.id.player1);
+            mImageViewEmptying.setImageResource(R.drawable.lava0);
+            mImageViewEmptying = findViewById(R.id.player3);
+            mImageViewEmptying.setImageResource(R.drawable.lava0);
+        }else{
+            mImageViewEmptying.setImageResource(R.drawable.krokotest);
+            mImageViewEmptying = findViewById(R.id.player1);
+            mImageViewEmptying.setImageResource(R.drawable.krokotest);
+            mImageViewEmptying = findViewById(R.id.player3);
+            mImageViewEmptying.setImageResource(R.drawable.krokotest);
         }
     }
 
@@ -438,7 +461,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void update(){
-        if(layout==2) {
+        if(layout==6) {
             fillTextView(R.id.t1, "Live: "+live);
             fillTextView(R.id.t2, "Attack: "+attack);
             fillTextView(R.id.t3, "Speed: "+speed);
@@ -550,6 +573,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.item5:
                 showlevel5fragment();
+                break;
+            case R.id.leftplayer:
+                changePlayer(false);
+                break;
+            case R.id.rightplayer:
+                changePlayer(true);
                 break;
             default:
         }
