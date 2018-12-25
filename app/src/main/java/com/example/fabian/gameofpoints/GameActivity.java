@@ -28,6 +28,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static android.util.Log.d;
 
 public class GameActivity extends Activity implements View.OnClickListener{
@@ -50,6 +53,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     CustomDialog customDialog;
 
     private int anzahlWelten = 1;
+    private int[] playerliste = {R.drawable.krokotest, R.drawable.lava0,R.drawable.p3b1,R.drawable.schnee0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -405,21 +409,23 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void changePlayer(boolean direction){
-        mImageViewEmptying = findViewById(R.id.player2);
-        if(direction){
-            mImageViewEmptying.setImageResource(R.drawable.lava0);
-            mImageViewEmptying = findViewById(R.id.player1);
-            mImageViewEmptying.setImageResource(R.drawable.lava0);
-            mImageViewEmptying = findViewById(R.id.player3);
-            mImageViewEmptying.setImageResource(R.drawable.lava0);
+    private void setPlayer(){
+        if(player==0){
+            setImage(R.id.player1, playerliste.length-1);
         }else{
-            mImageViewEmptying.setImageResource(R.drawable.krokotest);
-            mImageViewEmptying = findViewById(R.id.player1);
-            mImageViewEmptying.setImageResource(R.drawable.krokotest);
-            mImageViewEmptying = findViewById(R.id.player3);
-            mImageViewEmptying.setImageResource(R.drawable.krokotest);
+            setImage(R.id.player1, player-1);
         }
+        setImage(R.id.player2, player);
+        if(player==playerliste.length-1){
+            setImage(R.id.player3, 0);
+        }else{
+            setImage(R.id.player3, player+1);
+        }
+    }
+
+    private void setImage(int id, int number){
+        mImageViewEmptying = findViewById(id);
+        mImageViewEmptying.setImageResource(playerliste[number]);
     }
 
     private void outoflevel(){
@@ -575,10 +581,18 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showlevel5fragment();
                 break;
             case R.id.leftplayer:
-                changePlayer(false);
+                player--;
+                if(player<0){
+                    player = playerliste.length-1;
+                }
+                setPlayer();
                 break;
             case R.id.rightplayer:
-                changePlayer(true);
+                player++;
+                if(player>=playerliste.length){
+                    player = 0;
+                }
+                setPlayer();
                 break;
             default:
         }
