@@ -19,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="@string/String"
+            android:textColor="@color/mainText"
+            tools:text="@string/String" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,45 +77,71 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView9"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="TextView" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/String"
+                    android:textColor="@color/mainText"
+                    tools:text="@string/String" />
+
+                <ImageView
+                    android:id="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/picture"
+                    android:src="@android:drawable/btn_star_big_on" />
+            </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/zuruekLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/picture"
+        android:src="@android:drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/charakter"
+            android:id="@+id/coins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/character"
-            android:textColor="@color/mainText" />
+            android:textColor="@color/mainText"
+            tools:text="@string/String" />
 
         <ImageView
-            android:id="@+id/zuruekLevel"
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:layout_weight="1"
-            android:contentDescription="@string/picture"
-            android:src="@android:drawable/ic_delete" />
-
-    </FrameLayout>
+            android:layout_gravity="center_vertical"
+            android:src="@android:drawable/btn_star_big_on" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -131,6 +159,7 @@
         android:layout_marginLeft="6dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/navigationitem3"
         android:src="@drawable/itemdeath2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,6 +174,7 @@
         android:layout_height="44dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/picture"
         android:src="@drawable/itemlive3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,6 +189,7 @@
         android:layout_height="44dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/picture"
         android:src="@drawable/itemdeath1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -172,6 +203,7 @@
         android:layout_height="44dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/picture"
         android:src="@drawable/itemdeath3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -188,6 +220,7 @@
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:layout_marginTop="6dp"
+        android:contentDescription="@string/picture"
         android:src="@drawable/itemdeath3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

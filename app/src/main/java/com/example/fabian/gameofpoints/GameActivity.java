@@ -43,17 +43,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
     private int player = 0;
     private int scrollWidth;
-    private MediaPlayer music;
-    private GameSurfaceView gameview;
-    private Engine engine;
+    private int anzahlWelten = 1;
+    private int[] playerliste = {R.drawable.krokotest, 100, R.drawable.lava0, 200, R.drawable.p3b1, 300, R.drawable.schnee0, 400};
 
     private ImageView mImageViewEmptying;
-    SharedPreferences sp;
-    SharedPreferences.Editor e;
-    CustomDialog customDialog;
-
-    private int anzahlWelten = 1;
-    private int[] playerliste = {R.drawable.krokotest, R.drawable.lava0,R.drawable.p3b1,R.drawable.schnee0};
+    private TextView tv;
+    private GameSurfaceView gameview;
+    private Engine engine;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor e;
+    private CustomDialog customDialog;
+    private MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,11 +150,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void imageStar(int rubin, int vier){
-        mImageViewEmptying =(ImageView) findViewById(rubin);
         if(vier!=4) {
-            mImageViewEmptying.setImageResource(R.drawable.star1);
+            setImage(rubin, vier);
         }else{
-            mImageViewEmptying.setImageResource(R.drawable.star1);//4er Stern
+            setImage(rubin, vier);//4er Stern
         }
     }
 
@@ -263,7 +262,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.item5).setOnClickListener(this);
         container.findViewById(R.id.leftplayer).setOnClickListener(this);
         container.findViewById(R.id.rightplayer).setOnClickListener(this);
-        layout=1;
+        layout=2;
+        update();
     }
 
     private void showlevel3fragment(){
@@ -286,7 +286,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.star21).setOnClickListener(this);
         container.findViewById(R.id.star31).setOnClickListener(this);
         container.findViewById(R.id.star41).setOnClickListener(this);
-
         layout=3;
         setStars();
         scroll();
@@ -411,16 +410,42 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     private void setPlayer(){
         if(player==0){
-            setImage(R.id.player1, playerliste.length-1);
+            setImage(R.id.player1, playerliste.length-2);
         }else{
-            setImage(R.id.player1, player-1);
+            setImage(R.id.player1, player-2);
         }
         setImage(R.id.player2, player);
-        if(player==playerliste.length-1){
+        if(player==playerliste.length-2){
             setImage(R.id.player3, 0);
         }else{
-            setImage(R.id.player3, player+1);
+            setImage(R.id.player3, player+2);
         }
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("player"+player/2, false)==false){
+            fillTextView(R.id.cost, String.valueOf(playerliste[player+1]));
+            setImage(R.id.money, R.drawable.star1);//zu coins ändern
+        }else{
+            fillTextView(R.id.cost, "gekauft");
+            setImage(R.id.money, R.drawable.star);//zu haken ändern
+        }
+    }
+
+    private void setBought(){
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getInt("coins", 0) - playerliste[player+1]>=0){
+            e = sp.edit();
+            e.putInt("coins", sp.getInt("coins", 0)-playerliste[player+1]);
+            e.putBoolean("player"+player/2, true);
+            e.commit();
+            updateCoins();
+        }else{
+            showDialog("", "You have not enough coins");
+        }
+    }
+
+    private void updateCoins(){
+        sp = getPreferences(MODE_PRIVATE);
+        fillTextView(R.id.coins, "Charakter:   "+sp.getInt("coins", 0));
     }
 
     private void setImage(int id, int number){
@@ -467,17 +492,23 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void update(){
-        if(layout==6) {
-            fillTextView(R.id.t1, "Live: "+live);
-            fillTextView(R.id.t2, "Attack: "+attack);
-            fillTextView(R.id.t3, "Speed: "+speed);
-            fillTextView(R.id.t4, "dont know: "+dontknow);
-            fillTextView(R.id.upgradePoints, "Upgradepoints left: "+upgradePoints);
+        switch(layout) {
+            case 2:
+                setPlayer();
+                updateCoins();
+                break;
+            case 6:
+                fillTextView(R.id.t1, "Live: " + live);
+                fillTextView(R.id.t2, "Attack: " + attack);
+                fillTextView(R.id.t3, "Speed: " + speed);
+                fillTextView(R.id.t4, "dont know: " + dontknow);
+                fillTextView(R.id.upgradePoints, "Upgradepoints left: " + upgradePoints);
+                break;
         }
     }
 
     private void fillTextView(int id, String text){
-        TextView tv = (TextView)findViewById(id);
+        tv = (TextView)findViewById(id);
         tv.setText(text);
     }
 
@@ -581,18 +612,21 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showlevel5fragment();
                 break;
             case R.id.leftplayer:
-                player--;
+                player-=2;
                 if(player<0){
-                    player = playerliste.length-1;
+                    player = playerliste.length-2;
                 }
                 setPlayer();
                 break;
             case R.id.rightplayer:
-                player++;
-                if(player>=playerliste.length){
+                player+=2;
+                if(player>playerliste.length+2){
                     player = 0;
                 }
                 setPlayer();
+                break;
+            case R.id.buy:
+                setBought();
                 break;
             default:
         }
