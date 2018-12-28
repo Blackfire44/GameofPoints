@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:duration="45" android:drawable="@drawable/sonne0"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne1"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne2"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne3"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne4"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne5"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne6"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne7"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne8"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne9"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne10"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne11"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne12"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne13"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne14"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne15"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne16"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne17"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne18"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne19"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne20"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne21"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne22"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne23"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne24"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne25"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne26"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne27"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne28"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne29"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne30"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne31"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne32"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne33"></item>
+    <item android:duration="45" android:drawable="@drawable/sonne34"></item>
+
+
+</animation-list>

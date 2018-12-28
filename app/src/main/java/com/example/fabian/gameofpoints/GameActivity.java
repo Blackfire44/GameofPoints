@@ -43,8 +43,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
     private int player = 0;
     private int scrollWidth;
-    private int anzahlWelten = 1;
-    private int[] playerliste = {R.drawable.krokotest, 100, R.drawable.lava0, 200, R.drawable.p3b1, 300, R.drawable.schnee0, 400};
+    private int anzahlWelten = 7;
+    private int playerselection;
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300};
+    private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14"};
 
     private ImageView mImageViewEmptying;
     private TextView tv;
@@ -61,6 +63,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_game);
 
         löscheShared();
+        pluscoins(1000);
+
+
+        setPlayer1();
 
         switch((int)(Math.random()*3+1)){
             case 1:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
@@ -75,6 +81,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
 
         // startMusic();
+    }
+
+    private void setPlayer1(){
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("player0", false)==false&&player==0) {
+            e=sp.edit();
+            e.putBoolean("player0", true);
+            e.commit();
+        }
+        playerselect();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -117,43 +133,41 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void prüfeStars() { //nur nach Levelende!!!!
         sp = getPreferences(MODE_PRIVATE);
         e = sp.edit();
-        world = 1; //weg machen, nur zu Testzwecken
         //get Time
         int time = 15;
         int timergrenze = 30;
         //getLevel(welt).getZeitMissionen
 
-        for(int stern = 0; stern<4; stern++) {
-            if (time <= timergrenze && sp.getBoolean("star" + stern + world, false) == false) {
-                e.putBoolean("star" + stern + world, true);
+        for(int stern = 1; stern<5; stern++) {
+            if (time<=timergrenze && sp.getBoolean("star" + world + stern, false) == false) {
+                e.putBoolean("star" + world + stern, true);
             }
             timergrenze-=10;
         }
         e.commit();
             for (int rubin = 0; rubin < 4; rubin++) {
-                if(sp.getBoolean("star" + rubin + world, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(R.id.star11+rubin, rubin);
+                if(sp.getBoolean("star" + world + (rubin+1), false)==true){ //stern41 4ter Stern der 1ten Welt
+                    imageStar(R.id.star11+4*(world-1)+rubin, rubin);
                 }
             }
-
     }
 
     private void setStars(){
         sp = getPreferences(MODE_PRIVATE);
-        for(int welt = 1; welt<=anzahlWelten; welt++) {
-            for (int rubin = 0; rubin < 4; rubin++) {
-                if(sp.getBoolean("star" + rubin + welt, false)==true){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(R.id.star11+rubin, rubin);//noch mit welt verrechnen
+        for(int welt = 0; welt<anzahlWelten; welt++) {
+            for (int rubin = 1; rubin < 5; rubin++) {
+                if(sp.getBoolean("star" + welt + rubin, false)==true){ //stern14 4ter Stern der 1ten Welt
+                    imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
                 }
             }
         }
     }
 
     private void imageStar(int rubin, int vier){
-        if(vier!=4) {
-            setImage(rubin, vier);
+        if(vier!=3) {
+            setImage(rubin, R.drawable.star1);
         }else{
-            setImage(rubin, vier);//4er Stern
+            setImage(rubin, R.drawable.star1);//4er Stern
         }
     }
 
@@ -262,7 +276,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.item5).setOnClickListener(this);
         container.findViewById(R.id.leftplayer).setOnClickListener(this);
         container.findViewById(R.id.rightplayer).setOnClickListener(this);
+        container.findViewById(R.id.buy).setOnClickListener(this);
         layout=2;
+        player=playerselection;
         update();
     }
 
@@ -282,10 +298,34 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.rotate4).setOnClickListener(this);
         container.findViewById(R.id.rotate5).setOnClickListener(this);
         container.findViewById(R.id.rotate6).setOnClickListener(this);
+        container.findViewById(R.id.rotate7).setOnClickListener(this);
         container.findViewById(R.id.star11).setOnClickListener(this);
+        container.findViewById(R.id.star12).setOnClickListener(this);
+        container.findViewById(R.id.star13).setOnClickListener(this);
+        container.findViewById(R.id.star14).setOnClickListener(this);
         container.findViewById(R.id.star21).setOnClickListener(this);
+        container.findViewById(R.id.star22).setOnClickListener(this);
+        container.findViewById(R.id.star23).setOnClickListener(this);
+        container.findViewById(R.id.star24).setOnClickListener(this);
         container.findViewById(R.id.star31).setOnClickListener(this);
-        container.findViewById(R.id.star41).setOnClickListener(this);
+        container.findViewById(R.id.star32).setOnClickListener(this);
+        container.findViewById(R.id.star33).setOnClickListener(this);
+        container.findViewById(R.id.star34).setOnClickListener(this);container.findViewById(R.id.star41).setOnClickListener(this);
+        container.findViewById(R.id.star42).setOnClickListener(this);
+        container.findViewById(R.id.star43).setOnClickListener(this);
+        container.findViewById(R.id.star44).setOnClickListener(this);
+        container.findViewById(R.id.star51).setOnClickListener(this);
+        container.findViewById(R.id.star52).setOnClickListener(this);
+        container.findViewById(R.id.star53).setOnClickListener(this);
+        container.findViewById(R.id.star54).setOnClickListener(this);
+        container.findViewById(R.id.star61).setOnClickListener(this);
+        container.findViewById(R.id.star62).setOnClickListener(this);
+        container.findViewById(R.id.star63).setOnClickListener(this);
+        container.findViewById(R.id.star64).setOnClickListener(this);
+        container.findViewById(R.id.star71).setOnClickListener(this);
+        container.findViewById(R.id.star72).setOnClickListener(this);
+        container.findViewById(R.id.star73).setOnClickListener(this);
+        container.findViewById(R.id.star74).setOnClickListener(this);
         layout=3;
         setStars();
         scroll();
@@ -356,6 +396,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.startgame).setOnClickListener(this);
         layout=6;
         setPlanet(R.id.planetsettings);
+        setPlayerImage(R.id.player, playerselection);
         update();
     }
 
@@ -410,37 +451,81 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     private void setPlayer(){
         if(player==0){
-            setImage(R.id.player1, playerliste.length-2);
+            setPlayerImage(R.id.player1, playerliste.length-2);
+            updatebackground(R.id.player1, playerliste.length-2);
         }else{
-            setImage(R.id.player1, player-2);
+            setPlayerImage(R.id.player1, player-2);
+            updatebackground(R.id.player1, player-2);
         }
-        setImage(R.id.player2, player);
+        setPlayerImage(R.id.player2, player);
+        updatebackground(R.id.player2, player);
         if(player==playerliste.length-2){
-            setImage(R.id.player3, 0);
+            setPlayerImage(R.id.player3, 0);
+            updatebackground(R.id.player3, 0);
         }else{
-            setImage(R.id.player3, player+2);
+            setPlayerImage(R.id.player3, player+2);
+            updatebackground(R.id.player3, player+2);
         }
+        updateBought();
+        fillTextView(R.id.playername, playernamen[player/2]);
+    }
+
+    private void updateBought(){
         sp = getPreferences(MODE_PRIVATE);
         if(sp.getBoolean("player"+player/2, false)==false){
-            fillTextView(R.id.cost, String.valueOf(playerliste[player+1]));
-            setImage(R.id.money, R.drawable.star1);//zu coins ändern
+            fillTextView(R.id.cost, ""+playerliste[player+1]);
+            setImage(R.id.money, R.drawable.coin);
         }else{
-            fillTextView(R.id.cost, "gekauft");
-            setImage(R.id.money, R.drawable.star);//zu haken ändern
+            if(player==playerselection){
+                fillTextView(R.id.cost, "selected");
+            }else{
+                fillTextView(R.id.cost, "bought");
+            }
+            setImage(R.id.money, R.drawable.haken);
+        }
+    }
+
+    private void playerselect(){
+        if(sp.getBoolean("player"+player/2, false)){
+            playerselection = player;
+        }
+    }
+
+    private void updatebackground(int id, int choose){
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("player"+choose/2, false)){
+            if(choose==playerselection){
+                setBackground(id, R.drawable.playerbackground3);
+            }else{
+                setBackground(id, R.drawable.playerbackground2);
+            }
+        }else{
+            setBackground(id, R.drawable.playerbackground1);
         }
     }
 
     private void setBought(){
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getInt("coins", 0) - playerliste[player+1]>=0){
-            e = sp.edit();
-            e.putInt("coins", sp.getInt("coins", 0)-playerliste[player+1]);
-            e.putBoolean("player"+player/2, true);
-            e.commit();
-            updateCoins();
-        }else{
-            showDialog("", "You have not enough coins");
+        if(sp.getBoolean("player"+player/2, false)==false) {
+            if (sp.getInt("coins", 0) - playerliste[player + 1] >= 0) {
+                e = sp.edit();
+                e.putInt("coins", sp.getInt("coins", 0) - playerliste[player + 1]);
+                e.putBoolean("player" + player / 2, true);
+                e.commit();
+                updateCoins();
+            } else {
+                showDialog("", "You have not enough coins to buy "+playernamen[player/2]);
+            }
         }
+        playerselect();
+        setPlayer();
+    }
+
+    private void pluscoins(int bonus){
+        sp = getPreferences(MODE_PRIVATE);
+        e = sp.edit();
+        e.putInt("coins", sp.getInt("coins", 0)+bonus);
+        e.commit();
     }
 
     private void updateCoins(){
@@ -448,9 +533,18 @@ public class GameActivity extends Activity implements View.OnClickListener{
         fillTextView(R.id.coins, "Charakter:   "+sp.getInt("coins", 0));
     }
 
-    private void setImage(int id, int number){
+    private void setPlayerImage(int id, int number){
+        setImage(id, playerliste[number]);
+    }
+
+    private void setImage(int id, int recource){
         mImageViewEmptying = findViewById(id);
-        mImageViewEmptying.setImageResource(playerliste[number]);
+        mImageViewEmptying.setImageResource(recource);
+    }
+
+    private void setBackground(int id, int recource){
+        mImageViewEmptying = findViewById(id);
+        mImageViewEmptying.setBackgroundResource(recource);
     }
 
     private void outoflevel(){
@@ -471,6 +565,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         //Log.d("CREATION", Integer.toString(gameview.getFpS()));
         //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
         //Log.d(getClass().getSimpleName(), "Funktioniert das?");
@@ -488,6 +584,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate5);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -545,19 +643,108 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showsettingfragment();
                 break;
             case R.id.rotate6:
-                world=5;
+                world=6;
+                showsettingfragment();
+                break;
+            case R.id.rotate7:
+                world=7;
                 showsettingfragment();
                 break;
             case R.id.star11:
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star21:
+            case R.id.star12:
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star31:
+            case R.id.star13:
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
+            case R.id.star14:
+                world = 1; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
+            case R.id.star21:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star22:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star23:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star24:
+                world = 2; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
+            case R.id.star31:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star32:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star33:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star34:
+                world = 3; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
             case R.id.star41:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star42:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star43:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star44:
+                world = 4; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
+            case R.id.star51:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star52:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star53:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star54:
+                world = 5; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
+            case R.id.star61:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star62:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star63:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star64:
+                world = 6; //weg machen, nur zu Testzwecken
+                prüfeStars();
+                showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
+                break;
+            case R.id.star71:
+                showDialog("Rubin 1:","try to finish within 0 seconds");
+                break;
+            case R.id.star72:
+                showDialog("Rubin 2:","try to finish within 10 seconds");
+                break;
+            case R.id.star73:
+                showDialog("Rubin 3:","try to finish within 20 seconds");
+                break;
+            case R.id.star74:
+                world = 7; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
@@ -620,7 +807,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.rightplayer:
                 player+=2;
-                if(player>playerliste.length+2){
+                if(player>playerliste.length-2){
                     player = 0;
                 }
                 setPlayer();
@@ -628,7 +815,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case R.id.buy:
                 setBought();
                 break;
-            default:
+            default:showDialog("Error", "Wrong OnClickListener!");
         }
     }
 

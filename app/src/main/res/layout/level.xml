@@ -82,9 +82,8 @@
                 <!-- Von hier aus die nächsten Level kopieren-->
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -117,6 +116,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
@@ -124,9 +126,71 @@
                             android:id="@+id/star11"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_marginLeft="100dp"
                             android:layout_weight="1"
                             android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star12"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star13"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star14"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="58dp"
+                        android:layout_marginRight="58dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level2name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingBottom="58dp"
+                            android:text="@string/Level2"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate2"
+                            android:layout_width="284dp"
+                            android:layout_height="284dp"
+                            android:background="@drawable/rotate_2"
+                            android:contentDescription="@string/picture" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="58dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/star21"
@@ -136,6 +200,68 @@
                             android:src="@drawable/star" />
 
                         <ImageView
+                            android:id="@+id/star22"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star23"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star24"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="75dp"
+                        android:layout_marginRight="75dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level3name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingBottom="75dp"
+                            android:text="@string/Level3"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate3"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            android:background="@drawable/rotate_3"
+                            android:contentDescription="@string/picture" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="75dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
                             android:id="@+id/star31"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -143,148 +269,304 @@
                             android:src="@drawable/star" />
 
                         <ImageView
+                            android:id="@+id/star32"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star33"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star34"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginRight="80dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level6name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingBottom="80dp"
+                            android:text="@string/Level6"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate6"
+                            android:layout_width="240dp"
+                            android:layout_height="240dp"
+                            android:background="@drawable/rotate_6"
+                            android:contentDescription="@string/picture" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
                             android:id="@+id/star41"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_marginRight="100dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star42"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star43"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star44"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginRight="110dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level4name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingBottom="110dp"
+                            android:text="@string/Level4"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate4"
+                            android:layout_width="180dp"
+                            android:layout_height="180dp"
+                            android:background="@drawable/rotate_4"
+                            android:contentDescription="@string/picture" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="110dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/star51"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star52"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star53"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star54"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginRight="70dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level5name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:paddingBottom="70dp"
+                            android:text="@string/Level5"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate5"
+                            android:layout_width="260dp"
+                            android:layout_height="260dp"
+                            android:background="@drawable/rotate_5"
+                            android:contentDescription="@string/picture" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/star61"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star62"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star63"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star64"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/level7name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/Level7"
+                            android:textColor="@color/mainText" />
+
+                        <ImageView
+                            android:id="@+id/rotate7"
+                            android:layout_width="400dp"
+                            android:layout_height="400dp"
+                            android:background="@drawable/rotate_7"
+                            android:contentDescription="@string/picture" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/star71"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star72"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star73"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/star" />
+
+                        <ImageView
+                            android:id="@+id/star74"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_weight="1"
                             android:src="@drawable/star" />
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <!-- bis hier. Dann: LayoutId ändern, text ändern, src des Bildes ändern-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="58dp"
-                    android:layout_marginRight="58dp"
-                    android:layout_marginBottom="58dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/level2name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="58dp"
-                        android:text="@string/Level2"
-                        android:textColor="@color/mainText" />
-
-                    <ImageView
-                        android:id="@+id/rotate2"
-                        android:layout_width="284dp"
-                        android:layout_height="284dp"
-                        android:background="@drawable/rotate_2"
-                        android:contentDescription="@string/picture" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginRight="75dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/level3name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="75dp"
-                        android:text="@string/Level3"
-                        android:textColor="@color/mainText" />
-
-                    <ImageView
-                        android:id="@+id/rotate3"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:background="@drawable/rotate_3"
-                        android:contentDescription="@string/picture" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="110dp"
-                    android:layout_marginRight="110dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/level4name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="110dp"
-                        android:text="@string/Level4"
-                        android:textColor="@color/mainText" />
-
-                    <ImageView
-                        android:id="@+id/rotate4"
-                        android:layout_width="180dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/rotate_4"
-                        android:contentDescription="@string/picture" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginRight="70dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/level5name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="70dp"
-                        android:text="@string/Level5"
-                        android:textColor="@color/mainText" />
-
-                    <ImageView
-                        android:id="@+id/rotate5"
-                        android:layout_width="260dp"
-                        android:layout_height="260dp"
-                        android:background="@drawable/rotate_5"
-                        android:contentDescription="@string/picture" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginRight="80dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/level6name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:paddingBottom="80dp"
-                        android:text="@string/Level6"
-                        android:textColor="@color/mainText" />
-
-                    <ImageView
-                        android:id="@+id/rotate6"
-                        android:layout_width="240dp"
-                        android:layout_height="240dp"
-                        android:background="@drawable/rotate_6"
-                        android:contentDescription="@string/picture" />
-
-                </LinearLayout>
             </LinearLayout>
-
 
         </HorizontalScrollView>
 

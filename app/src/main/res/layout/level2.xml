@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/playername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -39,6 +39,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
+                    android:background="@drawable/playerbackground1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
@@ -50,9 +51,10 @@
 
             <ImageView
                 android:id="@+id/player2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_weight="1"
+                android:background="@drawable/playerbackground1"
                 android:src="@drawable/krokotest" />
 
             <FrameLayout
@@ -66,6 +68,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
+                    android:background="@drawable/playerbackground1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
@@ -85,7 +88,7 @@
             <LinearLayout
                 android:id="@+id/buy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
@@ -101,12 +104,13 @@
 
                 <ImageView
                     android:id="@+id/money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
                     android:layout_weight="1"
                     android:contentDescription="@string/picture"
-                    android:src="@android:drawable/btn_star_big_on" />
+                    android:src="@drawable/coin" />
             </LinearLayout>
         </FrameLayout>
 
@@ -123,24 +127,28 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/coins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:textColor="@color/mainText"
             tools:text="@string/String" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:src="@android:drawable/btn_star_big_on" />
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:src="@drawable/coin" />
     </LinearLayout>
 
     <FrameLayout
