@@ -45,7 +45,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         }
     };
     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void draw(float f, float a, float g){
         Canvas canvas = null;
         try {
@@ -57,7 +56,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         finally {
             getHolder().unlockCanvasAndPost(canvas);
         }
-        Drawable drawable = getResources().getDrawable(R.drawable.krokotest, null);
+        Drawable drawable = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            drawable = getResources().getDrawable(R.drawable.krokotest, null);
+        }
         drawable.setBounds(2,3,4,5);
         drawable.draw(canvas);
     }

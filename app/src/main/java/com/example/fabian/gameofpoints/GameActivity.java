@@ -269,7 +269,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level2, null)); //level2
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -617,7 +616,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 showloadfragment();
                 break;
             case R.id.zuruekLevel:
-                if(layout!=1&&layout!=2&&layout!=4&&layout!=5) {
+                if(layout!=1&&layout!=4&&layout!=5) {
                     outoflevel();
                 }
                 showstartfragment();
@@ -758,6 +757,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.zuruekLevel2:
                 showloadfragment();
+                engine.stop();
                 break;
             case R.id.l1:
                 proofSettings(11);

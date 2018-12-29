@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.style.UpdateLayout;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -51,11 +52,27 @@ public class Engine implements SensorEventListener {
 
     public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
-        Runnable runnable = new Runnable(){
+        final Runnable runnable = new Runnable(){
             @Override
             public void run() {
                moveObjects();
                repaintAction();
+               /*long startTime = System.nanoTime();
+                while (running){
+                    if(!gameSurfaceView.getSurface().isValid())continue;
+                    Canvas canvas = null;
+                            try{
+                        canvas = gameSurfaceView.lockCanvas(null);
+                        synchronized (bg){
+                        canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
+                        }
+                            } finally {
+                                if(canvas != null) {
+                                    gameSurfaceView.unlockCanvasAndPost(canvas);
+                                }
+                            }
+
+                } */
             }
         };
         service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
@@ -82,21 +99,20 @@ public class Engine implements SensorEventListener {
     }
 
     public void repaintAction() {
-        System.out.println("beep");
-        for(int i = 0; i<10;i++){ //Objekt.getListe().size()
-            System.out.print("beep2");
+        for(int i = 0; i<Objekt.getListe().size();i++){
+            gameSurfaceView.getSurface();
+
             float a = (float) Objekt.getObjekt(i).getX();
             float b = (float) Objekt.getObjekt(i).getY();
-            float c = (float) Objekt.getObjekt(i).getR();
+            float c = (float) Objekt.getObjekt(i).getR();/*
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                gameSurfaceView.draw(a,b,c);
-                System.out.print("IRGENDWIE FUNKTIONIERT ES; ABER DANN WIEDER DOCH NCIHT :(!!!!");
+                //gameSurfaceView.draw(a,b,c);
             }
             else{
-                System.out.print("DAA DRAW ZEUG IST DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF!!!");
+                Log.d("CREATION", "DAS DRAW ZEUG IST DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF!!!");
             }
-
-            //  draw.drawCircle(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), Objekt.getObjekt(i).getR(), paint);
+*/
+            gameSurfaceView.draw(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), Objekt.getObjekt(i).getR());
        }
 
     }
