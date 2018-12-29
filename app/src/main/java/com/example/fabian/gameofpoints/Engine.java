@@ -100,19 +100,9 @@ public class Engine implements SensorEventListener {
 
     public void repaintAction() {
         for(int i = 0; i<Objekt.getListe().size();i++){
-            gameSurfaceView.getSurface();
-
-            float a = (float) Objekt.getObjekt(i).getX();
-            float b = (float) Objekt.getObjekt(i).getY();
-            float c = (float) Objekt.getObjekt(i).getR();/*
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //gameSurfaceView.draw(a,b,c);
-            }
-            else{
-                Log.d("CREATION", "DAS DRAW ZEUG IST DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOF!!!");
-            }
-*/
-            gameSurfaceView.draw(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), Objekt.getObjekt(i).getR());
+            gameSurfaceView.draw((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), (int) Objekt.getObjekt(i).getR(), Objekt.getObjekt(i).getColor(), Objekt.getObjekt(i).getAttack(), (int) Objekt.getObjekt(i).getLife());
+            Log.d("CREATION", "HIII");
+            System.out.println("Hallo?!");
        }
 
     }

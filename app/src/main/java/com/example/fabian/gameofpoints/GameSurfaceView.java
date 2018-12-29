@@ -45,33 +45,44 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         }
     };
     */
-    protected void draw(float f, float a, float g){
+    protected void draw(int objektX, int objektY, int objektR, int objektC, int objektL, int objektA){
         Canvas canvas = null;
+        Log.d("CREATION", "TEST");
         try {
             canvas = getHolder().lockCanvas();
             synchronized (getHolder()){
+                Log.d("CREATION", "TEST-1");
                 doDraw(canvas);
             }
         }
-        finally {
+        catch (Exception e){
             getHolder().unlockCanvasAndPost(canvas);
         }
+        Log.d("CREATION", "TEST0");
         Drawable drawable = null;
+        Log.d("CREATION", "TEST1");
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             drawable = getResources().getDrawable(R.drawable.krokotest, null);
         }
-        drawable.setBounds(2,3,4,5);
+        Log.d("CREATION", "TEST2");
+        drawable.setBounds(objektX, objektY, objektR, objektC);
+        Log.d("CREATION", "TEST3");
         drawable.draw(canvas);
+        Log.d("CREATION", "TEST4");
     }
 
     protected void doDraw(Canvas canvas){
         if(t == 0){
             t = System.currentTimeMillis();
             frames++;
-        }
+            Log.d("CREATION", "TEST-0.75");
+        }/*
         BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.hintergrund1);
+        Log.d("CREATION", "TEST-0.5");
         sterneField.setBounds(0,0,sterne.getBitmap().getWidth(), sterne.getBitmap().getHeight());
-        //canvas.drawBitmap(sterne.getBitmap(), sterneField, canvas.getClipBounds(), paintBitmap);
+        canvas.drawBitmap(sterne.getBitmap(), sterneField, canvas.getClipBounds(), paintBitmap);
+        Log.d("CREATION", "TEST-0.25");
+        */
 
     }
     public float getBaseDimension(){
