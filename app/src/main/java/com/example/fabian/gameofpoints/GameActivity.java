@@ -45,8 +45,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int scrollWidth;
     private int anzahlWelten = 7;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300};
-    private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14"};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
+    private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
 
     private ImageView mImageViewEmptying;
     private TextView tv;
@@ -221,17 +221,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 2:showstartfragment();
                 break;
-            case 3:showstartfragment();
+            case 3:
+                outoflevel();
+                showstartfragment();
                 break;
             case 4:showstartfragment();
                 break;
             case 5:showstartfragment();
                 break;
-            case 6:showloadfragment();
+            case 6:showloadfragment();//Setting
                 break;
-            case 7:showsettingfragment();//showstopfragment();
-                break;
-            case 8://Weiter spielen
+            case 7:showsettingfragment();//showstopfragment();//start
                 break;
             case 9:showloadfragment();//Game Over
                 break;
@@ -273,8 +273,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
-        container.findViewById(R.id.leftplayer).setOnClickListener(this);
-        container.findViewById(R.id.rightplayer).setOnClickListener(this);
+        container.findViewById(R.id.player1).setOnClickListener(this);
+        container.findViewById(R.id.player3).setOnClickListener(this);
         container.findViewById(R.id.buy).setOnClickListener(this);
         layout=2;
         player=playerselection;
@@ -443,6 +443,18 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case 3:
                 fillTextView(id,"World 3: Planet3");
                 break;
+            case 4:
+                fillTextView(id,"World 4: Planet4");
+                break;
+            case 5:
+                fillTextView(id,"World 5: Planet5");
+                break;
+            case 6:
+                fillTextView(id,"World 6: Planet6");
+                break;
+            case 7:
+                fillTextView(id,"World 7: Planet7");
+                break;
             default:
                 fillTextView(id, "Irgendwas anderes!");
         }
@@ -465,11 +477,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
             setPlayerImage(R.id.player3, player+2);
             updatebackground(R.id.player3, player+2);
         }
+        updateFilter();
         updateBought();
         fillTextView(R.id.playername, playernamen[player/2]);
     }
 
-    private void updateBought(){
+    private void updateBought(){//Text unten
         sp = getPreferences(MODE_PRIVATE);
         if(sp.getBoolean("player"+player/2, false)==false){
             fillTextView(R.id.cost, ""+playerliste[player+1]);
@@ -500,6 +513,19 @@ public class GameActivity extends Activity implements View.OnClickListener{
             }
         }else{
             setBackground(id, R.drawable.playerbackground1);
+        }
+    }
+
+    private void updateFilter(){
+        sp = getPreferences(MODE_PRIVATE);
+        for(int choose = 0; choose<playerliste.length/2; choose++) {
+            if (sp.getBoolean("player" + choose, false)) {
+                    if (choose*2 == playerselection) {
+                        setImage(R.id.filter1 + choose, R.drawable.filtergelb);
+                    } else {
+                        setImage(R.id.filter1 + choose, R.drawable.filterweiss);
+                    }
+            }
         }
     }
 
@@ -798,14 +824,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
             case R.id.item5:
                 showlevel5fragment();
                 break;
-            case R.id.leftplayer:
+            case R.id.player1:
                 player-=2;
                 if(player<0){
                     player = playerliste.length-2;
                 }
                 setPlayer();
                 break;
-            case R.id.rightplayer:
+            case R.id.player3:
                 player+=2;
                 if(player>playerliste.length-2){
                     player = 0;
