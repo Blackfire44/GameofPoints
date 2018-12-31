@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -22,6 +23,8 @@ import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.CheckedOutputStream;
+
 import static java.util.concurrent.Executor.*;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
@@ -33,7 +36,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
     private long frames;
     private BitmapDrawable sterneField;
     private ScheduledExecutorService executorService;
-    private NinePatch drawView;
 
     public GameSurfaceView (Context context){
         super(context);
@@ -53,7 +55,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
     };
     */
     protected void draw1(int objektX, int objektY, int objektR, int objektC, int objektL, int objektA) {
-       /* Canvas canvas = null;
+      /* Canvas canvas = null;
         try {
             canvas = getHolder().lockCanvas();
             synchronized (getHolder()) {
@@ -72,11 +74,22 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
                 tempCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
                 buffCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
 // and then you lock main canvas
+                System.out.println("TEST8");
+
+                //buffCanvas.drawRect(40,60,70,10,p);
+
                 buffCanvas = getHolder().lockCanvas();
-// draw everything you need into the buffer
-                tempCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888),4,5,drawView.getPaint()); // and etc
+                Canvas canvas = new Canvas();
+                Paint pa1= new Paint();
+                pa1.setColor(Color.RED);
+                pa1.setStyle(Paint.Style.FILL);
+                pa1.setStrokeWidth(50);
+
+                canvas.drawLine(0, 0, 100, 100, pa1);
+                //tempCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888),4,5,p); // and etc
+                System.out.println("TEST8");
 // then you draw the attached bitmap into the main canvas
-                buffCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888), 3,2,drawView.getPaint());
+                //buffCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888), 3,2, p);
                 System.out.println("TEST8");
 
 // then unlocking canvas to let it be drawn with main mechanisms
