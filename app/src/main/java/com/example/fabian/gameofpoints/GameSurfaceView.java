@@ -1,7 +1,10 @@
 package com.example.fabian.gameofpoints;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -13,6 +16,9 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +33,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
     private long frames;
     private BitmapDrawable sterneField;
     private ScheduledExecutorService executorService;
+    private NinePatch drawView;
 
     public GameSurfaceView (Context context){
         super(context);
@@ -45,38 +52,51 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         }
     };
     */
-    protected void draw(int objektX, int objektY, int objektR, int objektC, int objektL, int objektA){
+    protected void draw1(int objektX, int objektY, int objektR, int objektC, int objektL, int objektA) {
         Canvas canvas = null;
-        Log.d("CREATION", "TEST");
         try {
             canvas = getHolder().lockCanvas();
-            synchronized (getHolder()){
-                Log.d("CREATION", "TEST-1");
+            synchronized (getHolder()) {
                 doDraw(canvas);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             getHolder().unlockCanvasAndPost(canvas);
         }
-        Log.d("CREATION", "TEST0");
         Drawable drawable = null;
-        Log.d("CREATION", "TEST1");
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             drawable = getResources().getDrawable(R.drawable.krokotest, null);
+            for(int i = 0; i<=Objekt.getListe().size();i++) {
+                Paint p = new Paint();
+// Creating bitmap with attaching it to the buffer-canvas, it means that all the changes // done with the canvas are captured into the attached bitmap
+                Canvas tempCanvas= new Canvas();
+                Canvas buffCanvas = new Canvas();
+                tempCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
+                buffCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
+// and then you lock main canvas
+                buffCanvas = getHolder().lockCanvas();
+// draw everything you need into the buffer
+                tempCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888),4,5,p); // and etc
+// then you draw the attached bitmap into the main canvas
+                buffCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888), 3,2,p);
+                System.out.println("TEST8");
+// then unlocking canvas to let it be drawn with main mechanisms
+                getHolder().unlockCanvasAndPost(buffCanvas);
+                System.out.println("TEST9");
+                //Bitmap b = BitmapFactory.decodeResource(getResources(), i);
+                //drawable.draw(drawable);
+                System.out.println("TEST10");
+            }//https://stackoverflow.com/questions/6538423/double-buffering-in-java-on-android-with-canvas-and-surfaceview#6538623
         }
-        Log.d("CREATION", "TEST2");
-        drawable.setBounds(objektX, objektY, objektR, objektC);
-        Log.d("CREATION", "TEST3");
-        drawable.draw(canvas);
-        Log.d("CREATION", "TEST4");
+       // drawable.setBounds(objektX, objektY, objektR, objektC);
     }
 
     protected void doDraw(Canvas canvas){
         if(t == 0){
             t = System.currentTimeMillis();
             frames++;
-            Log.d("CREATION", "TEST-0.75");
-        }/*
+
+        }
+        /*
         BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.hintergrund1);
         Log.d("CREATION", "TEST-0.5");
         sterneField.setBounds(0,0,sterne.getBitmap().getWidth(), sterne.getBitmap().getHeight());
