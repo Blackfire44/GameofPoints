@@ -138,6 +138,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <FrameLayout
@@ -149,14 +150,13 @@
                     android:id="@+id/miniplayer1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
 
             <FrameLayout
@@ -168,15 +168,15 @@
                     android:id="@+id/miniplayer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -186,15 +186,15 @@
                     android:id="@+id/miniplayer3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -204,15 +204,15 @@
                     android:id="@+id/miniplayer4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -222,15 +222,15 @@
                     android:id="@+id/miniplayer5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -240,15 +240,15 @@
                     android:id="@+id/miniplayer6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -258,15 +258,15 @@
                     android:id="@+id/miniplayer7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
+
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -276,14 +276,13 @@
                     android:id="@+id/miniplayer8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:src="@drawable/krokotest" />
 
                 <ImageView
                     android:id="@+id/filter8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/filtergrau" />
+                    android:src="@drawable/filtergrau" />
             </FrameLayout>
         </LinearLayout>
 

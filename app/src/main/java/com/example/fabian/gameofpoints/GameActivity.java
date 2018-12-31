@@ -45,7 +45,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private int scrollWidth;
     private int anzahlWelten = 7;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.objekt_0, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
     private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
 
     private ImageView mImageViewEmptying;
@@ -141,13 +141,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
         for(int stern = 1; stern<5; stern++) {
             if (time<=timergrenze && sp.getBoolean("star" + world + stern, false) == false) {
                 e.putBoolean("star" + world + stern, true);
+                pluscoins(50);
             }
             timergrenze-=10;
         }
         e.commit();
+        showDialog("", "4444");
             for (int rubin = 0; rubin < 4; rubin++) {
                 if(sp.getBoolean("star" + world + (rubin+1), false)==true){ //stern41 4ter Stern der 1ten Welt
                     imageStar(R.id.star11+4*(world-1)+rubin, rubin);
+                    showDialog("", "2222");
                 }
             }
     }
@@ -158,6 +161,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             for (int rubin = 1; rubin < 5; rubin++) {
                 if(sp.getBoolean("star" + welt + rubin, false)==true){ //stern14 4ter Stern der 1ten Welt
                     imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
+                    showDialog("", "2222");
                 }
             }
         }
@@ -463,19 +467,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setPlayer(){
         if(player==0){
             setPlayerImage(R.id.player1, playerliste.length-2);
-            updatebackground(R.id.player1, playerliste.length-2);
         }else{
             setPlayerImage(R.id.player1, player-2);
-            updatebackground(R.id.player1, player-2);
         }
         setPlayerImage(R.id.player2, player);
-        updatebackground(R.id.player2, player);
         if(player==playerliste.length-2){
             setPlayerImage(R.id.player3, 0);
-            updatebackground(R.id.player3, 0);
         }else{
             setPlayerImage(R.id.player3, player+2);
-            updatebackground(R.id.player3, player+2);
         }
         updateFilter();
         updateBought();
@@ -491,7 +490,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
             if(player==playerselection){
                 fillTextView(R.id.cost, "selected");
             }else{
-                fillTextView(R.id.cost, "bought");
+                fillTextView(R.id.cost, "tap to select");
             }
             setImage(R.id.money, R.drawable.haken);
         }
@@ -503,7 +502,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void updatebackground(int id, int choose){
+    /*private void updatebackground(int id, int choose){
         sp = getPreferences(MODE_PRIVATE);
         if(sp.getBoolean("player"+choose/2, false)){
             if(choose==playerselection){
@@ -514,7 +513,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }else{
             setBackground(id, R.drawable.playerbackground1);
         }
-    }
+    }*/
 
     private void updateFilter(){
         sp = getPreferences(MODE_PRIVATE);
@@ -526,6 +525,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                         setImage(R.id.filter1 + choose, R.drawable.filterweiss);
                     }
             }
+
         }
     }
 
@@ -567,10 +567,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
         mImageViewEmptying.setImageResource(recource);
     }
 
-    private void setBackground(int id, int recource){
+   /* private void setBackground(int id, int recource){
         mImageViewEmptying = findViewById(id);
         mImageViewEmptying.setBackgroundResource(recource);
-    }
+    }*/
 
     private void outoflevel(){
         stopanimation();
