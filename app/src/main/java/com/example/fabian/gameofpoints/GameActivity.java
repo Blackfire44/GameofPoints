@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -78,9 +80,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
             default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
         }
         showstartfragment();
-
-
-        // startMusic();
+        startMusic(R.raw.intro, false);
+        startRandomMusic();
     }
 
     private void setPlayer1(){
@@ -189,31 +190,66 @@ public class GameActivity extends Activity implements View.OnClickListener{
         customDialog = new CustomDialog(this, titel, text);
     }
 
-    private void startMusic(){
-        //music = MediaPlayer.create(this, R.raw.music);
-        //music.setLooping(true);
-        //music.start();
+    private void startMusic(int i, boolean loop){
+        music = MediaPlayer.create(this, i);
+        if(loop){
+            music.setLooping(true);
+        }
+        music.start();
+    }
+
+    private void startRandomMusic(){
+        music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if(music!=null) {
+                    music.release();
+                }
+                switch((int)Math.random()*5){
+                    case 0:startMusic(R.raw.intro, false);
+                        break;
+                    case 1:startMusic(R.raw.intro, false);
+                        break;
+                    case 2:startMusic(R.raw.intro, false);
+                        break;
+                    case 3:startMusic(R.raw.intro, false);
+                        break;
+                    case 4:startMusic(R.raw.intro, false);
+                        break;
+                    default:startMusic(R.raw.intro, false);
+                }
+                startRandomMusic();
+            }
+        });
     }
 
     @Override
     protected void onPause(){
+        //pausegame();
         super.onPause();
-        // if(music!=null){
-        //     music.pause();
-        // }
+        if(music!=null){
+            music.pause();
+        }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        // music.start();
+        music.start();
     }
 
     @Override
     protected void onDestroy() {
         //stopgame();
-        //music.stop();
+        music.stop();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        //stopgame();
+        music.stop();
+        super.onStop();
     }
 
     @Override
@@ -247,7 +283,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.start, null));
-        container.findViewById(R.id.start).setOnClickListener(this);
+        container.findViewById(R.id.container).setOnClickListener(this);
         layout=0;
     }
 
@@ -638,8 +674,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch(view.getId()){
-            case R.id.start:
-                showloadfragment();
+            case R.id.container:
+                if(layout==0) {
+                    showloadfragment();
+                }
                 break;
             case R.id.zuruekLevel:
                 if(layout!=1&&layout!=4&&layout!=5) {
