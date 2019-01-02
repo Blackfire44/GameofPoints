@@ -140,16 +140,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
         //getLevel(welt).getZeitMissionen
 
         for(int stern = 1; stern<5; stern++) {
-            if (time<=timergrenze && sp.getBoolean("star" + world + stern, false) == false) {
+            if (time<=timergrenze && !sp.getBoolean("star" + world + stern, false)) {
                 e.putBoolean("star" + world + stern, true);
                 pluscoins(50);
+                showDialog("star" + world + stern, "5555");
             }
             timergrenze-=10;
         }
         e.commit();
-        showDialog("", "4444");
             for (int rubin = 0; rubin < 4; rubin++) {
-                if(sp.getBoolean("star" + world + (rubin+1), false)==true){ //stern41 4ter Stern der 1ten Welt
+                showDialog("star" + world + (rubin+1), ""+sp.getBoolean("star" + world + (rubin+1), false));
+                if(sp.getBoolean("star" + world + (rubin + 1), false)){ //stern41 4ter Stern der 1ten Welt
                     imageStar(R.id.star11+4*(world-1)+rubin, rubin);
                     showDialog("", "2222");
                 }
@@ -160,9 +161,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         sp = getPreferences(MODE_PRIVATE);
         for(int welt = 0; welt<anzahlWelten; welt++) {
             for (int rubin = 1; rubin < 5; rubin++) {
-                if(sp.getBoolean("star" + welt + rubin, false)==true){ //stern14 4ter Stern der 1ten Welt
+                if(sp.getBoolean("star" + welt + rubin, false)){ //stern14 4ter Stern der 1ten Welt
                     imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
-                    showDialog("", "2222");
                 }
             }
         }
@@ -191,6 +191,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void startMusic(int i, boolean loop){
+        if(music!=null) {
+            music.release();
+        }
         music = MediaPlayer.create(this, i);
         if(loop){
             music.setLooping(true);
