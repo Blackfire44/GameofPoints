@@ -25,22 +25,30 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.CheckedOutputStream;
 
+import static android.util.Log.*;
 import static java.util.concurrent.Executor.*;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
+public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runnable{
 
     private final static float size = 32;
-    private float scale;
+    private float scale,x,y;
     private long t;
     private long frames;
-    private BitmapDrawable sterneField;
+    private Bitmap sterneField;
     private ScheduledExecutorService executorService;
+    private boolean able;
+    private Thread thread = null;
+    private SurfaceHolder surfaceHolder;
+    private Canvas canvas;
 
     public GameSurfaceView (Context context){
         super(context);
         scale = getResources().getDisplayMetrics().density;
+       // sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
         //getHolder().addCallback((SurfaceHolder.Callback) this);
+
+
 
     }
 /*
@@ -52,55 +60,31 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
 
             //Log.d(getClass().getSimpleName(), Integer.toString(getFpS()) + " fps");
         }
-    };
-    */
-    protected void draw1(int objektX, int objektY, int objektR, int objektC, int objektL, int objektA) {
-      /* Canvas canvas = null;
-        try {
-            canvas = getHolder().lockCanvas();
-            synchronized (getHolder()) {
-                doDraw(canvas);
-            }
-        } catch (Exception e) {
-            getHolder().unlockCanvasAndPost(canvas);
-        }*/
-        Drawable drawable = null;
+    };*/
+    protected void draw1() {
+
+        //Drawable drawable = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            drawable = getResources().getDrawable(R.drawable.krokotest, null);
-            for(int i = 0; i<=Objekt.getListe().size();i++) {
-// Creating bitmap with attaching it to the buffer-canvas, it means that all the changes // done with the canvas are captured into the attached bitmap
-                Canvas tempCanvas= new Canvas();
-                Canvas buffCanvas = new Canvas();
-                tempCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
-                buffCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
-// and then you lock main canvas
-                System.out.println("TEST8");
+
+            sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
+            //drawable = getResources().getDrawable(R.drawable.krokotest, null);
+            for (int i = 0; i <= Objekt.getListe().size(); i++) {
+                surfaceHolder = getHolder();
+               // Canvas tempCanvas = new Canvas();
+                //Canvas buffCanvas = new Canvas();
+               // tempCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
+               // buffCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
 
                 //buffCanvas.drawRect(40,60,70,10,p);
-
-                buffCanvas = getHolder().lockCanvas();
-                Canvas canvas = new Canvas();
-                Paint pa1= new Paint();
-                pa1.setColor(Color.RED);
-                pa1.setStyle(Paint.Style.FILL);
-                pa1.setStrokeWidth(50);
-
-                canvas.drawLine(0, 0, 100, 100, pa1);
-                //tempCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888),4,5,p); // and etc
-                System.out.println("TEST8");
-// then you draw the attached bitmap into the main canvas
-                //buffCanvas.drawBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888), 3,2, p);
-                System.out.println("TEST8");
-
-// then unlocking canvas to let it be drawn with main mechanisms
-                getHolder().unlockCanvasAndPost(buffCanvas);
-                System.out.println("TEST9");
-                //Bitmap b = BitmapFactory.decodeResource(getResources(), i);
-                //drawable.draw(drawable);
-                System.out.println("TEST10");
+               // if(Objekt.getObjekt(i).getMembership()==1) {
+                canvas = surfaceHolder.lockCanvas();
+                Log.d("CREATION", "TEST");
+                canvas.drawBitmap(sterneField, 100, 100, null);
+                Log.d("CREATION", "TEST");
+                surfaceHolder.unlockCanvasAndPost(canvas);
+                Log.d("CREATION", "TEST");
             }//https://stackoverflow.com/questions/6538423/double-buffering-in-java-on-android-with-canvas-and-surfaceview#6538623
         }
-       // drawable.setBounds(objektX, objektY, objektR, objektC);
     }
 
     protected void doDraw(Canvas canvas){
@@ -132,6 +116,25 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         }
     }
 
+    public void stop(){
+        able = false;
+        while (true){
+            try {
+                thread.join();
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            break;
+        }
+        thread  = null;
+    }
+    public  void resume(){
+        able = true;
+        thread = new Thread(this);
+        thread.start();
+
+    }
 
     @Override
     public void addCallback(Callback callback) {
@@ -174,7 +177,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
     }
 
     @Override
-    public Canvas lockCanvas(Rect rect) {
+    public Canvas lockCanvas(Rect rect)  {
         return null;
     }
 
@@ -193,4 +196,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
         return null;
     }
 
+    @Override
+    public void run() {
+
+    }
 }

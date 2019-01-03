@@ -352,7 +352,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.star31).setOnClickListener(this);
         container.findViewById(R.id.star32).setOnClickListener(this);
         container.findViewById(R.id.star33).setOnClickListener(this);
-        container.findViewById(R.id.star34).setOnClickListener(this);container.findViewById(R.id.star41).setOnClickListener(this);
+        container.findViewById(R.id.star34).setOnClickListener(this);
+        container.findViewById(R.id.star41).setOnClickListener(this);
         container.findViewById(R.id.star42).setOnClickListener(this);
         container.findViewById(R.id.star43).setOnClickListener(this);
         container.findViewById(R.id.star44).setOnClickListener(this);
