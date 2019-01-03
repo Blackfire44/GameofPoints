@@ -10,9 +10,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.text.style.UpdateLayout;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -20,18 +22,23 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class Engine implements SensorEventListener {
+public class Engine implements SensorEventListener ,Runnable {
+
     private float impactX;
     private float impactY;
     private int stamm1;// lieb == 1
     private int stamm2;// böse == 2
     private float minX, maxX, minY, maxY;
+    private Handler handler = new Handler();
     private int directionChange = 44;
     private float scaleA = 100f;
     private int msPerFrame = 30;
     private int anzViech = 10;
+    private float Vx, Vy;
     private int touched;
+    private long deadline;
     private ArrayList<Integer> stamm = new ArrayList<>();
+
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -39,49 +46,63 @@ public class Engine implements SensorEventListener {
     private SensorManager sensorManager;
     private GameActivity gameActivity;
     private ScheduledExecutorService service;
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
 
-    public Engine(SensorManager sensorManager, GameSurfaceView gameSurfaceView, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
+            moveObjects();
+            //repaintAction();
+            Log.d("CREATION", "Sollte klappen");
+            gameSurfaceView.setPosition(Vx,Vy);
+
+        }
+    };
+    public Engine(SensorManager sensorManager, GameSurfaceView gameSurfaceView, GameActivity gameActivity) { //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
         this.gameSurfaceView = gameSurfaceView;
         this.sensorManager = sensorManager;
         this.gameActivity = gameActivity;
-        for(int i = 0; i<8; i++){
-            int e = 450+i*50;
+        for (int i = 0; i < 8; i++) {
+            int e = 450 + i * 50;
             Objekt a = new Objekt(800, e, 1, 2, 1, 1, 5);
         }
     }
 
-    public void start(){
+    public void start() {
         service = Executors.newSingleThreadScheduledExecutor();
-        final Runnable runnable = new Runnable(){
-            @Override
-            public void run() {
-               moveObjects();
-               repaintAction();
-               /*long startTime = System.nanoTime();
-                while (running){
-                    if(!gameSurfaceView.getSurface().isValid())continue;
-                    Canvas canvas = null;
-                            try{
-                        canvas = gameSurfaceView.lockCanvas(null);
-                        synchronized (bg){
-                        canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
-                        }
-                            } finally {
-                                if(canvas != null) {
-                                    gameSurfaceView.unlockCanvasAndPost(canvas);
-                                }
-                            }
 
-                } */
-            }
-        };
-        service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
+        deadline = System.currentTimeMillis()+gameSurfaceView.getFpS();
+        impactX = Objekt.getObjekt(1).getSpeed();
+        impactY = Objekt.getObjekt(1).getSpeed();
+        Vx = Objekt.getObjekt(1).getX();
+        Vy = Objekt.getObjekt(1).getY();
 
+        gameSurfaceView.setPosition(Objekt.getObjekt(1).getX(), Objekt.getObjekt(1).getY());
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+        service.scheduleAtFixedRate(runnable,msPerFrame,msPerFrame,TimeUnit.MILLISECONDS);
         aktualisiereDiagramm();
+
+    }
+   /* @Override
+    public void run() {
+    long startTime = System.nanoTime();
+    while (running){
+        if(!gameSurfaceView.getSurface().isValid())continue;
+        Canvas canvas = null;
+                try{
+            canvas = gameSurfaceView.lockCanvas(null);
+            synchronized (bg){
+            canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
+            }
+                } finally {
+                    if(canvas != null) {
+                        gameSurfaceView.unlockCanvasAndPost(canvas);
+                    }
+                }
+
     }
 
+    }*/
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
         Objekt a = new Objekt(x, y, membership, life, attack, speed, color);
     }
@@ -99,9 +120,8 @@ public class Engine implements SensorEventListener {
     }
 
     public void repaintAction() {
-        for(int i = 0; i<Objekt.getListe().size();i++){
-            gameSurfaceView.draw1();
-       }
+       gameSurfaceView.draw1();
+
 
     }
 
@@ -112,10 +132,15 @@ public class Engine implements SensorEventListener {
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
+   /* @Override
+    public void run(){
+        Vx = Vy = Objekt.getObjekt(1).getSpeed()*gameSurfaceView.getFpS()/1000;
+        handler.post(){ gameSurfaceView.setPosition(Objekt.getObjekt(1).getX(),Objekt.getObjekt(1).getY());}
+    }
+*/
     public void moveObjects(){
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getLife()>0) {
@@ -258,5 +283,10 @@ public class Engine implements SensorEventListener {
             }
            gameActivity.setDiagramm(stamm1, stamm2+stamm1);
         }
+    }
+
+    @Override
+    public void run() {
+
     }
 }

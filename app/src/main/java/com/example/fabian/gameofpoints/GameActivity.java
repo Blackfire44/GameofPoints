@@ -109,10 +109,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
-        /*for(int i = 0; i<Objekt.liste.size(); i++){                aus Xml Datei die Anfangslage holen.
-            Objekt.liste.get(i).setX(x);
-            Objekt.liste.get(i).setY(y);
-        }*/
         //loadBackground();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout=7;
