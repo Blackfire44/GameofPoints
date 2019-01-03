@@ -4,34 +4,39 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class Engine implements SensorEventListener {
-    private float impactX;
-    private float impactY;
+    private float impactX, impactY, Vx, Vy;
     private double highest = 100000;
     private int stamm1;// lieb == 1
     private int stamm2;// böse == 2
     private float minX, maxX, minY, maxY;
+    private IGameView gameView;
     private int directionChange = 44;
     private float scaleA = 100f;
     private int msPerFrame = 30;
     private int touched;
     private ArrayList<Integer> stamm = new ArrayList<>();
 
+
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    private GameSurfaceView gameSurfaceView;
+    //private GameView gameView;
     private SensorManager sensorManager;
     private GameActivity gameActivity;
     private ScheduledExecutorService service;
 
-    public Engine(SensorManager sensorManager, GameSurfaceView gameSurfaceView, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
-        this.gameSurfaceView = gameSurfaceView;
+
+    public Engine(SensorManager sensorManager, IGameView gameView, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
+        this.gameView = gameView;
         this.sensorManager = sensorManager;
         this.gameActivity = gameActivity;
         for(int i = 0; i<8; i++){
@@ -42,23 +47,30 @@ public class Engine implements SensorEventListener {
 
     public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
+        for(int i = 0; i<Objekt.getListe().size(); i++) {
+            impactX = Objekt.getObjekt(i).getSpeed();
+            impactY = Objekt.getObjekt(i).getSpeed();
+            Vx = Objekt.getObjekt(i).getX();
+            Vy = Objekt.getObjekt(i).getY();
+        }
         final Runnable runnable = new Runnable(){
             @Override
             public void run() {
                moveObjects();
                repaintAction();
+                gameView.setPosition(Vx,Vy);
                /*long startTime = System.nanoTime();
                 while (running){
-                    if(!gameSurfaceView.getSurface().isValid())continue;
+                    if(!gameView.getSurface().isValid())continue;
                     Canvas canvas = null;
                             try{
-                        canvas = gameSurfaceView.lockCanvas(null);
+                        canvas = gameView.lockCanvas(null);
                         synchronized (bg){
                         canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
                         }
                             } finally {
                                 if(canvas != null) {
-                                    gameSurfaceView.unlockCanvasAndPost(canvas);
+                                    gameView.unlockCanvasAndPost(canvas);
                                 }
                             }
 
@@ -113,9 +125,7 @@ public class Engine implements SensorEventListener {
     }
 
     public void repaintAction() {
-        for(int i = 0; i<Objekt.getListe().size();i++){
-            gameSurfaceView.draw1();
-       }
+            //gameSurfaceView.draw1();
 
     }
 

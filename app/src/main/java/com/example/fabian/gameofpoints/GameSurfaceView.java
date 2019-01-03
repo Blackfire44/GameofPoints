@@ -44,13 +44,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Canvas canvas;
     private Paint p = new Paint();
     private Paint PaintBitmap = new Paint();
-    private Bitmap sterneField;
+    private BitmapDrawable sterneField;
 
 
     public GameSurfaceView (Context context){
         super(context);
+        canvas = null;
         scale = getResources().getDisplayMetrics().density;
-        sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
+        sterneField = (BitmapDrawable) getResources().getDrawable(R.drawable.krokotest);
         PaintBitmap.setAntiAlias(true);
 
         //draw.set(0,0,Objekt.getObjekt(1).getY(),Objekt.getObjekt(1).getX());
@@ -74,7 +75,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Runnable renderer = new Runnable() {
         @Override
         public void run() {
-            Canvas canvas=null;
+            canvas=null;
             try {
                 canvas = getHolder().lockCanvas();
                 synchronized (getHolder()) {
@@ -99,6 +100,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     protected void draw1() {
 
+        //sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
         //Drawable drawable = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             //drawable = getResources().getDrawable(R.drawable.krokotest, null);
@@ -112,13 +114,16 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
                // if(Objekt.getObjekt(i).getMembership()==1) {
                 canvas = surfaceHolder.lockCanvas();
-                try {
-                    canvas.drawBitmap(sterneField, Objekt.getObjekt(i).getX()-(Objekt.getObjekt(i).getR()/2), Objekt.getObjekt(i).getY()-(Objekt.getObjekt(i).getR()/2), null); //Diese zeile funktioniert nicht, obwohl sie das, laut wirklich allem was ich bisher finden konnte, wirklich tuen sollte. Deshalb geht die nächte Zeile auch nicht, weil nicht im surfce steht, was released werden könnte!
+                //sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
+                if(sterneField != null) {
+                    try {
+                       // sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
+                        canvas.drawBitmap(sterneField.getBitmap(), Objekt.getObjekt(i).getX() - (Objekt.getObjekt(i).getR() / 2), Objekt.getObjekt(i).getY() - (Objekt.getObjekt(i).getR() / 2), null); //Diese zeile funktioniert nicht, obwohl sie das, laut wirklich allem was ich bisher finden konnte, wirklich tuen sollte. Deshalb geht die nächte Zeile auch nicht, weil nicht im surfce steht, was released werden könnte!
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("CREATION", "TEST");
                 }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
-                Log.d("CREATION", "TEST");
                 try {
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
@@ -131,12 +136,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     protected void doDraw(Canvas canvas){
+        System.out.println("WElt");
         if(t == 0){
             t = System.currentTimeMillis();
             frames++;
         }
         for (int i = 0; i <= Objekt.getListe().size(); i++) {
-            canvas.drawBitmap(sterneField, Objekt.getObjekt(i).getX(), Objekt.getObjekt(1).getY(), PaintBitmap);
+            canvas.drawBitmap(sterneField.getBitmap(), Objekt.getObjekt(i).getX(), Objekt.getObjekt(1).getY(), PaintBitmap);
         /*
         BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.hintergrund1);
         Log.d("CREATION", "TEST-0.5");

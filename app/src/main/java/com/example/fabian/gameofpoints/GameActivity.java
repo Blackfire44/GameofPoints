@@ -52,7 +52,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
 
     private ImageView mImageViewEmptying;
     private TextView tv;
-    private GameSurfaceView gameview;
+    private GameView gameview;
     private Engine engine;
     private SharedPreferences sp;
     private SharedPreferences.Editor e;
@@ -101,7 +101,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
         container.findViewById(R.id.schalten).setOnClickListener(this);
         container.findViewById(R.id.container).setOnTouchListener(this);
-        gameview = new GameSurfaceView(this) {
+        gameview = new GameView(this) {
 
         };
         gameview.setVisibility(View.VISIBLE);
