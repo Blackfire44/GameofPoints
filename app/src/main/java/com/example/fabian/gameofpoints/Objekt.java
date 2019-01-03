@@ -10,12 +10,12 @@ public class Objekt {
     private int attack;
     private int speed;
     private int direction;
-    private int breedTimer; //bitte noch hinzufügen
+    private int breedTimer;
     private boolean breedState; // einfügen
     private int partner;
     private boolean control;
     private int grow;
-
+    private static int anzViech = 0;
     private int color;
 
     private float x, y, r;
@@ -38,6 +38,7 @@ public class Objekt {
         setR();
         direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
         liste.add(this);
+        anzViech++;
     }
 
     public Objekt(int x, int y, int membership) {
@@ -51,6 +52,7 @@ public class Objekt {
         r = 10;
         direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
         liste.add(this);
+        anzViech++;
     }
 
     public static ArrayList<Objekt> getListe() {
@@ -59,6 +61,10 @@ public class Objekt {
 
     public static Objekt getObjekt(int i) {
         return liste.get(i);
+    }
+
+    public static int getAnzViech() {
+        return anzViech;
     }
 
     public int getMembership() {
@@ -125,9 +131,15 @@ public class Objekt {
         this.membership = membership;
     }
 
+    public static void setAnzViech(int anz) { anzViech = anz;
+    }
+
     public void setLife(float life) {
         this.life = life;
         setNewR();
+        if(life<=0){
+            anzViech--;
+        }
     }
 
     public void setAttack(int attack) {

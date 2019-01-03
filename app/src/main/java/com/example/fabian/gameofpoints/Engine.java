@@ -1,44 +1,27 @@
 package com.example.fabian.gameofpoints;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
-import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.text.style.UpdateLayout;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class Engine implements SensorEventListener ,Runnable {
-
+public class Engine implements SensorEventListener {
     private float impactX;
     private float impactY;
+    private double highest = 100000;
     private int stamm1;// lieb == 1
     private int stamm2;// böse == 2
     private float minX, maxX, minY, maxY;
-    private Handler handler = new Handler();
     private int directionChange = 44;
     private float scaleA = 100f;
     private int msPerFrame = 30;
-    private int anzViech = 10;
-    private float Vx, Vy;
     private int touched;
-    private long deadline;
     private ArrayList<Integer> stamm = new ArrayList<>();
-
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -46,65 +29,59 @@ public class Engine implements SensorEventListener ,Runnable {
     private SensorManager sensorManager;
     private GameActivity gameActivity;
     private ScheduledExecutorService service;
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
 
-            moveObjects();
-            //repaintAction();
-            Log.d("CREATION", "Sollte klappen");
-            gameSurfaceView.setPosition(Vx,Vy);
-
-        }
-    };
-    public Engine(SensorManager sensorManager, GameSurfaceView gameSurfaceView, GameActivity gameActivity) { //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
+    public Engine(SensorManager sensorManager, GameSurfaceView gameSurfaceView, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
         this.gameSurfaceView = gameSurfaceView;
         this.sensorManager = sensorManager;
         this.gameActivity = gameActivity;
-        for (int i = 0; i < 8; i++) {
-            int e = 450 + i * 50;
+        for(int i = 0; i<8; i++){
+            int e = 450+i*50;
             Objekt a = new Objekt(800, e, 1, 2, 1, 1, 5);
         }
     }
 
-    public void start() {
+    public void start(){
         service = Executors.newSingleThreadScheduledExecutor();
+        final Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+               moveObjects();
+               repaintAction();
+               /*long startTime = System.nanoTime();
+                while (running){
+                    if(!gameSurfaceView.getSurface().isValid())continue;
+                    Canvas canvas = null;
+                            try{
+                        canvas = gameSurfaceView.lockCanvas(null);
+                        synchronized (bg){
+                        canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
+                        }
+                            } finally {
+                                if(canvas != null) {
+                                    gameSurfaceView.unlockCanvasAndPost(canvas);
+                                }
+                            }
 
-        deadline = System.currentTimeMillis()+gameSurfaceView.getFpS();
-        impactX = Objekt.getObjekt(1).getSpeed();
-        impactY = Objekt.getObjekt(1).getSpeed();
-        Vx = Objekt.getObjekt(1).getX();
-        Vy = Objekt.getObjekt(1).getY();
+                } */
+            }
+        };
+        service.scheduleAtFixedRate(runnable, msPerFrame, msPerFrame, TimeUnit.MILLISECONDS);
 
-        gameSurfaceView.setPosition(Objekt.getObjekt(1).getX(), Objekt.getObjekt(1).getY());
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
-        service.scheduleAtFixedRate(runnable,msPerFrame,msPerFrame,TimeUnit.MILLISECONDS);
         aktualisiereDiagramm();
-
-    }
-   /* @Override
-    public void run() {
-    long startTime = System.nanoTime();
-    while (running){
-        if(!gameSurfaceView.getSurface().isValid())continue;
-        Canvas canvas = null;
-                try{
-            canvas = gameSurfaceView.lockCanvas(null);
-            synchronized (bg){
-            canvas.drawBitmap(bg.getBitmap()bg.getX(), 0, null);
-            }
-                } finally {
-                    if(canvas != null) {
-                        gameSurfaceView.unlockCanvasAndPost(canvas);
-                    }
-                }
-
     }
 
-    }*/
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
         Objekt a = new Objekt(x, y, membership, life, attack, speed, color);
+    }
+
+    public void setSelect(int objekt){
+        for(int i = 0; i<Objekt.getListe().size(); i++){
+            Objekt.getObjekt(i).setControl(false);
+        }
+        Objekt.getObjekt(objekt).setControl(true);
+        gameActivity.setData(Objekt.getObjekt(objekt).getLife(), Objekt.getObjekt(objekt).getAttack(), Objekt.getObjekt(objekt).getSpeed());
     }
 
     public void setRegion(float minX, float minY, float maxX, float maxY){
@@ -114,14 +91,31 @@ public class Engine implements SensorEventListener ,Runnable {
         this.maxY=maxY;
     }
 
+    public void prüfeTouch(int touchX, int touchY){
+        int objekt = 0;
+        for(int i = 0; i<Objekt.getListe().size(); i++){
+            if(Objekt.getObjekt(i).getMembership()==1) {
+                double länge = Math.sqrt((Objekt.getObjekt(i).getX() - touchX) * (Objekt.getObjekt(i).getX() - touchX) + (Objekt.getObjekt(i).getY() - touchY) * (Objekt.getObjekt(i).getY() - touchY));
+                if (highest > länge) {
+                    highest = länge;
+                    objekt = i;
+                }
+            }
+        }
+        if(objekt!=0) {
+            setSelect(objekt);
+        }
+    }
+
     public void stop(){
         service.shutdown();
         sensorManager.unregisterListener(this);
     }
 
     public void repaintAction() {
-       gameSurfaceView.draw1();
-
+        for(int i = 0; i<Objekt.getListe().size();i++){
+            gameSurfaceView.draw1();
+       }
 
     }
 
@@ -132,15 +126,10 @@ public class Engine implements SensorEventListener ,Runnable {
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-   /* @Override
-    public void run(){
-        Vx = Vy = Objekt.getObjekt(1).getSpeed()*gameSurfaceView.getFpS()/1000;
-        handler.post(){ gameSurfaceView.setPosition(Objekt.getObjekt(1).getX(),Objekt.getObjekt(1).getY());}
-    }
-*/
+
     public void moveObjects(){
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getLife()>0) {
@@ -221,7 +210,7 @@ public class Engine implements SensorEventListener ,Runnable {
                     Objekt.getObjekt(i).setBreedTimer(Objekt.getObjekt(i).getBreedTimer()-1);
                 }
                 if(Objekt.getObjekt(i).getBreedTimer()==200&&Objekt.getObjekt(i).getGrow()==0) {
-                    if(Objekt.getObjekt(i).getBreedState()==false) {
+                    if(Objekt.getObjekt(i).getBreedState()==false&&Objekt.getAnzViech()<=30) {
                         //new Viech
                         Objekt b = new Objekt((int)(Objekt.getObjekt(i).getX() + Math.cos((Objekt.getObjekt(i).getDirection()-180)*Math.PI/180)*Objekt.getObjekt(i).getR()/2), (int)(Objekt.getObjekt(i).getY() + Math.sin((Objekt.getObjekt(i).getDirection()-180)*Math.PI/180)*Objekt.getObjekt(i).getR()/2), Objekt.getObjekt(i).getMembership());
                         if((int)(Math.random()*2)==0) {
@@ -257,11 +246,11 @@ public class Engine implements SensorEventListener ,Runnable {
                 Objekt.getObjekt(i).setX((float)(Objekt.getObjekt(i).getX() + Math.cos(Objekt.getObjekt(i).getDirection()*Math.PI/180) * Objekt.getObjekt(i).getSpeed()));//float statt int
                 Objekt.getObjekt(i).setY((float)(Objekt.getObjekt(i).getY() + Math.sin(Objekt.getObjekt(i).getDirection()*Math.PI/180) * Objekt.getObjekt(i).getSpeed()));//float statt int
             }
-            //if(Objekt.getObjekt(i).getControl()==true) {
-                //Bewegung des Gesteuerten Objects (wahrscheinlich mit den Neigungspunkten den Winkel ausrechnen und dann damit die X und Y Werte ausrechnen) (Oder die jeweiligen Werte mlal den Speed rechnen)
-               // Objekt.getObjekt(i).setX(Objekt.getObjekt(i).getX()+controlX/1);//noch auf 1 zurück/vorrechnen
-               // Objekt.getObjekt(i).setY(Objekt.getObjekt(i).getY()+controlY/1);//noch auf 1 zurück/vorrechnen
-            //}
+            if(Objekt.getObjekt(i).getControl()==true) {
+                //Bewegung des Gesteuerten Objects
+               Objekt.getObjekt(i).setX(Objekt.getObjekt(i).getX()+impactX/1);//noch auf 1 zurück/vorrechnen
+               Objekt.getObjekt(i).setY(Objekt.getObjekt(i).getY()+impactY/1);//noch auf 1 zurück/vorrechnen
+            }
         }
     }
 
@@ -283,10 +272,5 @@ public class Engine implements SensorEventListener ,Runnable {
             }
            gameActivity.setDiagramm(stamm1, stamm2+stamm1);
         }
-    }
-
-    @Override
-    public void run() {
-
     }
 }

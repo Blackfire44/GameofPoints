@@ -17,6 +17,7 @@ import android.support.annotation.RequiresApi;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -35,11 +36,10 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class GameActivity extends Activity implements View.OnClickListener{
-    private int live = 1;
+public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
+    private int life = 1;
     private int attack = 1;
     private int speed = 1;
-    private int dontknow = 1;
     private int upgradePoints = 20;
     private int layout;
     private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
@@ -80,8 +80,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
             default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
         }
         showstartfragment();
-        startMusic(R.raw.intro, false);
-        startRandomMusic();
     }
 
     private void setPlayer1(){
@@ -101,6 +99,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
+        container.findViewById(R.id.schalten).setOnClickListener(this);
+        container.findViewById(R.id.container).setOnTouchListener(this);
         gameview = new GameSurfaceView(this) {
 
         };
@@ -111,19 +111,52 @@ public class GameActivity extends Activity implements View.OnClickListener{
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
         //loadBackground();
         //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        layout=7;
         for(int i = 0; i <10; i++ ){
             int x = (int) (Math.random() * (container.getHeight()));
             int y = (int) (Math.random() * (container.getWidth()));
             engine.createObjekt(x, y, 1, 2, 3, 4, 5);
         }
-        //engine.repaintAction();
-        engine.start();
+        engine.createObjekt(100, 100, 1, life, attack, speed, playerliste[playerselection]);
+        engine.setSelect(Objekt.getListe().size()-1);
 
+        try {
+            fillTextView(R.id.countdown, "3");
+            Thread.sleep(1000);
+            fillTextView(R.id.countdown, "2");
+            Thread.sleep(1000);
+            fillTextView(R.id.countdown, "1");
+            Thread.sleep(1000);
+            findViewById(R.id.countdown).setVisibility(View.INVISIBLE);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        engine.start();
+        startRandomMusic();
+        layout=7;
     }
 
+    public void setData(float life, int attack, int speed){
+        fillTextView(R.id.life, "Life: "+(int)life);
+        fillTextView(R.id.attack, "Attack: "+attack);
+        fillTextView(R.id.speed, "Speed: "+speed);
+    }
+
+    private void einschalten(){
+        fillTextView(R.id.schalten, "turn off");
+        findViewById(R.id.life).setVisibility(View.VISIBLE);
+        findViewById(R.id.attack).setVisibility(View.VISIBLE);
+        findViewById(R.id.speed).setVisibility(View.VISIBLE);
+    }
+
+    private void ausschalten(){
+        fillTextView(R.id.schalten, "turn on");
+        findViewById(R.id.life).setVisibility(View.INVISIBLE);
+        findViewById(R.id.attack).setVisibility(View.INVISIBLE);
+        findViewById(R.id.speed).setVisibility(View.INVISIBLE);
+    }
 
     private void endGame(){
+        stopMusic();
         prüfeStars();
     }
 
@@ -138,12 +171,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
         for(int stern = 1; stern<5; stern++) {
             if (time<=timergrenze && !sp.getBoolean("star" + world + stern, false)) {
                 e.putBoolean("star" + world + stern, true);
+                e.commit();
                 pluscoins(50);
                 showDialog("star" + world + stern, "5555");
             }
             timergrenze-=10;
         }
-        e.commit();
             for (int rubin = 0; rubin < 4; rubin++) {
                 showDialog("star" + world + (rubin+1), ""+sp.getBoolean("star" + world + (rubin+1), false));
                 if(sp.getBoolean("star" + world + (rubin + 1), false)){ //stern41 4ter Stern der 1ten Welt
@@ -197,29 +230,42 @@ public class GameActivity extends Activity implements View.OnClickListener{
         music.start();
     }
 
+    private void stopMusic(){
+        music.stop();
+    }
+
     private void startRandomMusic(){
-        music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                if(music!=null) {
-                    music.release();
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("music", false)==true) {
+            music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if (music != null) {
+                        music.release();
+                    }
+                    switch ((int) Math.random() * 5) {
+                        case 0:
+                            startMusic(R.raw.intro, false);
+                            break;
+                        case 1:
+                            startMusic(R.raw.intro, false);
+                            break;
+                        case 2:
+                            startMusic(R.raw.intro, false);
+                            break;
+                        case 3:
+                            startMusic(R.raw.intro, false);
+                            break;
+                        case 4:
+                            startMusic(R.raw.intro, false);
+                            break;
+                        default:
+                            startMusic(R.raw.intro, false);
+                    }
+                    startRandomMusic();
                 }
-                switch((int)Math.random()*5){
-                    case 0:startMusic(R.raw.intro, false);
-                        break;
-                    case 1:startMusic(R.raw.intro, false);
-                        break;
-                    case 2:startMusic(R.raw.intro, false);
-                        break;
-                    case 3:startMusic(R.raw.intro, false);
-                        break;
-                    case 4:startMusic(R.raw.intro, false);
-                        break;
-                    default:startMusic(R.raw.intro, false);
-                }
-                startRandomMusic();
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -234,7 +280,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onResume(){
         super.onResume();
-        music.start();
+        if(sp.getBoolean("music", false)) {
+            music.start();
+        }
     }
 
     @Override
@@ -399,6 +447,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
+        container.findViewById(R.id.turnonoff).setOnClickListener(this);
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("music", false)==false){
+            fillTextView(R.id.turnonoff, "OFF");
+        }else{
+            fillTextView(R.id.turnonoff, "ON");
+        }
         layout=5;
     }
 
@@ -430,8 +485,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         container.findViewById(R.id.r2).setOnClickListener(this);
         container.findViewById(R.id.l3).setOnClickListener(this);
         container.findViewById(R.id.r3).setOnClickListener(this);
-        container.findViewById(R.id.l4).setOnClickListener(this);
-        container.findViewById(R.id.r4).setOnClickListener(this);
         container.findViewById(R.id.startgame).setOnClickListener(this);
         layout=6;
         setPlanet(R.id.planetsettings);
@@ -532,48 +585,35 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void playerselect(){
-        if(sp.getBoolean("player"+player/2, false)){
+    private void playerselect(){ //Ein Spieler wird für das nächste Spiel ausgewählt
+        if(sp.getBoolean("player"+player/2, false)){ //Prüfung, ob er schon gekauft wurde
             playerselection = player;
         }
     }
 
-    /*private void updatebackground(int id, int choose){
+    private void updateFilter(){ //Die Filter für die Charakterleiste wird aktualisiert
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("player"+choose/2, false)){
-            if(choose==playerselection){
-                setBackground(id, R.drawable.playerbackground3);
-            }else{
-                setBackground(id, R.drawable.playerbackground2);
-            }
-        }else{
-            setBackground(id, R.drawable.playerbackground1);
-        }
-    }*/
-
-    private void updateFilter(){
-        sp = getPreferences(MODE_PRIVATE);
-        for(int choose = 0; choose<playerliste.length/2; choose++) {
-            if (sp.getBoolean("player" + choose, false)) {
-                    if (choose*2 == playerselection) {
-                        setImage(R.id.filter1 + choose, R.drawable.filtergelb);
+        for(int choose = 0; choose<playerliste.length/2; choose++) { //Für alle Charaktere der Leiste (Sind alle in der Liste gespeichert)
+            if (sp.getBoolean("player" + choose, false)) { //Prüfung, ob er schon gekauft wurde
+                    if (choose*2 == playerselection) { //Prüfung, ob er für das nächste Spiel ausgewählt wurde
+                        setImage(R.id.filter1 + choose, R.drawable.filtergelb); //Filter für die Auswahl
                     } else {
-                        setImage(R.id.filter1 + choose, R.drawable.filterweiss);
+                        setImage(R.id.filter1 + choose, R.drawable.filterweiss); //Filter für nicht gekauft oder ausgewählt
                     }
             }
 
         }
     }
 
-    private void setBought(){
+    private void setBought(){ //Ein Charakter wird gekauft.
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("player"+player/2, false)==false) {
-            if (sp.getInt("coins", 0) - playerliste[player + 1] >= 0) {
+        if(sp.getBoolean("player"+player/2, false)==false) { //Prüfung, ob er schon gekauft wurde
+            if (sp.getInt("coins", 0) - playerliste[player + 1] >= 0) {  //Prüfung, ob das Geld noch reicht
                 e = sp.edit();
-                e.putInt("coins", sp.getInt("coins", 0) - playerliste[player + 1]);
-                e.putBoolean("player" + player / 2, true);
+                e.putInt("coins", sp.getInt("coins", 0) - playerliste[player + 1]); //Das Geld abziehen
+                e.putBoolean("player" + player / 2, true); //Den Charakter auf "gekauft" setzen
                 e.commit();
-                updateCoins();
+                updateCoins(); //Die Geldanzeige aktualisieren
             } else {
                 showDialog("", "You have not enough coins to buy "+playernamen[player/2]);
             }
@@ -582,38 +622,33 @@ public class GameActivity extends Activity implements View.OnClickListener{
         setPlayer();
     }
 
-    private void pluscoins(int bonus){
+    private void pluscoins(int bonus){ //Das Geld wird in den SharedPreferences um den hinzugefügten Bonus erhöht.
         sp = getPreferences(MODE_PRIVATE);
         e = sp.edit();
         e.putInt("coins", sp.getInt("coins", 0)+bonus);
         e.commit();
     }
 
-    private void updateCoins(){
+    private void updateCoins(){ //Die Anzeige für die Anzahl des vorhandenen Geldes wird aus den SharedPreferences aktualisiert
         sp = getPreferences(MODE_PRIVATE);
         fillTextView(R.id.coins, "Charakter:   "+sp.getInt("coins", 0));
     }
 
-    private void setPlayerImage(int id, int number){
+    private void setPlayerImage(int id, int number){ //Setzt ein Bild für einen Spieler aus der playerliste
         setImage(id, playerliste[number]);
     }
 
-    private void setImage(int id, int recource){
+    private void setImage(int id, int recource){ //Setze ein bestimmtes Bild in ein ImageView ein
         mImageViewEmptying = findViewById(id);
         mImageViewEmptying.setImageResource(recource);
     }
 
-   /* private void setBackground(int id, int recource){
-        mImageViewEmptying = findViewById(id);
-        mImageViewEmptying.setBackgroundResource(recource);
-    }*/
-
-    private void outoflevel(){
+    private void outoflevel(){ //Bei Austritt von level.xml wird die Animation gestoppt und die Weite, die gescrollt wurde gespeichert
         stopanimation();
         saveScrollWidth();
     }
 
-    private void startanimation(){
+    private void startanimation(){ //Die Animationen der Planeten werden gestartet
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
@@ -628,12 +663,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-        //Log.d("CREATION", Integer.toString(gameview.getFpS()));
-        //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS()) + " fps");
-        //Log.d(getClass().getSimpleName(), "Funktioniert das?");
     }
 
-    private void stopanimation(){
+    private void stopanimation(){ //Die Animationen der Planeten werden gestoppt
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate1);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate2);
@@ -650,244 +682,269 @@ public class GameActivity extends Activity implements View.OnClickListener{
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
-    private void update(){
+    private void update(){ //Aktualisiert anhand des im Moment angezeigten Layouts eben dieses
         switch(layout) {
-            case 2:
+            case 2: //level2.xml wird aktualisiert
                 setPlayer();
                 updateCoins();
                 break;
-            case 6:
-                fillTextView(R.id.t1, "Live: " + live);
+            case 6: //settings.xml wird aktualisiert
+                fillTextView(R.id.t1, "Life: " + life);
                 fillTextView(R.id.t2, "Attack: " + attack);
                 fillTextView(R.id.t3, "Speed: " + speed);
-                fillTextView(R.id.t4, "dont know: " + dontknow);
                 fillTextView(R.id.upgradePoints, "Upgradepoints left: " + upgradePoints);
                 break;
         }
     }
 
-    private void fillTextView(int id, String text){
+    private void fillTextView(int id, String text){ //Setzt einen Text in einen bestimmten TextView ein
         tv = (TextView)findViewById(id);
         tv.setText(text);
     }
 
     @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.container:
+    public void onClick(View view) { //Die onClick-Funktion verarbeitet Klicks auf bestimmte Views
+        switch(view.getId()){ //Der Switch sucht anhand des berührten Views die Funktion, die er erfüllen soll.
+            case R.id.container: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll)  (in start.xml)
                 if(layout==0) {
                     showloadfragment();
                 }
                 break;
-            case R.id.zuruekLevel:
+            case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
                 if(layout!=1&&layout!=4&&layout!=5) {
                     outoflevel();
                 }
                 showstartfragment();
                 break;
-            case R.id.rotate1:
+            case R.id.rotate1: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=1;
                 showsettingfragment();
                 break;
-            case R.id.rotate2:
+            case R.id.rotate2: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=2;
                 showsettingfragment();
                 break;
-            case R.id.rotate3:
+            case R.id.rotate3: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=3;
                 showsettingfragment();
                 break;
-            case R.id.rotate4:
+            case R.id.rotate4: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=4;
                 showsettingfragment();
                 break;
-            case R.id.rotate5:
+            case R.id.rotate5: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=5;
                 showsettingfragment();
                 break;
-            case R.id.rotate6:
+            case R.id.rotate6: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=6;
                 showsettingfragment();
                 break;
-            case R.id.rotate7:
+            case R.id.rotate7: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=7;
                 showsettingfragment();
                 break;
-            case R.id.star11:
+            case R.id.star11: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star12:
+            case R.id.star12: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star13:
+            case R.id.star13: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star14:
+            case R.id.star14: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 1; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star21:
+            case R.id.star21: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star22:
+            case R.id.star22: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star23:
+            case R.id.star23: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star24:
+            case R.id.star24: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 2; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star31:
+            case R.id.star31: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star32:
+            case R.id.star32: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star33:
+            case R.id.star33: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star34:
+            case R.id.star34: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 3; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star41:
+            case R.id.star41: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star42:
+            case R.id.star42: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star43:
+            case R.id.star43: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star44:
+            case R.id.star44: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 4; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star51:
+            case R.id.star51: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star52:
+            case R.id.star52: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star53:
+            case R.id.star53: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star54:
+            case R.id.star54: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 5; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star61:
+            case R.id.star61: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star62:
+            case R.id.star62: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star63:
+            case R.id.star63: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star64:
+            case R.id.star64: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 6; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.star71:
+            case R.id.star71: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 1:","try to finish within 0 seconds");
                 break;
-            case R.id.star72:
+            case R.id.star72: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 2:","try to finish within 10 seconds");
                 break;
-            case R.id.star73:
+            case R.id.star73: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 showDialog("Rubin 3:","try to finish within 20 seconds");
                 break;
-            case R.id.star74:
+            case R.id.star74: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
                 world = 7; //weg machen, nur zu Testzwecken
                 prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
-            case R.id.zuruekSettings:
+            case R.id.zuruekSettings: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in settings.xml)
                 showloadfragment();
                 break;
-            case R.id.startgame:
+            case R.id.startgame: //Das Spiel wird gestartet (in settings.xml)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     startGame();
                 }
                 break;
-            case R.id.zuruekLevel2:
+            case R.id.zuruekLevel2: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in activity_game.xml)
                 showloadfragment();
                 engine.stop();
                 break;
-            case R.id.l1:
+            case R.id.l1: //Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(11);
                 break;
-            case R.id.r1:
+            case R.id.r1://Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(12);
                 break;
-            case R.id.l2:
+            case R.id.l2://Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(21);
                 break;
-            case R.id.r2:
+            case R.id.r2://Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(22);
                 break;
-            case R.id.l3:
+            case R.id.l3://Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(31);
                 break;
-            case R.id.r3:
+            case R.id.r3://Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(32);
                 break;
-            case R.id.l4:
-                proofSettings(41);
-                break;
-            case R.id.r4:
-                proofSettings(42);
-                break;
-            case R.id.item1:
+            case R.id.item1: //level1.xml wird aufgerufen
                 showlevel1fragment();
                 break;
-            case R.id.item2:
+            case R.id.item2:  //level2.xml wird aufgerufen
                 showlevel2fragment();
                 break;
-            case R.id.item3:
+            case R.id.item3:  //level.xml wird aufgerufen
                 showloadfragment();
                 break;
-            case R.id.item4:
+            case R.id.item4:  //level4.xml wird aufgerufen
                 showlevel4fragment();
                 break;
-            case R.id.item5:
+            case R.id.item5:  //level5.xml wird aufgerufen
                 showlevel5fragment();
                 break;
-            case R.id.player1:
+            case R.id.player1: //Lässt player an der Liste entlanglaufen, um einen Chrakakter weiter nach links zu wechseln (in level2.xml)
                 player-=2;
                 if(player<0){
                     player = playerliste.length-2;
                 }
                 setPlayer();
                 break;
-            case R.id.player3:
+            case R.id.player3: //Lässt player an der Liste entlanglaufen, um einen Chrakakter weiter nach rechts zu wechseln (in level2.xml)
                 player+=2;
                 if(player>playerliste.length-2){
                     player = 0;
                 }
                 setPlayer();
                 break;
-            case R.id.buy:
+            case R.id.buy: //Ruft Methode setBought() auf (in level2.xml)
                 setBought();
+                break;
+            case R.id.schalten: //Schaltet die Anzeigen für die Eigenschaften der Objekte ein und aus, je nach dem, ob sie schon sichtbar oder unsichtbar sind (in activity_game.xml)
+                if(findViewById(R.id.life).getVisibility()==View.VISIBLE){
+                    ausschalten();
+                }else{
+                    einschalten();
+                }
+                break;
+            case R.id.turnonoff: //Die Musik wird in den Einstellungen ein oder ausgeschaltet, was auch im handy gespeichert wird, um beim nächsten Öffnen der App immer noch so ausgerichtet zu sein. (in level5.xml)
+                sp = getPreferences(MODE_PRIVATE);
+                e = sp.edit();
+                if(sp.getBoolean("music", false)){
+                    e.putBoolean("music", false);
+                    fillTextView(R.id.turnonoff, "OFF");
+                    stopMusic();
+                }else{
+                    e.putBoolean("music", true);
+                    fillTextView(R.id.turnonoff, "ON");
+                }
+                e.commit();
                 break;
             default:showDialog("Error", "Wrong OnClickListener!");
         }
     }
 
-    private void proofSettings(int click){
+    @Override
+    public boolean onTouch(View view, MotionEvent event) { //Wenn das Spiel gestartet ist, wird hier nach Bildschirmberührungen geprüft, dessen X- und Y-Werte dann an die Engine über prüfeTouch weitergegeben werden.
+        if(layout==7) {
+            try {
+                engine.prüfeTouch((int)event.getX(), (int)event.getY());
+            }catch (Exception e){
+
+            }
+        }
+        return false;
+    }
+
+    private void proofSettings(int click){ //Erhöht oder Erniedrigt die Werte von life, attack und speed, was in Abhängigkeit von upgradePoints steht, da diese auf die ersten Werte aufgeteilt werden, so können auch keine Werte erhöht werden, wenn keine upgradePoints mehr zur Verfügung stehen. Außerdem wird noch geprüft, ob die WErte unter 1 fallen.
         switch(click){
             case 11:
-                if(live>1) {
-                    live--;
+                if(life>1) {
+                    life--;
                     upgradePoints++;
                 }else{
 
@@ -895,7 +952,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 break;
             case 12:
                 if(upgradePoints>0) {
-                    live++;
+                    life++;
                     upgradePoints--;
                 }else{
 
@@ -933,28 +990,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
                 }
                 break;
-            case 41:
-                if(dontknow>1) {
-                    dontknow--;
-                    upgradePoints++;
-                }else{
-
-                }
-                break;
-            case 42:
-                if(upgradePoints>0) {
-                    dontknow++;
-                    upgradePoints--;
-                }else{
-
-                }
-                break;
             default:
         }
         update();
     }
 
-    private void scroll(){
+    private void scroll(){ //Setzt die Weite, die das letzte Mal gescrollt wurde, ,aus scrollWidth wieder ein. Setzt den ScrollView wieder sichtbar, um nicht für einen Frame am Anfang noch den ersten Planeten anzuzeigen.
         findViewById(R.id.scroll).post(new Runnable() {
             public void run() {
                 findViewById(R.id.scroll).scrollTo(scrollWidth, 0);
@@ -963,7 +1004,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         });
     }
 
-    private void saveScrollWidth(){
+    private void saveScrollWidth(){ //Sichert die Weite, die gescrollt wurde in scrolWidth
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
 }
@@ -971,16 +1012,15 @@ public class GameActivity extends Activity implements View.OnClickListener{
 Time-Counter
 Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)               \/
 Gravity                                                                          ?
-Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)
+Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)            \/
 	Nach x Sternen bekommt man y
-	Sterne bringen coins
-	Coinsystem (langfristig InApp- Käufe)
+	Sterne bringen coins                                                           \/
+	Coinsystem (langfristig InApp- Käufe)                                          \/
 	Tränke/ Designs/ Upgratepoints/…
-Musik
+Musik                                                                               \/
 xml-Dateien mit Libary in GameActivity abrufen (Minigolf App)
 Eigene Viecher mahlen (Drehbewegung)
-Viecher simulieren
+Viecher simulieren                                                                  \/
 Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
 Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
-random die Höhe der Planeten ändern                                              ??
 */

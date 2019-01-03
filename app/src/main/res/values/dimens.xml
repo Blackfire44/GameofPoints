@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_size">32sp</dimen>
     <dimen name="credits">24sp</dimen>
+    <dimen name="game">18sp</dimen>
 </resources>

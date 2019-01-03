@@ -108,15 +108,6 @@
                         android:contentDescription="@string/picture"
                         android:src="@android:drawable/ic_media_rew" />
 
-                    <ImageView
-                        android:id="@+id/l4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/picture"
-                        android:src="@android:drawable/ic_media_rew" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -164,18 +155,6 @@
                         android:textColor="@color/mainText"
                         android:text="@string/String" />
 
-                    <TextView
-                        android:id="@+id/t4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textColor="@color/mainText"
-                        android:text="@string/String" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -213,15 +192,6 @@
                         android:contentDescription="@string/picture"
                         android:src="@android:drawable/ic_media_ff" />
 
-                    <ImageView
-                        android:id="@+id/r4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/picture"
-                        android:src="@android:drawable/ic_media_ff" />
                 </LinearLayout>
             </LinearLayout>
 

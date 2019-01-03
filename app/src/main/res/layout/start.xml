@@ -19,10 +19,10 @@
         app:layout_constraintVertical_bias="0.089" />
 
     <TextView
-        android:id="@+id/start"
+        android:id="@+id/Tap_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Start"
+        android:text="@string/Tap_to"
         android:textColor="@color/mainText"
         android:textSize="@dimen/credits"
         app:layout_constraintBottom_toBottomOf="parent"
