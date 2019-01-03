@@ -29,13 +29,12 @@ import static android.util.Log.*;
 import static java.util.concurrent.Executor.*;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runnable{
+public class GameSurfaceView extends SurfaceView implements SurfaceHolder{
 
     private final static float size = 32;
     private float scale,x,y;
     private long t;
     private long frames;
-    private Bitmap sterneField;
     private ScheduledExecutorService executorService;
     private boolean able;
     private Thread thread = null;
@@ -61,11 +60,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
             //Log.d(getClass().getSimpleName(), Integer.toString(getFpS()) + " fps");
         }
     };*/
+
+    public Bitmap sterneField;
     protected void draw1() {
 
         //Drawable drawable = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-
             sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
             //drawable = getResources().getDrawable(R.drawable.krokotest, null);
             for (int i = 0; i <= Objekt.getListe().size(); i++) {
@@ -74,14 +74,23 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
                 //Canvas buffCanvas = new Canvas();
                // tempCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
                // buffCanvas.setBitmap(Bitmap.createBitmap((int) Objekt.getObjekt(i).getX(), (int) Objekt.getObjekt(i).getY(), Bitmap.Config.ARGB_8888));
-
                 //buffCanvas.drawRect(40,60,70,10,p);
+
                // if(Objekt.getObjekt(i).getMembership()==1) {
                 canvas = surfaceHolder.lockCanvas();
+                try {
+                    canvas.drawBitmap(sterneField, Objekt.getObjekt(i).getX()-(Objekt.getObjekt(i).getR()/2), Objekt.getObjekt(i).getY()-(Objekt.getObjekt(i).getR()/2), null); //Diese zeile funktioniert nicht, obwohl sie das, laut wirklich allem was ich bisher finden konnte, wirklich tuen sollte. Deshalb geht die nächte Zeile auch nicht, weil nicht im surfce steht, was released werden könnte!
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 Log.d("CREATION", "TEST");
-                canvas.drawBitmap(sterneField, 100, 100, null);
-                Log.d("CREATION", "TEST");
-                surfaceHolder.unlockCanvasAndPost(canvas);
+                try {
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 Log.d("CREATION", "TEST");
             }//https://stackoverflow.com/questions/6538423/double-buffering-in-java-on-android-with-canvas-and-surfaceview#6538623
         }
@@ -105,7 +114,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
     public float getBaseDimension(){
         return(scale*size);
     }
-
+/*
     public int getFpS(){
         long delta = System.currentTimeMillis() - t;
         if(delta<1000) {
@@ -114,7 +123,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
         else{
             return (int) (frames/(delta/1000));
         }
-    }
+    }*/
 
     public void stop(){
         able = false;
@@ -128,12 +137,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
             break;
         }
         thread  = null;
-    }
-    public  void resume(){
-        able = true;
-        thread = new Thread(this);
-        thread.start();
-
     }
 
     @Override
@@ -173,11 +176,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
 
     @Override
     public Canvas lockCanvas() {
-        return null;
+        return canvas;
     }
 
     @Override
-    public Canvas lockCanvas(Rect rect)  {
+    public Canvas lockCanvas(Rect rect) {
         return null;
     }
 
@@ -194,10 +197,5 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder, Runna
     @Override
     public Surface getSurface() {
         return null;
-    }
-
-    @Override
-    public void run() {
-
     }
 }
