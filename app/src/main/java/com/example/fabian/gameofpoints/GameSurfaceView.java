@@ -142,7 +142,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             frames++;
         }
         for (int i = 0; i <= Objekt.getListe().size(); i++) {
-            canvas.drawBitmap(sterneField.getBitmap(), Objekt.getObjekt(i).getX(), Objekt.getObjekt(1).getY(), PaintBitmap);
+            canvas.drawBitmap(sterneField.getBitmap(), Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY(), PaintBitmap);
         /*
         BitmapDrawable sterne = (BitmapDrawable) getResources().getDrawable(R.drawable.hintergrund1);
         Log.d("CREATION", "TEST-0.5");
