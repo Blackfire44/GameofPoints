@@ -29,14 +29,6 @@
                 android:text="@string/Planetenauswahl"
                 android:textColor="@color/mainText" />
 
-            <ImageView
-                android:id="@+id/zuruekLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/picture"
-                android:src="@android:drawable/ic_delete" />
-
         </LinearLayout>
 
         <HorizontalScrollView

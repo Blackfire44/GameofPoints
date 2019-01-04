@@ -24,15 +24,6 @@
             android:text="@string/shop"
             android:textColor="@color/mainText" />
 
-        <ImageView
-            android:id="@+id/zuruekLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:contentDescription="@string/picture"
-            android:src="@android:drawable/ic_delete" />
-
     </FrameLayout>
 
     <FrameLayout

@@ -47,7 +47,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int scrollWidth;
     private int anzahlWelten = 7;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.objekt_0, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
     private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
 
     private ImageView mImageViewEmptying;
@@ -92,8 +92,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         playerselect();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
@@ -846,9 +844,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showloadfragment();
                 break;
             case R.id.startgame: //Das Spiel wird gestartet (in settings.xml)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startGame();
-                }
+                startGame();
                 break;
             case R.id.zuruekLevel2: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in activity_game.xml)
                 showloadfragment();

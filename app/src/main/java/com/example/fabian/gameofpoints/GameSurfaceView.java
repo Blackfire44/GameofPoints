@@ -102,7 +102,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
         //sterneField = BitmapFactory.decodeResource(getResources(),R.drawable.krokotest);
         //Drawable drawable = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        //if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             //drawable = getResources().getDrawable(R.drawable.krokotest, null);
             for (int i = 0; i <= Objekt.getListe().size(); i++) {
                 surfaceHolder = getHolder();
@@ -133,7 +133,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
                 Log.d("CREATION", "TEST");
             }//https://stackoverflow.com/questions/6538423/double-buffering-in-java-on-android-with-canvas-and-surfaceview#6538623
         }
-    }
+  //  }
 
     protected void doDraw(Canvas canvas){
         System.out.println("WElt");
