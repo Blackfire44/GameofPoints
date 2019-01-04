@@ -47,7 +47,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int scrollWidth;
     private int anzahlWelten = 7;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
 
     private ImageView mImageViewEmptying;
@@ -339,7 +339,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level1, null)); //level1
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -371,7 +370,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -425,7 +423,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -440,7 +437,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -708,12 +704,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     showloadfragment();
                 }
                 break;
-            case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
+            /*case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
                 if(layout!=1&&layout!=4&&layout!=5) {
                     outoflevel();
-                }
+                }*
                 showstartfragment();
-                break;
+                break;*/
             case R.id.rotate1: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=1;
                 showsettingfragment();

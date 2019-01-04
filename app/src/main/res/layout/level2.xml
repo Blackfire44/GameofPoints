@@ -249,7 +249,7 @@
                     android:id="@+id/miniplayer7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/krokotest" />
+                    android:src="@drawable/viech6" />
 
                 <ImageView
                     android:id="@+id/filter7"
@@ -267,7 +267,7 @@
                     android:id="@+id/miniplayer8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/krokotest" />
+                    android:src="@drawable/viech7" />
 
                 <ImageView
                     android:id="@+id/filter8"
