@@ -15,24 +15,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/pause"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Pause" />
-
-        <TextView
             android:id="@+id/backtotitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Back to title" />
 
-        <TextView
-            android:id="@+id/Continue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Continue" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

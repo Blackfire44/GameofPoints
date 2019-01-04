@@ -1,40 +1,21 @@
 package com.example.fabian.gameofpoints;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
-import android.hardware.SensorManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import static android.util.Log.d;
+        import android.app.Activity;
+        import android.content.Context;
+        import android.content.SharedPreferences;
+        import android.graphics.drawable.AnimationDrawable;
+        import android.hardware.SensorManager;
+        import android.media.MediaPlayer;
+        import android.os.Bundle;
+        import android.view.MotionEvent;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.FrameLayout;
+        import android.widget.ImageView;
+        import android.widget.ProgressBar;
+        import android.widget.TextView;
+        import java.util.concurrent.ScheduledExecutorService;
 
 public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
     private int life = 1;
@@ -42,13 +23,21 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int speed = 1;
     private int upgradePoints = 20;
     private int layout;
+    private int rubine;
     private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
     private int player = 0;
     private int scrollWidth;
     private int anzahlWelten = 7;
+    private float basedimension;
+    private int timer = 0;
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.objekt_0, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
     private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
+    private int[] background = {R.drawable.jonschnee, R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee};
+    private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
+    private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
+    private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
+    private int[] colorlist = {R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest,R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest};
 
     private ImageView mImageViewEmptying;
     private TextView tv;
@@ -58,192 +47,210 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private SharedPreferences.Editor e;
     private CustomDialog customDialog;
     private MediaPlayer music;
+    private ScheduledExecutorService executor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        löscheShared();
-        pluscoins(1000);
+        löscheShared();//noch entfernen beim Start
 
+        pluscoins(1000); //Man bekommt am Anfang 1000 Münzen
+        setPlayer1(); //Der erste Charakter wird freigeschaltet
 
-        setPlayer1();
-
-        switch((int)(Math.random()*3+1)){
+        switch((int)(Math.random()*3+1)){ //Der Hintergrund wird zufällig gesetzt
             case 1:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
                 break;
             case 2:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund2);
                 break;
             case 3:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund3);
                 break;
+            case 4:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund4);
+                break;
             default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
         }
-        showstartfragment();
+        showstartfragment(); //start.xml wird angezeigt
     }
 
-    private void setPlayer1(){
+    private void setPlayer1(){ //Der erste Charakter wird direkt freigeschaltet
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("player0", false)==false&&player==0) {
+        if(sp.getBoolean("player0", false)==false&&player==0) { //Prüfung, ob er schon freigeschaltet ist
             e=sp.edit();
             e.putBoolean("player0", true);
             e.commit();
         }
-        playerselect();
+        playerselect(); //Dieser Charakter wird ausgewählt
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
+
+        gameview = new GameView(this);
+        gameview.setVisibility(View.VISIBLE);
+        gameview.setBackground(background[world-1]);
+        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
         container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
         container.findViewById(R.id.schalten).setOnClickListener(this);
         container.findViewById(R.id.container).setOnTouchListener(this);
-        gameview = new GameView(this) {
 
-        };
-        gameview.setVisibility(View.VISIBLE);
-        float basedimension = gameview.getBaseDimension();
+        basedimension = gameview.getBaseDimension();
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
-        engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Rand abstecken mit der halben Basedimension/ deklariert den Rand mit einberechnung des Ballradiuses???? eventuell ändern....
-        //loadBackground();
-        //container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        for(int i = 0; i <10; i++ ){
-            int x = (int) (Math.random() * (container.getHeight()));
-            int y = (int) (Math.random() * (container.getWidth()));
-            engine.createObjekt(x, y, 1, 2, 3, 4, 5);
-        }
-        engine.createObjekt(100, 100, 1, life, attack, speed, playerliste[playerselection]);
+        engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Der Rand wird anhand des Containers abgesteckt
+
+        engine.createObjekt(container.getWidth()-200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],colorlist[world-1]);
+        engine.createObjekt(container.getWidth()/2, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],colorlist[world-1]);
+        engine.createObjekt(200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],colorlist[world-1]);
+
+        engine.createObjekt(container.getWidth()-200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],colorlist[world-1]);
+        engine.createObjekt(200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],colorlist[world-1]);
+
+        engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]);
         engine.setSelect(Objekt.getListe().size()-1);
 
-        try {
-            fillTextView(R.id.countdown, "3");
-            Thread.sleep(1000);
-            fillTextView(R.id.countdown, "2");
-            Thread.sleep(1000);
-            fillTextView(R.id.countdown, "1");
-            Thread.sleep(1000);
-            findViewById(R.id.countdown).setVisibility(View.INVISIBLE);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
+        timer=0;
+        //executor = Executors.newSingleThreadScheduledExecutor();
+        //executor.scheduleAtFixedRate(runnable,0, 1000, TimeUnit.MILLISECONDS);
         engine.start();
-        startRandomMusic();
         layout=7;
+        startRandomMusic();
     }
 
-    public void setData(float life, int attack, int speed){
+    private Runnable runnable = new Runnable(){
+        @Override
+        public void run() {
+            setTimer();
+        }
+    };
+
+    public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
         fillTextView(R.id.life, "Life: "+(int)life);
         fillTextView(R.id.attack, "Attack: "+attack);
         fillTextView(R.id.speed, "Speed: "+speed);
     }
 
-    private void einschalten(){
+    private void einschalten(){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird sichtbar gemacht
         fillTextView(R.id.schalten, "turn off");
         findViewById(R.id.life).setVisibility(View.VISIBLE);
         findViewById(R.id.attack).setVisibility(View.VISIBLE);
         findViewById(R.id.speed).setVisibility(View.VISIBLE);
     }
 
-    private void ausschalten(){
+    private void ausschalten(){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird unsichtbar gemacht
         fillTextView(R.id.schalten, "turn on");
         findViewById(R.id.life).setVisibility(View.INVISIBLE);
         findViewById(R.id.attack).setVisibility(View.INVISIBLE);
         findViewById(R.id.speed).setVisibility(View.INVISIBLE);
     }
 
-    private void endGame(){
-        stopMusic();
-        prüfeStars();
+    public void endGame(boolean which){ //Wird nach Ende eines Spiels aufgerufen
+        engine.stop(); //Die laufenden Aktionen werden gestoppt
+        Objekt.getListe().clear(); //Die Objektliste wird geleert
+        stopMusic(); //Die Musik wird angehalten
+        showgameoverfragment(); //showgameoverfragment.xml wird aufgerufen
+        if(which){
+            prüfeStars(); //Die gewonnenen rubine werden hinzugefügt
+            fillTextView(R.id.endscreen, "Level completed!");
+        }else{
+            fillTextView(R.id.endscreen, "Game over!");
+            fillTextView(R.id.time, "You earned 0 rubies");
+        }
     }
 
-    private void prüfeStars() { //nur nach Levelende!!!!
+    public void setTimer(){//Der Timer wird erhöht und auch in game_activity.xml aktualisiert
+        timer++;
+        fillTextView(R.id.timer, ""+timer);
+    }
+
+    private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
         sp = getPreferences(MODE_PRIVATE);
         e = sp.edit();
-        //get Time
-        int time = 15;
-        int timergrenze = 30;
-        //getLevel(welt).getZeitMissionen
+        rubine = 10;
 
-        for(int stern = 1; stern<5; stern++) {
-            if (time<=timergrenze && !sp.getBoolean("star" + world + stern, false)) {
+        int timergrenze = 90; //Die Leistung für den ersten Rubin ist bei 90 Sekunden
+
+        for(int stern = 1; stern<4; stern++) { //Die ersten drei Rubine werden bei bestimmten Zeiten, die immer knapper werden, erspielt
+            if (timer<=timergrenze && !sp.getBoolean("star" + world + stern, false)) { //Prüfung, ob der Stern schon freigespielt wurde und jetzt freigeschaltet werden darf
                 e.putBoolean("star" + world + stern, true);
                 e.commit();
-                pluscoins(50);
-                showDialog("star" + world + stern, "5555");
+                pluscoins(50); //Man bekommt zusätzlich 50 Münzen
+                rubine += 50; //Für die Anzeige werden die Rubine gezählt
             }
-            timergrenze-=10;
+            timergrenze-=30; //Die benötigte Zeit wird knapper
         }
-            for (int rubin = 0; rubin < 4; rubin++) {
-                showDialog("star" + world + (rubin+1), ""+sp.getBoolean("star" + world + (rubin+1), false));
-                if(sp.getBoolean("star" + world + (rubin + 1), false)){ //stern41 4ter Stern der 1ten Welt
-                    imageStar(R.id.star11+4*(world-1)+rubin, rubin);
-                    showDialog("", "2222");
-                }
-            }
+        if(upgradePoints>=10&&!sp.getBoolean("star" + world + 4, false)){ //Der 4.Rubin wird freigespielt, wenn mindestens 10 upgradePoints noch übrig sind
+            e.putBoolean("star" + world + 4, true);
+            e.commit();
+            pluscoins(100); //Man bekommt zusätzlich 100 Münzen
+            rubine += 10; //Für die Anzeige werden die Rubine gezählt
+        }
+        fillTextView(R.id.time, "You earned "+rubine+" rubies");
     }
 
-    private void setStars(){
+    private void setStars(){ //Alle Rubine werden für alle Planeten aktualisiert
         sp = getPreferences(MODE_PRIVATE);
         for(int welt = 0; welt<anzahlWelten; welt++) {
             for (int rubin = 1; rubin < 5; rubin++) {
-                if(sp.getBoolean("star" + welt + rubin, false)){ //stern14 4ter Stern der 1ten Welt
+                if(sp.getBoolean("star" + welt + rubin, false)){ //star14 steht kodiert für :4. Stern der 1. Welt
                     imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
                 }
             }
         }
     }
 
-    private void imageStar(int rubin, int vier){
+    private void imageStar(int rubin, int vier){  //Die Bilder der Rubine werden in die entsprechenden ImageViews gesetzt
         if(vier!=3) {
             setImage(rubin, R.drawable.star1);
         }else{
-            setImage(rubin, R.drawable.star1);//4er Stern
+            setImage(rubin, R.mipmap.kreislogo4); //Der vierte Rubin wird als Medaille angezeigt
         }
     }
 
-    private void löscheShared(){ //noch entfernen beim Start
+    private void löscheShared(){ //Löscht alle fest gespeicherten Werte
         sp = getPreferences(MODE_PRIVATE);
         sp.edit().clear().commit();
     }
 
-    public void setDiagramm(int stamm1, int stammgesamt){
+    public void setDiagramm(int stamm1, int stammgesamt){ //Das Diagramm wird aktualisiert, um das Verhältniss der eigenen Charaktere zu den gegnerischen zu zeigen
         ProgressBar progress = findViewById(R.id.progressBar4);
-        progress.setProgress((int)stamm1/stammgesamt*100);
+        progress.setProgress((int)stamm1/stammgesamt*100); //ProgressBar wird gesetzt
     }
 
-    private void showDialog(String titel, String text){
+    private void showDialog(String titel, String text){ //Ein Dialog wird angezeigt
         customDialog = new CustomDialog(this, titel, text);
     }
 
-    private void startMusic(int i, boolean loop){
-        if(music!=null) {
+    private void startMusic(int i, boolean loop){ //Die Musik wird gestartet
+        if(music!=null) { //Wenn noch Musik läuft, wird diese beendet
             music.release();
         }
-        music = MediaPlayer.create(this, i);
-        if(loop){
+        music = MediaPlayer.create(this, i); //Der Track wird eingestellt
+        if(loop){ //Eine dauerhafte Wiederholung kann eingestellt werden
             music.setLooping(true);
         }
-        music.start();
+        music.start(); //Die Musik wird gestartet
     }
 
-    private void stopMusic(){
-        music.stop();
+    private void stopMusic(){ //die Musik wird angehalten
+        if(music!=null) {
+            music.stop();
+        }
     }
 
-    private void startRandomMusic(){
+    private void startRandomMusic(){ //Eine zufällige Musik wird gewählt
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("music", false)==true) {
-            music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        if(sp.getBoolean("music", false)==true) { //Prüfung, ob die Musik gestartet werden darf
+            music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { //Wenn die Musik beendet ist, wird onCompletion() ausgeführt
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    if (music != null) {
+                    if (music != null) { //Die laufende Musik wird noch geschlossen, falls sie noch läuft oder fertig, aber noch nicht beendet ist
                         music.release();
                     }
-                    switch ((int) Math.random() * 5) {
+                    switch ((int) Math.random() * 5) { //Zufällig wird ein neuer Track ausgewählt
                         case 0:
                             startMusic(R.raw.intro, false);
                             break;
@@ -262,45 +269,52 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                         default:
                             startMusic(R.raw.intro, false);
                     }
-                    startRandomMusic();
+                    startRandomMusic(); //Ein neuer OnCompletionListener wird gesetzt
                 }
             });
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause(){ //Wenn die App pausiert wird,  werden laufende Prozesse auch pausiert (Home-Button)
         //pausegame();
         super.onPause();
         if(music!=null){
+            showDialog("hallo", "hallo");
             music.pause();
         }
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume(){ //Wenn die App (wieder)geöffnet wird,  werden laufende Prozesse auch gestartet (App wird geöffnet)
         super.onResume();
         if(sp.getBoolean("music", false)) {
-            music.start();
+            if(music==null) {
+                music.start();
+            }
         }
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy() { //Wenn die App geschlossen wird, werden laufende Prozesse auch beendt
         //stopgame();
-        music.stop();
+        if(music!=null) {
+            music.stop();
+        }
         super.onDestroy();
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop() { //Wenn die App gestoppt wird, werden laufende Prozesse auch gestoppt (Speicher ist voll)
         //stopgame();
-        music.stop();
+        if(music!=null) {
+            music.stop();
+        }
         super.onStop();
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { //Bei Berührung der Zurücktaste wird nicht direkt die App geschlossen, sondern in das dafür vorgesehene, vorhergehende Layout geleitet
         switch(layout){
             case 0:super.onBackPressed();
                 break;
@@ -309,71 +323,71 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             case 2:showstartfragment();
                 break;
             case 3:
-                outoflevel();
+                outoflevel(); //Die laufenden Aktivitäten werden beendet
                 showstartfragment();
                 break;
             case 4:showstartfragment();
                 break;
             case 5:showstartfragment();
                 break;
-            case 6:showloadfragment();//Setting
+            case 6:showloadfragment();//(in setting.xml)
                 break;
-            case 7:showsettingfragment();//showstopfragment();//start
+            case 7:showstopfragment();//(nach Start)
                 break;
-            case 9:showloadfragment();//Game Over
+            case 9:showloadfragment();//(in gamover.xml)
                 break;
             default:showstartfragment();
         }
     }
 
-    private void showstartfragment(){
+    private void showstartfragment(){ //start.xml wird angezeigt
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.start, null));
-        container.findViewById(R.id.container).setOnClickListener(this);
-        layout=0;
+        container.findViewById(R.id.container).setOnClickListener(this);//Ein OnClickListener wird gesetzt, um den View anklickbar zu machen
+        layout=0; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showlevel1fragment(){
-        if(layout==3){
+    private void showlevel1fragment(){ //level1.xml wird angezeigt
+        if(layout==3){ //Wenn man aus dem level.xml Layout kommt, werden die laufenden Funktionen gestoppt
             outoflevel();
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level1, null)); //level1
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
-        layout=1;
+        layout=1; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showlevel2fragment(){
-        if(layout==3){
+    private void showlevel2fragment(){ //level2.xml wird angezeigt
+        if(layout==3){ //Wenn man aus dem level.xml Layout kommt, werden die laufenden Funktionen gestoppt
             outoflevel();
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level2, null)); //level2
-        container.findViewById(R.id.item1).setOnClickListener(this);
+        container.findViewById(R.id.item1).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
         container.findViewById(R.id.player1).setOnClickListener(this);
         container.findViewById(R.id.player3).setOnClickListener(this);
         container.findViewById(R.id.buy).setOnClickListener(this);
-        layout=2;
-        player=playerselection;
-        update();
+        layout=2; //Es wird gespeichert, in welchem Layout man sich gerade befindet
+        player=playerselection; //Der zu letzt ausgewählte Charakter wird wieder gesetzt
+        update(); //Alles wird wieder aktualisiert angezeigt, da die Layouts bei Austritt keine Änderungen speichern
     }
 
-    private void showlevel3fragment(){
+    private void showlevel3fragment(){ //level.xml wird angezeigt
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
-        findViewById(R.id.scroll).setVisibility(View.INVISIBLE);
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        findViewById(R.id.scroll).setVisibility(View.INVISIBLE); //Der ScrollView wird unsichtbar gesetzt, um den einen Frame, der vor dem Anzeigen der letzten Scrollweite noch gezeigt wird, nicht zu zeigen
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -413,55 +427,54 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.star72).setOnClickListener(this);
         container.findViewById(R.id.star73).setOnClickListener(this);
         container.findViewById(R.id.star74).setOnClickListener(this);
-        layout=3;
-        setStars();
-        scroll();
-        startanimation();
-        //Log.d(getClass().getSimpleName(), Integer.toString(gameview.getFpS())+ " fps");
+        layout=3; //Es wird gespeichert, in welchem Layout man sich gerade befindet
+        setStars(); //Die Sterne werden wieder aktualisiert, da die Layouts bei Austritt keine Änderungen speichern
+        scroll(); //Es wird zur alten Weite gescrollt
+        startanimation(); //Die Animationen werden gespeichert
     }
 
-    private void showlevel4fragment(){
-        if(layout==3){
+    private void showlevel4fragment(){ //level4.xml wird angezeigt
+        if(layout==3){ //Wenn man aus dem level.xml Layout kommt, werden die laufenden Funktionen gestoppt
             outoflevel();
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
-        layout=4;
+        layout=4; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showlevel5fragment(){
-        if(layout==3){
+    private void showlevel5fragment(){ //level5.xml wird angezeigt
+        if(layout==3){ //Wenn man aus dem level.xml Layout kommt, werden die laufenden Funktionen gestoppt
             outoflevel();
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);
+        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.turnonoff).setOnClickListener(this);
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("music", false)==false){
+        if(sp.getBoolean("music", false)==false){ //Der TextView für die Musikeinstellung wird auf "ON" gesetzt, wenn die Musik an ist und auf "OFF", wenn die Musik aus ist
             fillTextView(R.id.turnonoff, "OFF");
         }else{
             fillTextView(R.id.turnonoff, "ON");
         }
-        layout=5;
+        layout=5; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showloadfragment(){
+    private void showloadfragment(){ //load.xml wird angezeigt
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.load, null));
-        if(layout!=1&&layout!=2&&layout!=4&&layout!=5){
+        if(layout!=1&&layout!=2&&layout!=4&&layout!=5){ //Bei level1.xml, level2.xml, level4.xml oder level5.xml wird die Navigationbar nicht ausgeblendet, um eine durchgängig vorhandene Navigation BAr zu simulieren
             container.findViewById(R.id.item1).setVisibility(View.INVISIBLE);
             container.findViewById(R.id.item2).setVisibility(View.INVISIBLE);
             container.findViewById(R.id.item3).setVisibility(View.INVISIBLE);
@@ -469,16 +482,16 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             container.findViewById(R.id.item5).setVisibility(View.INVISIBLE);
             container.findViewById(R.id.leiste).setVisibility(View.INVISIBLE);
         }
-        load();
+        load(); //Es wird das Laden gestartet
     }
 
 
-    private void showsettingfragment(){
-        outoflevel();
+    private void showsettingfragment(){ //setting.xml wird angezeigt
+        outoflevel(); //Laufende Funktionen aus level.xml werden abgebrochen
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.settings, null));
-        container.findViewById(R.id.zuruekSettings).setOnClickListener(this);
+        container.findViewById(R.id.zuruekSettings).setOnClickListener(this); //OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.l1).setOnClickListener(this);
         container.findViewById(R.id.r1).setOnClickListener(this);
         container.findViewById(R.id.l2).setOnClickListener(this);
@@ -486,35 +499,34 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.l3).setOnClickListener(this);
         container.findViewById(R.id.r3).setOnClickListener(this);
         container.findViewById(R.id.startgame).setOnClickListener(this);
-        layout=6;
+        layout=6; //Es wird gespeichert, in welchem Layout man sich gerade befindet
         setPlanet(R.id.planetsettings);
-        setPlayerImage(R.id.player, playerselection);
-        update();
+        setPlayerImage(R.id.player, playerselection); //Der ausgewählte Charakter wird angezeigt
+        update(); //Eine Aktualisierung wird durchgeführt, da die Layouts bei Austritt keine Änderungen speichern
     }
 
-    private void showstopfragment(){
+    private void showstopfragment(){ //stopp.xml wird angezeigt
         //stopgame();
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
-        container.findViewById(R.id.backtotitle).setOnClickListener(this);
-        container.findViewById(R.id.Continue).setOnClickListener(this);
-        layout=8;
+        container.findViewById(R.id.backtotitle).setOnClickListener(this); //OnClickListener wird gesetzt, um den View anklickbar zu machen
+        layout=8; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showgameoverfragment(){
+    private void showgameoverfragment(){ //gameover.xml wird angezeigt
         //stopgame();
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.gameover, null));
-        layout=9;
+        layout=9; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void load(){
+    private void load(){ //Ein Ladebildschirm wird angezeigt, um das Laden der drehenden Planeten nicht als Standbildschirm dastehen zu lassen.
         findViewById(R.id.container).post(new Runnable() {
             public void run() {
-                long l = System.currentTimeMillis();
-                showlevel3fragment();
+                long l = System.currentTimeMillis(); //Die reelle Zeit wird abgenommen
+                showlevel3fragment(); //Level.xml wird angezeigt
                 try {
-                    l = System.currentTimeMillis()-l;
+                    l = System.currentTimeMillis()-l; //Wenn weniger, als 1,5 Sekunden geladen wurde, wird noch bis 1,5 Sekunden gewartet
                     if(l<1500){
                         Thread.sleep(1500-l);
                     }
@@ -525,7 +537,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         });
     }
 
-    private void setPlanet(int id){
+    private void setPlanet(int id){ //In settings.xml wird je nach ausgewählter Welt derren Name angezeigt
         switch(world){
             case 1:
                 fillTextView(id, "World 1: Trius");
@@ -553,35 +565,35 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
     }
 
-    private void setPlayer(){
-        if(player==0){
+    private void setPlayer(){ //Die Charaktere werden wieder an richtiger Position angezeigt
+        if(player==0){ //Bei dem linken Charakter wird noch geprüft, ob der Mittlere am Rand der Liste steht, um den nächsten dann am anderen Ende auszuwählen
             setPlayerImage(R.id.player1, playerliste.length-2);
         }else{
             setPlayerImage(R.id.player1, player-2);
         }
-        setPlayerImage(R.id.player2, player);
-        if(player==playerliste.length-2){
+        setPlayerImage(R.id.player2, player); //Der Mittlere wird gesetzt
+        if(player==playerliste.length-2){ //Bei dem rechten Charakter wird noch geprüft, ob der Mittlere am Rand der Liste steht, um den nächsten dann am anderen Ende auszuwählen
             setPlayerImage(R.id.player3, 0);
         }else{
             setPlayerImage(R.id.player3, player+2);
         }
-        updateFilter();
-        updateBought();
-        fillTextView(R.id.playername, playernamen[player/2]);
+        updateFilter(); //Die Filter für die Leiste werden aktualisiert
+        updateBought(); //Die Anzeige für die Kosten werden aktualisiert
+        fillTextView(R.id.playername, playernamen[player/2]); //Der Name des mittleren Cgarakters wird aktualisiert
     }
 
-    private void updateBought(){//Text unten
+    private void updateBought(){ //Der Text unter den Charakteren mit den Kosten wird aktualisiert
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("player"+player/2, false)==false){
-            fillTextView(R.id.cost, ""+playerliste[player+1]);
-            setImage(R.id.money, R.drawable.coin);
+        if(sp.getBoolean("player"+player/2, false)==false){ //Prüfung, ob der Charakter gekauft wurde
+            fillTextView(R.id.cost, ""+playerliste[player+1]); //Die Kosten werden im textView angezeigt
+            setImage(R.id.money, R.drawable.coin); //Ein Geldstück wird neben den Kosten gezeigt
         }else{
-            if(player==playerselection){
-                fillTextView(R.id.cost, "selected");
+            if(player==playerselection){ //Prüfung, ob der Spieler ausgewählt ist, wenn er schon gekauft ist
+                fillTextView(R.id.cost, "selected"); //Er ist ausgewählt
             }else{
-                fillTextView(R.id.cost, "tap to select");
+                fillTextView(R.id.cost, "tap to select"); //Er ist noch nicht ausgewählt
             }
-            setImage(R.id.money, R.drawable.haken);
+            setImage(R.id.money, R.drawable.haken); //Wenn er schon gekauft ist, wird ein Haken daneben gesetzt
         }
     }
 
@@ -595,11 +607,11 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         sp = getPreferences(MODE_PRIVATE);
         for(int choose = 0; choose<playerliste.length/2; choose++) { //Für alle Charaktere der Leiste (Sind alle in der Liste gespeichert)
             if (sp.getBoolean("player" + choose, false)) { //Prüfung, ob er schon gekauft wurde
-                    if (choose*2 == playerselection) { //Prüfung, ob er für das nächste Spiel ausgewählt wurde
-                        setImage(R.id.filter1 + choose, R.drawable.filtergelb); //Filter für die Auswahl
-                    } else {
-                        setImage(R.id.filter1 + choose, R.drawable.filterweiss); //Filter für nicht gekauft oder ausgewählt
-                    }
+                if (choose*2 == playerselection) { //Prüfung, ob er für das nächste Spiel ausgewählt wurde
+                    setImage(R.id.filter1 + choose, R.drawable.filtergelb); //Filter für die Auswahl
+                } else {
+                    setImage(R.id.filter1 + choose, R.drawable.filterweiss); //Filter für nicht gekauft oder ausgewählt
+                }
             }
 
         }
@@ -618,8 +630,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showDialog("", "You have not enough coins to buy "+playernamen[player/2]);
             }
         }
-        playerselect();
-        setPlayer();
+        playerselect(); //Der neue Charakter wird ausgewählt
+        setPlayer(); //Das Notwendige wird angepasst
     }
 
     private void pluscoins(int bonus){ //Das Geld wird in den SharedPreferences um den hinzugefügten Bonus erhöht.
@@ -716,6 +728,11 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 }
                 showstartfragment();
                 break;
+            case R.id.backtotitle: //start.xml wird aufgerufen (nach Start)
+                Objekt.getListe().clear(); //Die Objektliste wird geleert
+                stopMusic(); //Die Musik wird angehalten
+                showloadfragment();
+                break;
             case R.id.rotate1: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=1;
                 showsettingfragment();
@@ -745,114 +762,101 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showsettingfragment();
                 break;
             case R.id.star11: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star12: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star13: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star14: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 1; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star21: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star22: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star23: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star24: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 2; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star31: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star32: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star33: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star34: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 3; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star41: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star42: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star43: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star44: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 4; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star51: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star52: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star53: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star54: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 5; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star61: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star62: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star63: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star64: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 6; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.star71: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 1:","try to finish within 0 seconds");
+                showDialog("Rubin 1:","try to finish within 90 seconds");
                 break;
             case R.id.star72: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 2:","try to finish within 10 seconds");
+                showDialog("Rubin 2:","try to finish within 60 seconds");
                 break;
             case R.id.star73: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                showDialog("Rubin 3:","try to finish within 20 seconds");
+                showDialog("Rubin 3:","try to finish within 30 seconds");
                 break;
             case R.id.star74: //Ein Dialog wird gezeigt, der mitteilt, wie schnell ein Level beendet werden muss (in level.xml)
-                world = 7; //weg machen, nur zu Testzwecken
-                prüfeStars();
                 showDialog("Special Medal:","Use just 10 Upgradepoints to win this match.");
                 break;
             case R.id.zuruekSettings: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in settings.xml)
                 showloadfragment();
                 break;
             case R.id.startgame: //Das Spiel wird gestartet (in settings.xml)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     startGame();
-                }
                 break;
-            case R.id.zuruekLevel2: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in activity_game.xml)
+            case R.id.zuruekLevel2: //stop.xml wird aufgerufen und die laufenden Aktionen der engine werden gestoppt (in game_activity.xml)
+                engine.stop(); //Die laufenden Aktionen werden gestoppt
+                showstopfragment(); //stopp.xml wird aufgerufen
+                break;
+            case R.id.back: //level.xml wird aufgerufen (über den Load-Umweg, da es eine Weile lädt und dafür noch ein Ladebildschirm angezeigt werden soll) (in activity_game.xml) (in gameover.xml)
                 showloadfragment();
-                engine.stop();
                 break;
             case R.id.l1: //Es iwrd weitergegeben, welcher Wert aus life, attack und speed sich erhöhen oder erniedrigen soll. (in settings.xml)
                 proofSettings(11);
@@ -916,13 +920,14 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 e = sp.edit();
                 if(sp.getBoolean("music", false)){
                     e.putBoolean("music", false);
+                    e.commit();
                     fillTextView(R.id.turnonoff, "OFF");
                     stopMusic();
                 }else{
                     e.putBoolean("music", true);
+                    e.commit();
                     fillTextView(R.id.turnonoff, "ON");
                 }
-                e.commit();
                 break;
             default:showDialog("Error", "Wrong OnClickListener!");
         }

@@ -6,22 +6,15 @@ import android.widget.AdapterView;
 
 public class CustomDialog {
 
-    public CustomDialog(Context context, String title, String text){
+    public CustomDialog(Context context, String title, String text){ //Konstruktor
         setupDialog(context, title, text);
     }
 
-    private void setupDialog(Context context, String title, String text){
+    private void setupDialog(Context context, String title, String text){ //Es wird ein Dialogfenster gezeigt
         AlertDialog dialog = new AlertDialog.Builder(context, R.style.CustomDialogTheme)
                 .setTitle(title)
                 .setMessage(text)
-                .create();
-        dialog.show();
+                .create(); //Ein Dialog wird kreiert und Titel und die Mitteilung werden mitgegeben
+        dialog.show(); //Der Dialog wird angezeigt
     }
 }
-/*.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-@Override
-public void onClick(DialogInterface dialog, int i) {
-        dialog.cancel();
-        }
-        })*/
-//dialog.setCanceledOnTouchOutside(false);

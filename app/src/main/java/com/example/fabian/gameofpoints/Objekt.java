@@ -11,7 +11,7 @@ public class Objekt {
     private int speed;
     private int direction;
     private int breedTimer;
-    private boolean breedState; // einfügen
+    private boolean breedState;
     private int partner;
     private boolean control;
     private int grow;
@@ -22,7 +22,7 @@ public class Objekt {
 
     private static ArrayList<Objekt> liste = new ArrayList<>();
 
-    public Objekt(int x, int y, int membership, int life, int attack, int speed, int color){ //radius entfernen und durch Live ersetzen
+    public Objekt(int x, int y, int membership, int life, int attack, int speed, int color){ //Die Anfangswerte bei der Erschaffung vor dem Spielstart werden gesetzt
         this.x = x;
         this.y = y;
         this.membership = membership;
@@ -36,28 +36,26 @@ public class Objekt {
         control = false;
         grow = 0;
         setR();
-        direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
+        direction = (int)(Math.random()*360); //Zufällig wird eine Anfangsgradzahl berechnet
         liste.add(this);
         anzViech++;
     }
 
-    public Objekt(int x, int y, int membership) {
+    public Objekt(int x, int y, int membership) { //Bei Erzeugung während des Spiels werden die nun noch nötigen Werte gesetzt, da die anderen Werte von den Eltern noch nachträglich eingetragen werden müssen
         this.x = x;
         this.y = y;
         this.membership = membership;
-        breedTimer = 200;//auch unten bei setR() ändern
+        breedTimer = 200;
         breedState = false;
         control = false;
         grow = 1;
-        r = 10;
-        direction = (int)(Math.random()*360); //random eine Anfangsgradzahl berechnen
+        r = 10; //Der Radius bekommt einen Anfangswert, bevor er größer wird
+        direction = (int)(Math.random()*360); //Zufällig wird eine Anfangsgradzahl berechnet
         liste.add(this);
         anzViech++;
     }
 
-    public static ArrayList<Objekt> getListe() {
-        return liste;
-    }
+    public static ArrayList<Objekt> getListe() { return liste; } //Getter/Setter \/ + setLife(), setR(), setNewR()
 
     public static Objekt getObjekt(int i) {
         return liste.get(i);
@@ -127,17 +125,10 @@ public class Objekt {
         return grow;
     }
 
-    public void setMembership(int membership) {
-        this.membership = membership;
-    }
-
-    public static void setAnzViech(int anz) { anzViech = anz;
-    }
-
     public void setLife(float life) {
         this.life = life;
-        setNewR();
-        if(life<=0){
+        setNewR(); //Der Radius wird den Leben angepasst
+        if(life<=0){ //Mit einem Tod wird auch die Anzahl der Viecher minimiert
             anzViech--;
         }
     }
@@ -162,21 +153,20 @@ public class Objekt {
         this.y = y;
     }
 
-    public void setR() {
-        r = life*2+10;
+    public void setR() { //Radius wird anhand der Leben gesetzt, mit einem Anfangswert
+        r = life*20+100;
     }
 
-    public void setNewR() {
-        if(grow==0) {
+    public void setNewR() { //Der Radius wird gesetzt
+        if(grow==0) { //Wenn es erwachsen ist, wird der normale Radius anhand der Leben gesetzt
             setR();
         }else {
-            if(breedTimer==0) {
+            if(breedTimer==0) { //Wenn der breedTimer abgelaufen ist, ist das Objekt Erwachsen und bekommt die normale Größe anhand der Leben
                 grow = 0;
-                life = lifeSafe;
                 setR();
             }else {
-                if(r<life*2+10) {
-                    r = r + (life*2-r+10)/breedTimer;//oben im konstruktor auch mitändern
+                if(r<life*20+100) {
+                    r = r + (life*20-r+100)/breedTimer; //Der Radius wird im Verhältniss zu den Leben und der Zeit zum erwachsenwerden erhöht
                 }else {
                     setR();
                 }
