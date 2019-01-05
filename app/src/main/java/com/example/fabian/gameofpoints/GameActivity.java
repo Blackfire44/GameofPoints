@@ -114,20 +114,11 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]);
         engine.setSelect(Objekt.getListe().size()-1);
 
-        timer=0;
-        //executor = Executors.newSingleThreadScheduledExecutor();
-        //executor.scheduleAtFixedRate(runnable,0, 1000, TimeUnit.MILLISECONDS);
+        timer=1000;
         engine.start();
         layout=7;
         startRandomMusic();
     }
-
-    private Runnable runnable = new Runnable(){
-        @Override
-        public void run() {
-            setTimer();
-        }
-    };
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
         fillTextView(R.id.life, "Life: "+(int)life);
@@ -149,7 +140,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         findViewById(R.id.speed).setVisibility(View.INVISIBLE);
     }
 
-    public void endGame(boolean which){ //Wird nach Ende eines Spiels aufgerufen
+    public void endGame(boolean which, int timer){ //Wird nach Ende eines Spiels aufgerufen
+        this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
         engine.stop(); //Die laufenden Aktionen werden gestoppt
         Objekt.getListe().clear(); //Die Objektliste wird geleert
         stopMusic(); //Die Musik wird angehalten
@@ -161,11 +153,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             fillTextView(R.id.endscreen, "Game over!");
             fillTextView(R.id.time, "You earned 0 rubies");
         }
-    }
-
-    public void setTimer(){//Der Timer wird erhöht und auch in game_activity.xml aktualisiert
-        timer++;
-        fillTextView(R.id.timer, ""+timer);
     }
 
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
@@ -215,11 +202,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private void löscheShared(){ //Löscht alle fest gespeicherten Werte
         sp = getPreferences(MODE_PRIVATE);
         sp.edit().clear().commit();
-    }
-
-    public void setDiagramm(int stamm1, int stammgesamt){ //Das Diagramm wird aktualisiert, um das Verhältniss der eigenen Charaktere zu den gegnerischen zu zeigen
-        ProgressBar progress = findViewById(R.id.progressBar4);
-        progress.setProgress((int)stamm1/stammgesamt*100); //ProgressBar wird gesetzt
     }
 
     private void showDialog(String titel, String text){ //Ein Dialog wird angezeigt
@@ -1013,7 +995,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
 }
 /*Hintergründe von GameActivity
 Time-Counter
-Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)               \/
 Gravity    --> Viecher etwas beeinflussen können
 Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)            \/
 	Nach x Sternen bekommt man y

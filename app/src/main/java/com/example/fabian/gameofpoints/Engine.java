@@ -57,15 +57,14 @@ public class Engine implements SensorEventListener {
 
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
-        aktualisiereDiagramm();
     }
 
     private void testFinish(){
         boolean stammgut = false;
         boolean stammböse = false;
         for(int i = 0; i<Objekt.getListe().size();i++){
-            if(Objekt.getObjekt(1).getLife()>0){
-                if(Objekt.getObjekt(1).getMembership()==1){
+            if(Objekt.getObjekt(i).getLife()>0){
+                if(Objekt.getObjekt(i).getMembership()==1){
                     stammgut=true;
                 }else{
                     stammböse=true;
@@ -181,7 +180,6 @@ public class Engine implements SensorEventListener {
                                                     }
                                                 }
                                                 testFinish();
-                                                //aktualisiereDiagramm();
                                             }
                                             Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
                                             if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){
@@ -270,20 +268,5 @@ public class Engine implements SensorEventListener {
     private void setObjektToBorder(int i){
         Objekt.getObjekt(i).setDirection(Objekt.getObjekt(i).getDirection()-180);
         touched = 1;
-    }
-
-    private void aktualisiereDiagramm(){
-        stamm1 = 0;
-        stamm2 = 0;
-        for(int i = 0; i<Objekt.getListe().size(); i++) {
-            switch(Objekt.getObjekt(i).getMembership()) {
-                case 1:stamm1++;
-                    break;
-                case 2:stamm2++;
-                    break;
-                default:
-            }
-           gameActivity.setDiagramm(stamm1, stamm2+stamm1);
-        }
     }
 }
