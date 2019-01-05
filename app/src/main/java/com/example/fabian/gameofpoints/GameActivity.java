@@ -97,7 +97,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.schalten).setOnClickListener(this);
         container.findViewById(R.id.container).setOnTouchListener(this);
 
-        basedimension = gameview.getBaseDimension();
+        //basedimension = gameview.getBaseDimension();
 
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Der Rand wird anhand des Containers abgesteckt
@@ -112,20 +112,11 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]);
         engine.setSelect(Objekt.getListe().size()-1);
 
-        timer=0;
-        //executor = Executors.newSingleThreadScheduledExecutor();
-        //executor.scheduleAtFixedRate(runnable,0, 1000, TimeUnit.MILLISECONDS);
+        timer=1000;
         engine.start();
         layout=7;
         startRandomMusic();
     }
-
-    private Runnable runnable = new Runnable(){
-        @Override
-        public void run() {
-            setTimer();
-        }
-    };
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
         fillTextView(R.id.life, "Life: "+(int)life);
@@ -147,7 +138,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         findViewById(R.id.speed).setVisibility(View.INVISIBLE);
     }
 
-    public void endGame(boolean which){ //Wird nach Ende eines Spiels aufgerufen
+    public void endGame(boolean which, int timer){ //Wird nach Ende eines Spiels aufgerufen
+        this.timer = timer;
         engine.stop(); //Die laufenden Aktionen werden gestoppt
         Objekt.getListe().clear(); //Die Objektliste wird geleert
         stopMusic(); //Die Musik wird angehalten
@@ -355,7 +347,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level1, null)); //level1
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -370,7 +362,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level2, null)); //level2
-        container.findViewById(R.id.item1).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
@@ -387,7 +380,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
         findViewById(R.id.scroll).setVisibility(View.INVISIBLE); //Der ScrollView wird unsichtbar gesetzt, um den einen Frame, der vor dem Anzeigen der letzten Scrollweite noch gezeigt wird, nicht zu zeigen
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -440,7 +433,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -455,7 +448,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -722,7 +715,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     showloadfragment();
                 }
                 break;
-            case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
+            case R.id.zurueckLevel: //start.xml wird aufgerufen (in level.xml)
                 if(layout!=1&&layout!=4&&layout!=5) {
                     outoflevel();
                 }

@@ -22,6 +22,7 @@ public class Engine implements SensorEventListener {
     private int directionChange = 44;
     private float scaleA = 100f;
     private int msPerFrame = 30;
+    private int timer;
     private int touched;
 
     private GameView gameView;
@@ -31,7 +32,7 @@ public class Engine implements SensorEventListener {
     private ScheduledExecutorService service;
 
 
-    public Engine(SensorManager sensorManager, GameView gameView, GameActivity gameActivity){ //Für Klassendaigramm noch überprüfen, vielleicht alles in der Engine machen (Masteview wird in der Engine deklariert)
+    public Engine(SensorManager sensorManager, GameView gameView, GameActivity gameActivity){
         this.gameView = gameView;
         this.sensorManager = sensorManager;
         this.gameActivity = gameActivity;
@@ -45,6 +46,11 @@ public class Engine implements SensorEventListener {
             @Override
             public void run() {
                 moveObjects();
+                timer++;
+                if(timer>1000/msPerFrame){
+                    timer=0;
+                    gameView.setCountdown();
+                }
                 gameView.setData();
             }
         };
@@ -69,9 +75,9 @@ public class Engine implements SensorEventListener {
         }
         if(stammgut==false||stammböse==false){
             if(stammböse==false){
-                gameActivity.endGame(true);
+                gameActivity.endGame(true, gameView.getCountdown());
             }else{
-                gameActivity.endGame(false);
+                gameActivity.endGame(false, gameView.getCountdown());
             }
         }
     }
@@ -176,7 +182,7 @@ public class Engine implements SensorEventListener {
                                                     }
                                                 }
                                                 testFinish();
-                                                aktualisiereDiagramm();
+                                                //aktualisiereDiagramm();
                                             }
                                             Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
                                             if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){

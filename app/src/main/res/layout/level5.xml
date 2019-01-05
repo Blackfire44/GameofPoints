@@ -17,6 +17,13 @@
         app:layout_constraintVertical_bias="1.0"
         android:layout_marginBottom="56dp">
 
+        <ImageView
+            android:id="@+id/zurueckLevel5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@android:drawable/ic_delete" />
+
         <TextView
             android:id="@+id/Settings"
             android:layout_width="wrap_content"
@@ -81,7 +88,7 @@
         android:layout_height="44dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
-        android:src="@drawable/itemdeath3"
+        android:src="@drawable/itemdeath4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
@@ -108,7 +115,7 @@
         android:layout_height="44dp"
         android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
-        android:src="@drawable/itemdeath3"
+        android:src="@drawable/itemdeath5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
