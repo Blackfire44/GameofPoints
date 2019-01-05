@@ -39,7 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
     private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
     private int[] colorlist = {R.drawable.krokotest, R.drawable.viech1, R.drawable.viech2,R.drawable.viech3, R.drawable.viech4, R.drawable.viech5, R.drawable.viech6, R.drawable.viech7};
-    private int[] boesecolorliste = {R.drawable.viechboese};
+    private int[] boesecolorliste = {R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2};
 
     private ImageView mImageViewEmptying;
     private TextView tv;
@@ -104,9 +104,9 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Der Rand wird anhand des Containers abgesteckt
 
-        engine.createObjekt(container.getWidth()-200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[0]);
-        engine.createObjekt(container.getWidth()/2, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[0]);
-        engine.createObjekt(200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[0]);
+        engine.createObjekt(container.getWidth()-200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(container.getWidth()/2, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
 
         engine.createObjekt(container.getWidth()-200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]); //Viecher von Spieler
         engine.createObjekt(200, container.getHeight()-200, 1, life, attacklist[world-1], speedlist[world-1],playerliste[playerselection]);
