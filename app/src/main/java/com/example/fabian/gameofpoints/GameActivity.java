@@ -31,7 +31,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private float basedimension;
     private int timer = 0;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.lava0, 100, R.drawable.p3b1, 200, R.drawable.schnee0, 300,R.drawable.objekt_0, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
     private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
     private int[] background = {R.drawable.jonschnee, R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee};
     private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
