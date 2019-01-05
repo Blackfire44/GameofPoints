@@ -40,7 +40,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int[] lifelist = {11, 4, 10, 7, 9, 10, 5};
     private int[] attacklist = {6, 9, 3, 5, 4, 18, 10};
     private int[] speedlist = {3, 7, 7, 5, 1, 6, 5};
-    private int[] colorlist = {R.drawable.krokotest, R.drawable.viech1, R.drawable.viech2,R.drawable.viech3, R.drawable.viech4, R.drawable.viech5, R.drawable.viech6, R.drawable.viech7};
     private int[] boesecolorliste = {R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2};
 
     private ImageView mImageViewEmptying;
