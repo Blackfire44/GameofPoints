@@ -18,9 +18,9 @@ import android.widget.TextView;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
-    private int life = 0;
-    private int attack = 0;
-    private int speed = 0;
+    private int life = 1;
+    private int attack = 1;
+    private int speed = 1;
     private int upgradePoints = 20;
     private int layout;
     private int rubine;
@@ -58,9 +58,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        löscheShared();//noch entfernen beim Start
-
-        pluscoins(1000); //Man bekommt am Anfang 1000 Münzen
         setPlayer1(); //Der erste Charakter wird freigeschaltet
 
         switch((int)(Math.random()*3+1)){ //Der Hintergrund wird zufällig gesetzt
@@ -83,6 +80,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             e=sp.edit();
             e.putBoolean("player0", true);
             e.commit();
+            pluscoins(1000); //Man bekommt am Anfang 1000 Münzen
         }
         playerselect(); //Dieser Charakter wird ausgewählt
     }
@@ -90,16 +88,16 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private void startGame(){
         ViewGroup container = (ViewGroup) findViewById(R.id.container);
         container.removeAllViews();
+        container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
+        container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
+        container.findViewById(R.id.schalten).setOnClickListener(this);
+        container.findViewById(R.id.container).setOnTouchListener(this);
+        findViewById(R.id.background).setBackgroundResource(background[world-1]);
 
         gameview = new GameView(this);
         gameview.setVisibility(View.VISIBLE);
         gameview.setBackground(background[world-1]);
         container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
-        container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
-        container.findViewById(R.id.schalten).setOnClickListener(this);
-        container.findViewById(R.id.container).setOnTouchListener(this);
 
         basedimension = gameview.getBaseDimension();
 
@@ -111,7 +109,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine.createObjekt(200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
 
         engine.createObjekt(container.getWidth()-200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]); //Viecher von Spieler
-        engine.createObjekt(200, container.getHeight()-200, 1, life, attacklist[world-1], speedlist[world-1],playerliste[playerselection]);
+        engine.createObjekt(200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]);
 
         engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]);
         engine.setSelect(Objekt.getListe().size()-1);
@@ -147,14 +145,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine.stop(); //Die laufenden Aktionen werden gestoppt
         Objekt.getListe().clear(); //Die Objektliste wird geleert
         stopMusic(); //Die Musik wird angehalten
-        showgameoverfragment(); //showgameoverfragment.xml wird aufgerufen
-        if(which){
-            prüfeStars(); //Die gewonnenen rubine werden hinzugefügt
-            fillTextView(R.id.endscreen, "Level completed!");
-        }else{
-            fillTextView(R.id.endscreen, "Game over!");
-            fillTextView(R.id.time, "You earned 0 rubies");
-        }
+        showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
     }
 
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
@@ -327,9 +318,9 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void showstartfragment(){ //start.xml wird angezeigt
-        ViewGroup container = (ViewGroup)findViewById(R.id.container);
-        container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.start, null));
+        ViewGroup container = (ViewGroup)findViewById(R.id.container); //Eine ViewGroup wird gebildet und sucht alle container
+        container.removeAllViews(); //Alle conatiner werden entfernt
+        container.addView(getLayoutInflater().inflate(R.layout.start, null)); //Das Layout, das man haben will, wird gestartet
         container.findViewById(R.id.container).setOnClickListener(this);//Ein OnClickListener wird gesetzt, um den View anklickbar zu machen
         layout=0; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
@@ -488,18 +479,26 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void showstopfragment(){ //stopp.xml wird angezeigt
-        //stopgame();
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.addView(getLayoutInflater().inflate(R.layout.stopp, null));
         container.findViewById(R.id.backtotitle).setOnClickListener(this); //OnClickListener wird gesetzt, um den View anklickbar zu machen
         layout=8; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showgameoverfragment(){ //gameover.xml wird angezeigt
-        //stopgame();
+    private void showgameoverfragment(boolean which){ //gameover.xml wird angezeigt
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
+        container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.gameover, null));
+        container.findViewById(R.id.back).setOnClickListener(this); //OnClickListener wird gesetzt, um den View anklickbar zu machen
+        if(which){
+            prüfeStars(); //Die gewonnenen rubine werden hinzugefügt
+            fillTextView(R.id.endscreen, "Level completed!");
+        }else{
+            fillTextView(R.id.endscreen, "Game over!");
+            fillTextView(R.id.time, "You earned 0 rubies");
+        }
         layout=9; //Es wird gespeichert, in welchem Layout man sich gerade befindet
+        showloadfragment();
     }
 
     private void load(){ //Ein Ladebildschirm wird angezeigt, um das Laden der drehenden Planeten nicht als Standbildschirm dastehen zu lassen.

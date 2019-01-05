@@ -102,7 +102,7 @@ public class Engine implements SensorEventListener {
     public void prüfeTouch(int touchX, int touchY){
         int objekt = 0;
         for(int i = 0; i<Objekt.getListe().size(); i++){
-            if(Objekt.getObjekt(i).getMembership()==1) {
+            if(Objekt.getObjekt(i).getMembership()==1&&Objekt.getObjekt(i).getLife()>0) {
                 double länge = Math.sqrt((Objekt.getObjekt(i).getX() - touchX) * (Objekt.getObjekt(i).getX() - touchX) + (Objekt.getObjekt(i).getY() - touchY) * (Objekt.getObjekt(i).getY() - touchY));
                 if (highest > länge) {
                     highest = länge;
@@ -138,20 +138,20 @@ public class Engine implements SensorEventListener {
                 float y = Objekt.getObjekt(i).getY();
 
                 if(Objekt.getObjekt(i).getBreedTimer()<=200) {
-                    if(Objekt.getObjekt(i).getX()<minX) {
-                        Objekt.getObjekt(i).setX(minX);
+                    if(Objekt.getObjekt(i).getX()<minX+Objekt.getObjekt(i).getR()) {
+                        Objekt.getObjekt(i).setX(minX+Objekt.getObjekt(i).getR());
                         setObjektToBorder(i);
                     }else {
-                        if(Objekt.getObjekt(i).getX()>maxX) {
-                            Objekt.getObjekt(i).setX(maxX);
+                        if(Objekt.getObjekt(i).getX()>maxX-Objekt.getObjekt(i).getR()) {
+                            Objekt.getObjekt(i).setX(maxX-Objekt.getObjekt(i).getR());
                             setObjektToBorder(i);
                         }else {
-                            if(Objekt.getObjekt(i).getY()<minY) {
-                                Objekt.getObjekt(i).setY(minY);
+                            if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()) {
+                                Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR());
                                 setObjektToBorder(i);
                             }else {
-                                if(Objekt.getObjekt(i).getY()>maxY) {
-                                    Objekt.getObjekt(i).setY(maxY);
+                                if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()) {
+                                    Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR());
                                     setObjektToBorder(i);
                                 }else{
                                     for(int o = 0; o<Objekt.getListe().size(); o++) {
