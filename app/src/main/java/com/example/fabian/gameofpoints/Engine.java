@@ -15,9 +15,6 @@ import java.util.logging.LogRecord;
 
 public class Engine implements SensorEventListener {
     private float impactX, impactY;
-    private double highest = 100000;
-    private int stamm1;// lieb == 1
-    private int stamm2;// böse == 2
     private float minX, maxX, minY, maxY;
     private int directionChange = 44;
     private float scaleA = 100f;
@@ -100,7 +97,8 @@ public class Engine implements SensorEventListener {
     }
 
     public void prüfeTouch(int touchX, int touchY){
-        int objekt = 0;
+        double highest = 1000000;
+        int objekt = -1;
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getMembership()==1&&Objekt.getObjekt(i).getLife()>0) {
                 double länge = Math.sqrt((Objekt.getObjekt(i).getX() - touchX) * (Objekt.getObjekt(i).getX() - touchX) + (Objekt.getObjekt(i).getY() - touchY) * (Objekt.getObjekt(i).getY() - touchY));
@@ -110,7 +108,7 @@ public class Engine implements SensorEventListener {
                 }
             }
         }
-        if(objekt!=0) {
+        if(objekt!=-1) {
             setSelect(objekt);
         }
     }

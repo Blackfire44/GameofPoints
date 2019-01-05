@@ -141,13 +141,11 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     public void endGame(boolean which, int timer){ //Wird nach Ende eines Spiels aufgerufen
-        System.out.print("fertig");
-        //this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
-        //engine.stop(); //Die laufenden Aktionen werden gestoppt
-        //Objekt.getListe().clear(); //Die Objektliste wird geleert
-        //stopMusic(); //Die Musik wird angehalten
-       // showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
-        showstartfragment();
+        this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
+        engine.stop(); //Die laufenden Aktionen werden gestoppt
+        Objekt.getListe().clear(); //Die Objektliste wird geleert
+        stopMusic(); //Die Musik wird angehalten
+        showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
     }
 
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden

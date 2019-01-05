@@ -30,7 +30,7 @@ public class GameView extends View {
         scale = getResources().getDisplayMetrics().density;
         paintBitmap.setAntiAlias(true);
         paintText.setAntiAlias(true);
-        paintText.setColor(Color.rgb(0,0,0));
+        paintText.setColor(Color.rgb(255,255,255));
         paintText.setTextSize(scale*30);
         paintText.setStyle(Paint.Style.FILL);
     }
