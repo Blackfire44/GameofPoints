@@ -39,7 +39,6 @@ public class Engine implements SensorEventListener {
     }
 
     public void start(){
-        gameActivity.setTimer();
         service = Executors.newSingleThreadScheduledExecutor();
 
         final Runnable runnable = new Runnable(){

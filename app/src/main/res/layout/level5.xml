@@ -18,7 +18,7 @@
         android:layout_marginBottom="56dp">
 
         <ImageView
-            android:id="@+id/zurueckLevel5"
+            android:id="@+id/zurueckLevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

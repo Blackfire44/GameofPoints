@@ -153,11 +153,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
     }
 
-    public void setTimer(){//Der Timer wird erhöht und auch in game_activity.xml aktualisiert
-        timer++;
-        fillTextView(R.id.timer, ""+timer);
-    }
-
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
         sp = getPreferences(MODE_PRIVATE);
         e = sp.edit();
