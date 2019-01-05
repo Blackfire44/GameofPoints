@@ -13,15 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.concurrent.ScheduledExecutorService;
 
 public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
-    private int life = 1;
-    private int attack = 1;
-    private int speed = 1;
+    private int life = 0;
+    private int attack = 0;
+    private int speed = 0;
     private int upgradePoints = 20;
     private int layout;
     private int rubine;
@@ -35,9 +34,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
     private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.lavaoberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.sonneoberflaeche,R.drawable.sonneoberflaeche};
-    private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
+    private int[] lifelistcomp = {3, 19, 4, 8, 5, 2, 20};
+    private int[] attacklistcomp = {3, 1, 10, 7, 4, 18, 5};
+    private int[] speedlistcomp = {15, 1, 7, 6, 12, 1, 2};
+    private int[] lifelist = {11, 4, 10, 7, 9, 10, 5};
+    private int[] attacklist = {6, 9, 3, 5, 4, 18, 10};
+    private int[] speedlist = {3, 7, 7, 5, 1, 6, 5};
     private int[] colorlist = {R.drawable.krokotest, R.drawable.viech1, R.drawable.viech2,R.drawable.viech3, R.drawable.viech4, R.drawable.viech5, R.drawable.viech6, R.drawable.viech7};
     private int[] boesecolorliste = {R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2,R.drawable.viechboese,R.drawable.viechboese2};
 
@@ -104,9 +106,9 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Der Rand wird anhand des Containers abgesteckt
 
-        engine.createObjekt(container.getWidth()-200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
-        engine.createObjekt(container.getWidth()/2, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
-        engine.createObjekt(200, 200, 2, lifelist[world-1], attacklist[world-1], speedlist[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(container.getWidth()-200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(container.getWidth()/2, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
 
         engine.createObjekt(container.getWidth()-200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]); //Viecher von Spieler
         engine.createObjekt(200, container.getHeight()-200, 1, life, attacklist[world-1], speedlist[world-1],playerliste[playerselection]);
