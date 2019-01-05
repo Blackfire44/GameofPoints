@@ -9,10 +9,10 @@
     <string name="Level2">Quatron:</string>
     <string name="Level3">Planet 3:</string>
     <string name="Level4">Türkis</string>
-    <string name="Level5">Level5</string>
-    <string name="Level6">Level6</string>
-    <string name="Level7">Level7</string>
-    <string name="Level8">Level8</string>
+    <string name="Level5">Snow</string>
+    <string name="Level6">Lava</string>
+    <string name="Level7">Sun</string>
+    <string name="Level8">Ultron</string>
 
     <string name="Planetanzeige">Planet:</string>
     <string name="Counter">Counter</string>

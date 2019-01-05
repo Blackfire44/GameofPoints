@@ -378,6 +378,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.rotate5).setOnClickListener(this);
         container.findViewById(R.id.rotate6).setOnClickListener(this);
         container.findViewById(R.id.rotate7).setOnClickListener(this);
+        container.findViewById(R.id.rotate8).setOnClickListener(this);
         container.findViewById(R.id.star11).setOnClickListener(this);
         container.findViewById(R.id.star12).setOnClickListener(this);
         container.findViewById(R.id.star13).setOnClickListener(this);
@@ -660,6 +661,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
     }
 
     private void stopanimation(){ //Die Animationen der Planeten werden gestoppt
@@ -676,6 +679,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
+        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
+        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -743,6 +748,10 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showsettingfragment();
                 break;
             case R.id.rotate7: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
+                world=7;
+                showsettingfragment();
+                break;
+            case R.id.rotate8: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=7;
                 showsettingfragment();
                 break;
