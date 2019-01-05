@@ -136,57 +136,60 @@ public class Engine implements SensorEventListener {
                 float y = Objekt.getObjekt(i).getY();
 
                 if(Objekt.getObjekt(i).getBreedTimer()<=200) {
+                    boolean rand = false;
                     if(Objekt.getObjekt(i).getX()<minX+Objekt.getObjekt(i).getR()/2) {
                         Objekt.getObjekt(i).setX(minX+Objekt.getObjekt(i).getR()/2);
                         setObjektToBorder(i);
-                    }else {
-                        if(Objekt.getObjekt(i).getX()>maxX-Objekt.getObjekt(i).getR()/2) {
-                            Objekt.getObjekt(i).setX(maxX-Objekt.getObjekt(i).getR()/2);
-                            setObjektToBorder(i);
-                        }else {
-                            if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()/2) {
-                                Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR()/2);
-                                setObjektToBorder(i);
-                            }else {
-                                if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()/2) {
-                                    Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR()/2);
-                                    setObjektToBorder(i);
-                                }else{
-                                    for(int o = 0; o<Objekt.getListe().size(); o++) {
-                                        if(i!=o && Objekt.getObjekt(o).getLife()>0 && Math.sqrt((Objekt.getObjekt(i).getX()-Objekt.getObjekt(o).getX())*(Objekt.getObjekt(i).getX()-Objekt.getObjekt(o).getX())+(Objekt.getObjekt(i).getY()-Objekt.getObjekt(o).getY())*(Objekt.getObjekt(i).getY()-Objekt.getObjekt(o).getY()))<Objekt.getObjekt(i).getR()/2+Objekt.getObjekt(o).getR()/2) { //bei radius nicht durch zwei machen, genauso wie unten bei der neuen Creation
-                                            if(Objekt.getObjekt(i).getMembership()==Objekt.getObjekt(o).getMembership()) {
-                                                if(Objekt.getObjekt(i).getBreedState()==false) {
-                                                    if(Objekt.getObjekt(i).getBreedTimer()==0&&Objekt.getObjekt(o).getBreedTimer()==0&&Objekt.getObjekt(o).getBreedState()==false) {
-                                                        Objekt.getObjekt(i).setBreedTimer(400);
-                                                        Objekt.getObjekt(i).setPartner(o);
-                                                        Objekt.getObjekt(o).setPartner(i);
-                                                        Objekt.getObjekt(o).setBreedState(true);
-                                                    }
-                                                }else {
-                                                    Objekt.getObjekt(i).setBreedTimer(400);
-                                                }
-                                            }else {
-                                                while(Objekt.getObjekt(i).getLife()>0&&Objekt.getObjekt(o).getLife()>0) {
-                                                    Objekt.getObjekt(o).setLife(Objekt.getObjekt(o).getLife()-Objekt.getObjekt(i).getAttack());
-                                                    if(Objekt.getObjekt(o).getBreedTimer()<200) {
-                                                        Objekt.getObjekt(i).setLife(Objekt.getObjekt(i).getLife()-Objekt.getObjekt(o).getAttack());
-                                                    }else {
-                                                        Objekt.getObjekt(i).setLife(Objekt.getObjekt(i).getLife()-(float)Objekt.getObjekt(o).getAttack()/3);
-                                                        if(Objekt.getObjekt(o).getLife()<=0) {
-                                                            Objekt.getObjekt(Objekt.getObjekt(o).getPartner()).setBreedTimer(0);
-                                                        }
-                                                    }
-                                                }
-                                                testFinish();
+                        rand=true;
+                    }
+                    if(Objekt.getObjekt(i).getX()>maxX-Objekt.getObjekt(i).getR()/2) {
+                        Objekt.getObjekt(i).setX(maxX-Objekt.getObjekt(i).getR()/2);
+                        setObjektToBorder(i);
+                        rand=true;
+                    }
+                    if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()/2) {
+                        Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR()/2);
+                        setObjektToBorder(i);
+                        rand=true;
+                    }
+                    if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()/2) {
+                        Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR()/2);
+                        setObjektToBorder(i);
+                        rand=true;
+                    }
+                    if(!rand) {
+                        for(int o = 0; o<Objekt.getListe().size(); o++) {
+                            if(i!=o && Objekt.getObjekt(o).getLife()>0 && Math.sqrt((Objekt.getObjekt(i).getX()-Objekt.getObjekt(o).getX())*(Objekt.getObjekt(i).getX()-Objekt.getObjekt(o).getX())+(Objekt.getObjekt(i).getY()-Objekt.getObjekt(o).getY())*(Objekt.getObjekt(i).getY()-Objekt.getObjekt(o).getY()))<Objekt.getObjekt(i).getR()/2+Objekt.getObjekt(o).getR()/2) { //bei radius nicht durch zwei machen, genauso wie unten bei der neuen Creation
+                                if(Objekt.getObjekt(i).getMembership()==Objekt.getObjekt(o).getMembership()) {
+                                    if(Objekt.getObjekt(i).getBreedState()==false) {
+                                        if(Objekt.getObjekt(i).getBreedTimer()==0&&Objekt.getObjekt(o).getBreedTimer()==0&&Objekt.getObjekt(o).getBreedState()==false) {
+                                            Objekt.getObjekt(i).setBreedTimer(400);
+                                            Objekt.getObjekt(i).setPartner(o);
+                                            Objekt.getObjekt(o).setPartner(i);
+                                            Objekt.getObjekt(o).setBreedState(true);
+                                        }
+                                    }else {
+                                        Objekt.getObjekt(i).setBreedTimer(400);
+                                    }
+                                }else {
+                                    while(Objekt.getObjekt(i).getLife()>0&&Objekt.getObjekt(o).getLife()>0) {
+                                        Objekt.getObjekt(o).setLife(Objekt.getObjekt(o).getLife()-Objekt.getObjekt(i).getAttack());
+                                        if(Objekt.getObjekt(o).getBreedTimer()<200) {
+                                            Objekt.getObjekt(i).setLife(Objekt.getObjekt(i).getLife()-Objekt.getObjekt(o).getAttack());
+                                        }else {
+                                            Objekt.getObjekt(i).setLife(Objekt.getObjekt(i).getLife()-(float)Objekt.getObjekt(o).getAttack()/3);
+                                            if(Objekt.getObjekt(o).getLife()<=0) {
+                                                Objekt.getObjekt(Objekt.getObjekt(o).getPartner()).setBreedTimer(0);
                                             }
-                                            Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
-                                            if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){
-                                                Objekt.getObjekt(i).setDirection(-Objekt.getObjekt(i).getDirection());
-                                            }
-                                            touched = 2;
                                         }
                                     }
+                                    testFinish();
                                 }
+                                Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
+                                if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){
+                                    Objekt.getObjekt(i).setDirection(-Objekt.getObjekt(i).getDirection());
+                                }
+                                touched = 2;
                             }
                         }
                     }

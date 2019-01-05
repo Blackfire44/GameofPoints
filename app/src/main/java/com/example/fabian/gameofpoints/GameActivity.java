@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.concurrent.ScheduledExecutorService;
 
 public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
     private int life = 1;
@@ -30,6 +29,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int anzahlWelten = 7;
     private float basedimension;
     private int timer = 0;
+    private boolean win;
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
@@ -50,7 +50,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private SharedPreferences.Editor e;
     private CustomDialog customDialog;
     private MediaPlayer music;
-    private ScheduledExecutorService executor;
+
+    private MediaPlayer.OnCompletionListener listener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            randomMusic();
+        }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
         }
         showstartfragment(); //start.xml wird angezeigt
+        startMusic(R.raw.intro, true);
     }
 
     private void setPlayer1(){ //Der erste Charakter wird direkt freigeschaltet
@@ -92,8 +98,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.schalten).setOnClickListener(this);
         container.findViewById(R.id.container).setOnTouchListener(this);
         findViewById(R.id.background).setBackgroundResource(background[world-1]);
-
-        //startRandomMusic();
 
         gameview = new GameView(this);
         gameview.setVisibility(View.VISIBLE);
@@ -118,6 +122,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         timer=1000;
         engine.start();
         layout=7;
+        randomMusic();
     }
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
@@ -141,11 +146,16 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     public void endGame(boolean which, int timer){ //Wird nach Ende eines Spiels aufgerufen
+        win = which;
         this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
         engine.stop(); //Die laufenden Aktionen werden gestoppt
         Objekt.getListe().clear(); //Die Objektliste wird geleert
         stopMusic(); //Die Musik wird angehalten
-        showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
+        findViewById(R.id.container).post(new Runnable() {
+            public void run() {
+                showgameoverfragment(); //showgameoverfragment.xml wird aufgerufen
+            }
+        });
     }
 
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
@@ -170,14 +180,14 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             pluscoins(100); //Man bekommt zusätzlich 100 Münzen
             rubine += 10; //Für die Anzeige werden die Rubine gezählt
         }
-        fillTextView(R.id.time, "You earned "+rubine+" rubies");
+        fillTextView(R.id.time, "You earned "+rubine+" coins");
     }
 
     private void setStars(){ //Alle Rubine werden für alle Planeten aktualisiert
         sp = getPreferences(MODE_PRIVATE);
         for(int welt = 0; welt<anzahlWelten; welt++) {
             for (int rubin = 1; rubin < 5; rubin++) {
-                if(sp.getBoolean("star" + welt + rubin, false)){ //star14 steht kodiert für :4. Stern der 1. Welt
+                if(sp.getBoolean("star" + (welt+1) + rubin, false)){ //star14 steht kodiert für :4. Stern der 1. Welt
                     imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
                 }
             }
@@ -202,14 +212,15 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void startMusic(int i, boolean loop){ //Die Musik wird gestartet
-        if(music!=null) { //Wenn noch Musik läuft, wird diese beendet
-            music.release();
-        }
-        music = MediaPlayer.create(this, i); //Der Track wird eingestellt
-        if(loop){ //Eine dauerhafte Wiederholung kann eingestellt werden
-            music.setLooping(true);
-        }
-        music.start(); //Die Musik wird gestartet
+            if (music != null) { //Wenn noch Musik läuft, wird diese beendet
+                music.release();
+            }
+            music = MediaPlayer.create(this, i); //Der Track wird eingestellt
+            if (loop) { //Eine dauerhafte Wiederholung kann eingestellt werden
+                music.setLooping(true);
+            }
+            music.start(); //Die Musik wird gestartet
+            music.setOnCompletionListener(listener); //Der OnCompletionListener wird gesetzt
     }
 
     private void stopMusic(){ //die Musik wird angehalten
@@ -218,46 +229,42 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
     }
 
-    private void startRandomMusic(){ //Eine zufällige Musik wird gewählt
+    private void randomMusic(){ //Eine zufällige Musik wird ausgewählt
+        if (music != null) { //Die laufende Musik wird noch geschlossen, falls sie noch läuft oder fertig, aber noch nicht beendet ist
+            music.release();
+        }
         sp = getPreferences(MODE_PRIVATE);
-        if(sp.getBoolean("music", false)==true) { //Prüfung, ob die Musik gestartet werden darf
-            music.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { //Wenn die Musik beendet ist, wird onCompletion() ausgeführt
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    if (music != null) { //Die laufende Musik wird noch geschlossen, falls sie noch läuft oder fertig, aber noch nicht beendet ist
-                        music.release();
-                    }
-                    switch ((int) Math.random() * 5) { //Zufällig wird ein neuer Track ausgewählt
-                        case 0:
-                            startMusic(R.raw.intro, false);
-                            break;
-                        case 1:
-                            startMusic(R.raw.intro, false);
-                            break;
-                        case 2:
-                            startMusic(R.raw.intro, false);
-                            break;
-                        case 3:
-                            startMusic(R.raw.intro, false);
-                            break;
-                        case 4:
-                            startMusic(R.raw.intro, false);
-                            break;
-                        default:
-                            startMusic(R.raw.intro, false);
-                    }
-                    startRandomMusic(); //Ein neuer OnCompletionListener wird gesetzt
-                }
-            });
+        if(sp.getBoolean("music", false)==true) {//Prüfung, ob die Musik gestartet werden darf
+            switch ((int) Math.random() * 5) { //Zufällig wird ein neuer Track ausgewählt
+                case 0:
+                    startMusic(R.raw.intro, false);
+                    break;
+                case 1:
+                    startMusic(R.raw.intro, false);
+                    break;
+                case 2:
+                    startMusic(R.raw.intro, false);
+                    break;
+                case 3:
+                    startMusic(R.raw.intro, false);
+                    break;
+                case 4:
+                    startMusic(R.raw.intro, false);
+                    break;
+                default:
+                    startMusic(R.raw.intro, false);
+            }
         }
     }
 
     @Override
-    protected void onPause(){ //Wenn die App pausiert wird,  werden laufende Prozesse auch pausiert (Home-Button)
-        //pausegame();
+    protected void onPause(){ //Wenn die App pausiert wird, werden laufende Prozesse auch pausiert (Home-Button)
+        if(layout==7) {
+            engine.stop(); //Die laufenden Prozesse werden gestoppt, wenn das Spiel gestartet ist
+            showstopfragment(); //stopp.xml wird aufgerufen
+        }
         super.onPause();
         if(music!=null){
-            showDialog("hallo", "hallo");
             music.pause();
         }
     }
@@ -276,7 +283,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
 
     @Override
     protected void onDestroy() { //Wenn die App geschlossen wird, werden laufende Prozesse auch beendt
-        //stopgame();
         if(music!=null) {
             music.stop();
         }
@@ -285,7 +291,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
 
     @Override
     protected void onStop() { //Wenn die App gestoppt wird, werden laufende Prozesse auch gestoppt (Speicher ist voll)
-        //stopgame();
         if(music!=null) {
             music.stop();
         }
@@ -488,20 +493,19 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         layout=8; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
-    private void showgameoverfragment(boolean which){ //gameover.xml wird angezeigt
+    private void showgameoverfragment(){ //gameover.xml wird angezeigt
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.gameover, null));
         container.findViewById(R.id.back).setOnClickListener(this); //OnClickListener wird gesetzt, um den View anklickbar zu machen
-        if(which){
+        if(win){
             prüfeStars(); //Die gewonnenen rubine werden hinzugefügt
             fillTextView(R.id.endscreen, "Level completed!");
         }else{
             fillTextView(R.id.endscreen, "Game over!");
-            fillTextView(R.id.time, "You earned 0 rubies");
+            fillTextView(R.id.time, "You earned 0 coins");
         }
         layout=9; //Es wird gespeichert, in welchem Layout man sich gerade befindet
-        showloadfragment();
     }
 
     private void load(){ //Ein Ladebildschirm wird angezeigt, um das Laden der drehenden Planeten nicht als Standbildschirm dastehen zu lassen.
@@ -710,12 +714,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     showloadfragment();
                 }
                 break;
-            /*case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
-                if(layout!=1&&layout!=4&&layout!=5) {
+            case R.id.zurueckLevel: //start.xml wird aufgerufen (in level.xml)
+                if(layout!=1&&layout!=2&&layout!=4&&layout!=5) {
                     outoflevel();
                 }
                 showstartfragment();
-                break;*/
+                break;
             case R.id.backtotitle: //start.xml wird aufgerufen (nach Start)
                 Objekt.getListe().clear(); //Die Objektliste wird geleert
                 stopMusic(); //Die Musik wird angehalten

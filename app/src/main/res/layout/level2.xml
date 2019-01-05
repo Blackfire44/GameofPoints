@@ -190,7 +190,7 @@
                     android:id="@+id/miniplayer3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/viech5" />
+                    android:src="@drawable/viech2" />
 
                 <ImageView
                     android:id="@+id/filter3"
@@ -244,7 +244,7 @@
                     android:id="@+id/miniplayer6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/viech2" />
+                    android:src="@drawable/viech5" />
 
                 <ImageView
                     android:id="@+id/filter6"
