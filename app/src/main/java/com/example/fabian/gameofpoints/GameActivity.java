@@ -31,13 +31,13 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private float basedimension;
     private int timer = 0;
     private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
-    private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
+    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
+    private String[] playernamen = {"kroko","lofi","geech","blmb","sleefy","blue","egg","krasel"};
     private int[] background = {R.drawable.jonschnee, R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee};
     private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
     private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
     private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] colorlist = {R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest,R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest};
+    private int[] colorlist = {R.drawable.krokotest, R.drawable.viech1, R.drawable.viech2,R.drawable.viech3, R.drawable.viech4, R.drawable.viech5, R.drawable.viech6, R.drawable.viech7};
 
     private ImageView mImageViewEmptying;
     private TextView tv;
@@ -355,7 +355,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level1, null)); //level1
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -386,8 +385,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
         container.addView(getLayoutInflater().inflate(R.layout.level, null));
-        findViewById(R.id.scroll).setVisibility(View.INVISIBLE); //Der ScrollView wird unsichtbar gesetzt, um den einen Frame, der vor dem Anzeigen der letzten Scrollweite noch gezeigt wird, nicht zu zeigen
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        findViewById(R.id.scroll).setVisibility(View.INVISIBLE); //Der ScrollView wird unsichtbar gesetzt, um den einen Frame, der vor dem Anzeigen der letzten Scrollweite noch gezeigt wird, nicht zu zeigen;//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
@@ -439,8 +437,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.addView(getLayoutInflater().inflate(R.layout.level4, null)); //level4//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -454,8 +451,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
         ViewGroup container = (ViewGroup)findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5
-        container.findViewById(R.id.zuruekLevel).setOnClickListener(this);//OnClickListener werden gesetzt, um die Views anklickbar zu machen
+        container.addView(getLayoutInflater().inflate(R.layout.level5, null)); //level5//OnClickListener werden gesetzt, um die Views anklickbar zu machen
         container.findViewById(R.id.item1).setOnClickListener(this);
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
@@ -722,12 +718,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     showloadfragment();
                 }
                 break;
-            case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
+            /*case R.id.zuruekLevel: //start.xml wird aufgerufen (in level.xml)
                 if(layout!=1&&layout!=4&&layout!=5) {
                     outoflevel();
                 }
                 showstartfragment();
-                break;
+                break;*/
             case R.id.backtotitle: //start.xml wird aufgerufen (nach Start)
                 Objekt.getListe().clear(); //Die Objektliste wird geleert
                 stopMusic(); //Die Musik wird angehalten
@@ -1016,7 +1012,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
 /*Hintergründe von GameActivity
 Time-Counter
 Tortendiagramm (wie viel Prozent von Planeten schon eingenommen)               \/
-Gravity                                                                          ?
+Gravity    --> Viecher etwas beeinflussen können
 Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)            \/
 	Nach x Sternen bekommt man y
 	Sterne bringen coins                                                           \/
