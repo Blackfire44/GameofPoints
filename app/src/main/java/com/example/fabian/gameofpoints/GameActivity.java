@@ -1,45 +1,46 @@
 package com.example.fabian.gameofpoints;
 
 
-        import android.app.Activity;
-        import android.content.Context;
-        import android.content.SharedPreferences;
-        import android.graphics.drawable.AnimationDrawable;
-        import android.hardware.SensorManager;
-        import android.media.MediaPlayer;
-        import android.os.Bundle;
-        import android.view.MotionEvent;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.FrameLayout;
-        import android.widget.ImageView;
-        import android.widget.ProgressBar;
-        import android.widget.TextView;
-        import java.util.concurrent.ScheduledExecutorService;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.concurrent.ScheduledExecutorService;
 
 public class GameActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
-    private int life = 1;
-    private int attack = 1;
-    private int speed = 1;
-    private int upgradePoints = 20;
-    private int layout;
-    private int rubine;
-    private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
-    private int player = 0;
-    private int scrollWidth;
-    private int anzahlWelten = 7;
-    private float basedimension;
-    private int timer = 0;
-    private int playerselection;
-    private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.krokotest, 500,R.drawable.krokotest, 500};
-    private String[] playernamen = {"kroko1","kroko2","kroko3","kroko14","krokoX","krokoX","krokoX","krokoX"};
-    private int[] background = {R.drawable.jonschnee, R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee,R.drawable.jonschnee};
-    private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
-    private int[] colorlist = {R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest,R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest, R.drawable.krokotest};
+        private int life = 1;
+        private int attack = 1;
+        private int speed = 1;
+        private int upgradePoints = 20;
+        private int layout;
+        private int rubine;
+        private int world; //wird je nach Level auf 1, 2, 3, 4, 5.... gesetzt
+        private int player = 0;
+        private int scrollWidth;
+        private int anzahlWelten = 7;
+        private float basedimension;
+        private int timer = 0;
+        private int playerselection;
+        private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
+        private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
+        private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.lavaoberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.sonneoberflaeche,R.drawable.sonneoberflaeche};
+        private int[] lifelist = {1, 2, 3, 4, 5, 6, 7};
+        private int[] attacklist = {1, 2, 3, 4, 5, 6, 7};
+        private int[] speedlist = {1, 2, 3, 4, 5, 6, 7};
+        private int[] colorlist = {R.drawable.krokotest, R.drawable.viech1, R.drawable.viech2,R.drawable.viech3, R.drawable.viech4, R.drawable.viech5, R.drawable.viech6, R.drawable.viech7};
 
-    private ImageView mImageViewEmptying;
+        private ImageView mImageViewEmptying;
     private TextView tv;
     private GameView gameview;
     private Engine engine;
