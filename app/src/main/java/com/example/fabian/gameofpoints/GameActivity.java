@@ -93,6 +93,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.container).setOnTouchListener(this);
         findViewById(R.id.background).setBackgroundResource(background[world-1]);
 
+        //startRandomMusic();
+
         gameview = new GameView(this);
         gameview.setVisibility(View.VISIBLE);
         gameview.setBackground(background[world-1]);
@@ -116,7 +118,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         timer=1000;
         engine.start();
         layout=7;
-        startRandomMusic();
     }
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
@@ -140,11 +141,13 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     public void endGame(boolean which, int timer){ //Wird nach Ende eines Spiels aufgerufen
-        this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
-        engine.stop(); //Die laufenden Aktionen werden gestoppt
-        Objekt.getListe().clear(); //Die Objektliste wird geleert
-        stopMusic(); //Die Musik wird angehalten
-        showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
+        System.out.print("fertig");
+        //this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
+        //engine.stop(); //Die laufenden Aktionen werden gestoppt
+        //Objekt.getListe().clear(); //Die Objektliste wird geleert
+        //stopMusic(); //Die Musik wird angehalten
+       // showgameoverfragment(which); //showgameoverfragment.xml wird aufgerufen
+        showstartfragment();
     }
 
     private void prüfeStars() { //Nach Beendung eines Levels wird geprüft, welche Rubine freigeschaltet wurden
@@ -191,7 +194,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
     }
 
-    private void löscheShared(){ //Löscht alle fest gespeicherten Werte
+    private void löscheShared(){ //Löscht alle fest gespeicherten Werte, ist hier nur noch drinnen, um so etwas, wie Käufe noch einmal austesten zu können
         sp = getPreferences(MODE_PRIVATE);
         sp.edit().clear().commit();
     }
@@ -265,8 +268,10 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     protected void onResume(){ //Wenn die App (wieder)geöffnet wird,  werden laufende Prozesse auch gestartet (App wird geöffnet)
         super.onResume();
         if(sp.getBoolean("music", false)) {
-            if(music==null) {
+            try {
                 music.start();
+            }catch(Exception e){
+
             }
         }
     }

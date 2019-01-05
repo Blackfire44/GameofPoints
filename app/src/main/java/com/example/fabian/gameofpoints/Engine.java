@@ -138,20 +138,20 @@ public class Engine implements SensorEventListener {
                 float y = Objekt.getObjekt(i).getY();
 
                 if(Objekt.getObjekt(i).getBreedTimer()<=200) {
-                    if(Objekt.getObjekt(i).getX()<minX+Objekt.getObjekt(i).getR()) {
-                        Objekt.getObjekt(i).setX(minX+Objekt.getObjekt(i).getR());
+                    if(Objekt.getObjekt(i).getX()<minX+Objekt.getObjekt(i).getR()/2) {
+                        Objekt.getObjekt(i).setX(minX+Objekt.getObjekt(i).getR()/2);
                         setObjektToBorder(i);
                     }else {
-                        if(Objekt.getObjekt(i).getX()>maxX-Objekt.getObjekt(i).getR()) {
-                            Objekt.getObjekt(i).setX(maxX-Objekt.getObjekt(i).getR());
+                        if(Objekt.getObjekt(i).getX()>maxX-Objekt.getObjekt(i).getR()/2) {
+                            Objekt.getObjekt(i).setX(maxX-Objekt.getObjekt(i).getR()/2);
                             setObjektToBorder(i);
                         }else {
-                            if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()) {
-                                Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR());
+                            if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()/2) {
+                                Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR()/2);
                                 setObjektToBorder(i);
                             }else {
-                                if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()) {
-                                    Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR());
+                                if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()/2) {
+                                    Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR()/2);
                                     setObjektToBorder(i);
                                 }else{
                                     for(int o = 0; o<Objekt.getListe().size(); o++) {

@@ -154,7 +154,7 @@ public class Objekt {
     }
 
     public void setR() { //Radius wird anhand der Leben gesetzt, mit einem Anfangswert
-        r = life*20+100;
+        r = life*5+100;
     }
 
     public void setNewR() { //Der Radius wird gesetzt
@@ -165,8 +165,8 @@ public class Objekt {
                 grow = 0;
                 setR();
             }else {
-                if(r<life*20+100) {
-                    r = r + (life*20-r+100)/breedTimer; //Der Radius wird im Verhältniss zu den Leben und der Zeit zum erwachsenwerden erhöht
+                if(r<life*5+100) {
+                    r = r + (life*5-r+100)/breedTimer; //Der Radius wird im Verhältniss zu den Leben und der Zeit zum erwachsenwerden erhöht
                 }else {
                     setR();
                 }

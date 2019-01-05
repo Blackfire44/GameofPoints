@@ -30,7 +30,7 @@ public class GameView extends View {
         scale = getResources().getDisplayMetrics().density;
         paintBitmap.setAntiAlias(true);
         paintText.setAntiAlias(true);
-        paintText.setColor(Color.argb(0,0,0,0));
+        paintText.setColor(Color.rgb(0,0,0));
         paintText.setTextSize(scale*30);
         paintText.setStyle(Paint.Style.FILL);
     }
@@ -57,7 +57,7 @@ public class GameView extends View {
     
     @Override
     protected void onDraw(Canvas canvas){
-        //canvas.drawBitmap(background.getBitmap(), getMatrix(), paintBitmap);
+        canvas.drawText(Integer.toString(countdown), 10*scale, canvas.getHeight()-10*scale, paintText);
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getLife()>0){
                 Vx = Objekt.getObjekt(i).getX();
@@ -66,8 +66,6 @@ public class GameView extends View {
                 color = (BitmapDrawable) getResources().getDrawable(Objekt.getObjekt(i).getColor());
                 viechRect.set(0,0,color.getBitmap().getWidth(), color.getBitmap().getHeight());
                 canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap);
-
-                canvas.drawText(Integer.toString(countdown), 10*scale, canvas.getHeight()-30*scale, paintText);
             }
         }
     }
