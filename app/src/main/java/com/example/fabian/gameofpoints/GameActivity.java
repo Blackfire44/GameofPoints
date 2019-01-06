@@ -33,7 +33,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
-    private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.lavaoberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.sonneoberflaeche,R.drawable.sonneoberflaeche};
+    private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.schneeoberflaeche,R.drawable.lavaoberflaeche,R.drawable.sonneoberflaeche};
     private int[] lifelistcomp = {3, 19, 4, 8, 5, 2, 20};
     private int[] attacklistcomp = {3, 1, 10, 7, 4, 18, 5};
     private int[] speedlistcomp = {15, 1, 7, 6, 12, 1, 2};
@@ -381,7 +381,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.rotate5).setOnClickListener(this);
         container.findViewById(R.id.rotate6).setOnClickListener(this);
         container.findViewById(R.id.rotate7).setOnClickListener(this);
-        container.findViewById(R.id.rotate8).setOnClickListener(this);
         container.findViewById(R.id.star11).setOnClickListener(this);
         container.findViewById(R.id.star12).setOnClickListener(this);
         container.findViewById(R.id.star13).setOnClickListener(this);
@@ -663,8 +662,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
     }
 
     private void stopanimation(){ //Die Animationen der Planeten werden gestoppt
@@ -681,8 +678,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -750,10 +745,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showsettingfragment();
                 break;
             case R.id.rotate7: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
-                world=7;
-                showsettingfragment();
-                break;
-            case R.id.rotate8: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=7;
                 showsettingfragment();
                 break;
