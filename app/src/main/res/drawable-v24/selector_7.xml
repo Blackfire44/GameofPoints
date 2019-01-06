@@ -16,6 +16,6 @@
     <transition
         android:fromId="@+id/on"
         android:toId="@+id/off"
-        android:drawable="@drawable/rotate8">
+        android:drawable="@drawable/rotate_7">
     </transition>
 </animated-selector>

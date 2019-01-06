@@ -27,13 +27,12 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int player = 0;
     private int scrollWidth;
     private int anzahlWelten = 7;
-    private float basedimension;
     private int timer = 0;
     private boolean win;
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
-    private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.lavaoberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.sonneoberflaeche,R.drawable.sonneoberflaeche};
+    private int[] background = {R.drawable.trieusoberflaeche, R.drawable.quatronoberflaeche,R.drawable.p3oberflaeche,R.drawable.tuerlisoberflaeche,R.drawable.schneeoberflaeche,R.drawable.lavaoberflaeche,R.drawable.sonneoberflaeche};
     private int[] lifelistcomp = {3, 19, 4, 8, 5, 2, 20};
     private int[] attacklistcomp = {3, 1, 10, 7, 4, 18, 5};
     private int[] speedlistcomp = {15, 1, 7, 6, 12, 1, 2};
@@ -54,7 +53,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private MediaPlayer.OnCompletionListener listener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
-            randomMusic();
+            randomMusic(); //Startet eine zufällige Musik
         }};
 
     @Override
@@ -90,39 +89,36 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         playerselect(); //Dieser Charakter wird ausgewählt
     }
 
-    private void startGame(){
-        ViewGroup container = (ViewGroup) findViewById(R.id.container);
-        container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.activity_game, null));
-        container.findViewById(R.id.zuruekLevel2).setOnClickListener(this);
+    private void startGame(){ //Das Spiel wird gestartet
+        ViewGroup container = (ViewGroup)findViewById(R.id.container); //Eine ViewGroup wird gebildet und sucht alle container
+        container.removeAllViews(); //Alle conatiner werden entfernt
+        container.addView(getLayoutInflater().inflate(R.layout.activity_game, null)); //Das activity_game.xml Layout wird aufgerufen
+        container.findViewById(R.id.zuruekLevel2).setOnClickListener(this); //OnClickListener werden gesetzt
         container.findViewById(R.id.schalten).setOnClickListener(this);
-        container.findViewById(R.id.container).setOnTouchListener(this);
-        findViewById(R.id.background).setBackgroundResource(background[world-1]);
+        container.findViewById(R.id.container).setOnTouchListener(this); //ein OnTouchListener wird gesetzt, da nur davon die X- und Y-Werte abgelesen werden können
+        findViewById(R.id.background).setBackgroundResource(background[world-1]); //Der Hintergrund wird je nach Level gesetzt
 
-        gameview = new GameView(this);
-        gameview.setVisibility(View.VISIBLE);
-        gameview.setBackground(background[world-1]);
-        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        gameview = new GameView(this); //Ein neuer GameView wird erzeugt
+        gameview.setVisibility(View.VISIBLE); //Dieser wird sichtbar gemacht
+        container.addView(gameview, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)); //Der GameView wird zur ViewGroup hinzugefügt
 
-        basedimension = gameview.getBaseDimension();
-
-        engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this);
+        engine = new Engine((SensorManager)getSystemService(Context.SENSOR_SERVICE), gameview, this); //Eine neue Engine wird erzeugt
         engine.setRegion(0, 0, container.getWidth(), container.getHeight()); //Der Rand wird anhand des Containers abgesteckt
 
-        engine.createObjekt(container.getWidth()-200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
+        engine.createObjekt(container.getWidth()-200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]); //Die Objekte werden anhand der Daten aus den Listen erzeugt, dabei entstehen drei gegnerische und zwei auf der eigenen Seite
         engine.createObjekt(container.getWidth()/2, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
         engine.createObjekt(200, 200, 2, lifelistcomp[world-1], attacklistcomp[world-1], speedlistcomp[world-1],boesecolorliste[world-1]);
 
         engine.createObjekt(container.getWidth()-200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]); //Viecher von Spieler
         engine.createObjekt(200, container.getHeight()-200, 1, lifelist[world-1], attacklist[world-1], speedlist[world-1],playerliste[playerselection]);
 
-        engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]);
-        engine.setSelect(Objekt.getListe().size()-1);
+        engine.createObjekt(container.getWidth()/2, container.getHeight()-200, 1, life, attack, speed, playerliste[playerselection]); //Der eigene Charakter wird anhand der selbst ausgesuchten Daten erstellt
+        engine.setSelect(Objekt.getListe().size()-1); //Der eigene Charakter wird zum Steuern ausgewählt
 
-        timer=1000;
-        engine.start();
-        layout=7;
-        randomMusic();
+        timer=1000; //Die timer-Variable wird auf einen hohen Wert gesetzt, das ist kein richtiger Timer dient nur für die Funktionen später
+        engine.start(); //Das Spiel wird gestartet
+        layout=7; //Das Layout wird gesetzt
+        randomMusic(); //Die zufällige Musik wird gestartet
     }
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
@@ -162,6 +158,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         sp = getPreferences(MODE_PRIVATE);
         e = sp.edit();
         rubine = 10;
+        pluscoins(10);
 
         int timergrenze = 90; //Die Leistung für den ersten Rubin ist bei 90 Sekunden
 
@@ -180,7 +177,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             pluscoins(100); //Man bekommt zusätzlich 100 Münzen
             rubine += 10; //Für die Anzeige werden die Rubine gezählt
         }
-        fillTextView(R.id.time, "You earned "+rubine+" coins");
+        fillTextView(R.id.time, "You earned "+rubine); //Es wird angezeigt, wie viele Münzen gewonnen wurden
     }
 
     private void setStars(){ //Alle Rubine werden für alle Planeten aktualisiert
@@ -381,7 +378,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.rotate5).setOnClickListener(this);
         container.findViewById(R.id.rotate6).setOnClickListener(this);
         container.findViewById(R.id.rotate7).setOnClickListener(this);
-        container.findViewById(R.id.rotate8).setOnClickListener(this);
         container.findViewById(R.id.star11).setOnClickListener(this);
         container.findViewById(R.id.star12).setOnClickListener(this);
         container.findViewById(R.id.star13).setOnClickListener(this);
@@ -500,10 +496,10 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.back).setOnClickListener(this); //OnClickListener wird gesetzt, um den View anklickbar zu machen
         if(win){
             prüfeStars(); //Die gewonnenen rubine werden hinzugefügt
-            fillTextView(R.id.endscreen, "Level completed!");
+            fillTextView(R.id.endscreen, "Level completed!"); //Das Level wurde geschafft
         }else{
-            fillTextView(R.id.endscreen, "Game over!");
-            fillTextView(R.id.time, "You earned 0 coins");
+            fillTextView(R.id.endscreen, "Game over!"); //Das Level wurde verloren
+            fillTextView(R.id.time, "You earned 0"); //Es wird angezeigt, wie viele Münzen gewonnen wurden
         }
         layout=9; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
@@ -534,19 +530,19 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 fillTextView(id, "World 2: Quatron");
                 break;
             case 3:
-                fillTextView(id,"World 3: Planet3");
+                fillTextView(id,"World 3: Odana");
                 break;
             case 4:
-                fillTextView(id,"World 4: Planet4");
+                fillTextView(id,"World 4: Xondir");
                 break;
             case 5:
-                fillTextView(id,"World 5: Planet5");
+                fillTextView(id,"World 5: Tempenix");
                 break;
             case 6:
-                fillTextView(id,"World 6: Planet6");
+                fillTextView(id,"World 6: Fulmir");
                 break;
             case 7:
-                fillTextView(id,"World 7: Planet7");
+                fillTextView(id,"World 7: Nano");
                 break;
             default:
                 fillTextView(id, "Irgendwas anderes!");
@@ -663,8 +659,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).start();
     }
 
     private void stopanimation(){ //Die Animationen der Planeten werden gestoppt
@@ -681,8 +675,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate6);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
         mImageViewEmptying = (ImageView) findViewById(R.id.rotate7);
-        ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
-        mImageViewEmptying = (ImageView) findViewById(R.id.rotate8);
         ((AnimationDrawable) mImageViewEmptying.getBackground()).stop();
     }
 
@@ -750,10 +742,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showsettingfragment();
                 break;
             case R.id.rotate7: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
-                world=7;
-                showsettingfragment();
-                break;
-            case R.id.rotate8: //settings.xml wird aufgerufen, die Welt, also das jeweilige Level wird gesetzt (in level.xml)
                 world=7;
                 showsettingfragment();
                 break;
@@ -1009,18 +997,3 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         scrollWidth = findViewById(R.id.scroll).getScrollX();
     }
 }
-/*Hintergründe von GameActivity
-Time-Counter
-Gravity    --> Viecher etwas beeinflussen können
-Sterne (Ein Stern für gelöst, zwei sehr schnell, drei extrem schnell)            \/
-	Nach x Sternen bekommt man y
-	Sterne bringen coins                                                           \/
-	Coinsystem (langfristig InApp- Käufe)                                          \/
-	Tränke/ Designs/ Upgratepoints/…
-Musik                                                                               \/
-xml-Dateien mit Libary in GameActivity abrufen (Minigolf App)
-Eigene Viecher mahlen (Drehbewegung)
-Viecher simulieren                                                                  \/
-Viecher anklicken können, damit man Daten (Art, versch. Punkte, …) ablesen kann
-Immer angeklicktes Viech wird von Spieler beeinflusst, dessen Daten können abgelesen werden
-*/
