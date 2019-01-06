@@ -75,6 +75,11 @@ public class Engine implements SensorEventListener {
                 gameActivity.endGame(false, gameView.getCountdown());
             }
         }
+        for(int i = 0; i<Objekt.getListe().size(); i++) {
+            if(Objekt.getObjekt(i).getLife()>0&&Objekt.getObjekt(i).getControl()) {
+                setData(i);
+            }
+        }
     }
 
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
@@ -86,6 +91,10 @@ public class Engine implements SensorEventListener {
             Objekt.getObjekt(i).setControl(false);
         }
         Objekt.getObjekt(objekt).setControl(true);
+        setData(objekt);
+    }
+
+    private void setData(int objekt){
         gameActivity.setData(Objekt.getObjekt(objekt).getLife(), Objekt.getObjekt(objekt).getAttack(), Objekt.getObjekt(objekt).getSpeed());
     }
 
@@ -148,12 +157,12 @@ public class Engine implements SensorEventListener {
                         rand=true;
                     }
                     if(Objekt.getObjekt(i).getY()<minY+Objekt.getObjekt(i).getR()/2) {
-                        Objekt.getObjekt(i).setY(minY+Objekt.getObjekt(i).getR()/2);
+                            Objekt.getObjekt(i).setY(minY + Objekt.getObjekt(i).getR() / 2);
                         setObjektToBorder(i);
                         rand=true;
                     }
                     if(Objekt.getObjekt(i).getY()>maxY-Objekt.getObjekt(i).getR()/2) {
-                        Objekt.getObjekt(i).setY(maxY-Objekt.getObjekt(i).getR()/2);
+                            Objekt.getObjekt(i).setY(maxY - Objekt.getObjekt(i).getR() / 2);
                         setObjektToBorder(i);
                         rand=true;
                     }
@@ -192,6 +201,8 @@ public class Engine implements SensorEventListener {
                                 touched = 2;
                             }
                         }
+                    }else{
+                        Objekt.getObjekt(i).setDirection(-Objekt.getObjekt(i).getDirection());
                     }
                     if(Objekt.getObjekt(i).getGrow()==2) {
                         Objekt.getObjekt(i).setGrow(1);
@@ -250,16 +261,16 @@ public class Engine implements SensorEventListener {
             }
             if(Objekt.getObjekt(i).getControl()==true&&Objekt.getObjekt(i).getBreedTimer()<=201&&Objekt.getObjekt(i).getLife()>0) {
                 //Bewegung des Gesteuerten Objects
-                if(impactX>1){
+                if(impactX>40){
                     Objekt.getObjekt(i).setX(Objekt.getObjekt(i).getX()+Objekt.getObjekt(i).getSpeed());
                 }
-                if(impactX<-1){
+                if(impactX<-40){
                     Objekt.getObjekt(i).setX(Objekt.getObjekt(i).getX()-Objekt.getObjekt(i).getSpeed());
                 }
-                if(impactY>1){
+                if(impactY>40){
                     Objekt.getObjekt(i).setY(Objekt.getObjekt(i).getY()+Objekt.getObjekt(i).getSpeed());
                 }
-                if(impactY<-1){
+                if(impactY<-40){
                     Objekt.getObjekt(i).setY(Objekt.getObjekt(i).getY()-Objekt.getObjekt(i).getSpeed());
                 }
             }
