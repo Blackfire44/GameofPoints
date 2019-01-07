@@ -75,7 +75,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             default:findViewById(R.id.container).setBackgroundResource(R.drawable.hintergrund1);
         }
         showstartfragment(); //start.xml wird angezeigt
-        startMusic(R.raw.intro, true);
+        startMusic(R.raw.hoch, true);//Die Musik wird gestartet
     }
 
     private void setPlayer1(){ //Der erste Charakter wird direkt freigeschaltet
@@ -209,20 +209,27 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void startMusic(int i, boolean loop){ //Die Musik wird gestartet
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("music", false)==true) {//Prüfung, ob die Musik gestartet werden darf
             if (music != null) { //Wenn noch Musik läuft, wird diese beendet
                 music.release();
             }
             music = MediaPlayer.create(this, i); //Der Track wird eingestellt
             if (loop) { //Eine dauerhafte Wiederholung kann eingestellt werden
                 music.setLooping(true);
+            } else {
+                music.setOnCompletionListener(listener); //Der OnCompletionListener wird gesetzt
             }
             music.start(); //Die Musik wird gestartet
-            music.setOnCompletionListener(listener); //Der OnCompletionListener wird gesetzt
+        }
     }
 
     private void stopMusic(){ //die Musik wird angehalten
-        if(music!=null) {
-            music.stop();
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("music", false)==true) {//Prüfung, ob die Musik gestoppt werden darf
+            if (music != null) {
+                music.stop();
+            }
         }
     }
 
@@ -232,24 +239,18 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         }
         sp = getPreferences(MODE_PRIVATE);
         if(sp.getBoolean("music", false)==true) {//Prüfung, ob die Musik gestartet werden darf
-            switch ((int) Math.random() * 5) { //Zufällig wird ein neuer Track ausgewählt
+            switch ((int) Math.random() * 3) { //Zufällig wird ein neuer Track ausgewählt
                 case 0:
-                    startMusic(R.raw.intro, false);
+                    startMusic(R.raw.pirates, false);
                     break;
                 case 1:
-                    startMusic(R.raw.intro, false);
+                    startMusic(R.raw.frog, false);
                     break;
                 case 2:
-                    startMusic(R.raw.intro, false);
-                    break;
-                case 3:
-                    startMusic(R.raw.intro, false);
-                    break;
-                case 4:
-                    startMusic(R.raw.intro, false);
+                    startMusic(R.raw.trash, false);
                     break;
                 default:
-                    startMusic(R.raw.intro, false);
+                    startMusic(R.raw.pirates, false);
             }
         }
     }
@@ -260,37 +261,28 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             engine.stop(); //Die laufenden Prozesse werden gestoppt, wenn das Spiel gestartet ist
             showstopfragment(); //stopp.xml wird aufgerufen
         }
+        stopMusic(); //Die Musik wird gestoppt
         super.onPause();
-        if(music!=null){
-            music.pause();
-        }
     }
 
     @Override
     protected void onResume(){ //Wenn die App (wieder)geöffnet wird,  werden laufende Prozesse auch gestartet (App wird geöffnet)
         super.onResume();
-        if(sp.getBoolean("music", false)) {
-            try {
-                music.start();
-            }catch(Exception e){
-
-            }
+        sp = getPreferences(MODE_PRIVATE);
+        if(sp.getBoolean("music", false)==true) {//Prüfung, ob die Musik gestartet werden darf
+            startMusic(R.raw.hoch, true); //Musik wird wieder gestartet
         }
     }
 
     @Override
     protected void onDestroy() { //Wenn die App geschlossen wird, werden laufende Prozesse auch beendt
-        if(music!=null) {
-            music.stop();
-        }
+        stopMusic(); //Die Musik wird gestoppt
         super.onDestroy();
     }
 
     @Override
     protected void onStop() { //Wenn die App gestoppt wird, werden laufende Prozesse auch gestoppt (Speicher ist voll)
-        if(music!=null) {
-            music.stop();
-        }
+        stopMusic(); //Die Musik wird angehalten
         super.onStop();
     }
 
@@ -340,6 +332,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);
         layout=1; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
@@ -354,6 +347,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);
         container.findViewById(R.id.player1).setOnClickListener(this);
         container.findViewById(R.id.player3).setOnClickListener(this);
         container.findViewById(R.id.buy).setOnClickListener(this);
@@ -371,6 +365,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);
         container.findViewById(R.id.rotate1).setOnClickListener(this);
         container.findViewById(R.id.rotate2).setOnClickListener(this);
         container.findViewById(R.id.rotate3).setOnClickListener(this);
@@ -423,6 +418,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.item2).setOnClickListener(this);
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item5).setOnClickListener(this);
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);
         layout=4; //Es wird gespeichert, in welchem Layout man sich gerade befindet
     }
 
@@ -438,6 +434,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         container.findViewById(R.id.item3).setOnClickListener(this);
         container.findViewById(R.id.item4).setOnClickListener(this);
         container.findViewById(R.id.turnonoff).setOnClickListener(this);
+        container.findViewById(R.id.zurueckLevel).setOnClickListener(this);
         sp = getPreferences(MODE_PRIVATE);
         if(sp.getBoolean("music", false)==false){ //Der TextView für die Musikeinstellung wird auf "ON" gesetzt, wenn die Musik an ist und auf "OFF", wenn die Musik aus ist
             fillTextView(R.id.turnonoff, "OFF");
@@ -502,6 +499,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             fillTextView(R.id.time, "You earned 0"); //Es wird angezeigt, wie viele Münzen gewonnen wurden
         }
         layout=9; //Es wird gespeichert, in welchem Layout man sich gerade befindet
+        startMusic(R.raw.hoch, true); //Die Musik für die Levelauswahl wird wieder gestartet
     }
 
     private void load(){ //Ein Ladebildschirm wird angezeigt, um das Laden der drehenden Planeten nicht als Standbildschirm dastehen zu lassen.
@@ -899,18 +897,19 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     einschalten();
                 }
                 break;
-            case R.id.turnonoff: //Die Musik wird in den Einstellungen ein oder ausgeschaltet, was auch im handy gespeichert wird, um beim nächsten Öffnen der App immer noch so ausgerichtet zu sein. (in level5.xml)
+            case R.id.turnonoff: //Die Musik wird in den Einstellungen ein oder ausgeschaltet, was auch im Handy gespeichert wird, um beim nächsten Öffnen der App immer noch so ausgerichtet zu sein. (in level5.xml)
                 sp = getPreferences(MODE_PRIVATE);
                 e = sp.edit();
                 if(sp.getBoolean("music", false)){
                     e.putBoolean("music", false);
                     e.commit();
                     fillTextView(R.id.turnonoff, "OFF");
-                    stopMusic();
+                    stopMusic(); //Die Musik wird angehalten
                 }else{
                     e.putBoolean("music", true);
                     e.commit();
                     fillTextView(R.id.turnonoff, "ON");
+                    startMusic(R.raw.hoch, true); //Die Musik wird gestartet
                 }
                 break;
             default:showDialog("Error", "Wrong OnClickListener!");
