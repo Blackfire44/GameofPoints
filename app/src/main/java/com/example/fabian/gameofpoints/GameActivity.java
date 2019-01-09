@@ -90,6 +90,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void startGame(){ //Das Spiel wird gestartet
+        Objekt.getListe().clear(); //Die Objektliste wird geleert
         ViewGroup container = (ViewGroup)findViewById(R.id.container); //Eine ViewGroup wird gebildet und sucht alle container
         container.removeAllViews(); //Alle conatiner werden entfernt
         container.addView(getLayoutInflater().inflate(R.layout.activity_game, null)); //Das activity_game.xml Layout wird aufgerufen
@@ -145,7 +146,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         win = which;
         this.timer = timer; //Der Timer wird zum Anzeigen von dem GameView geholt
         engine.stop(); //Die laufenden Aktionen werden gestoppt
-        Objekt.getListe().clear(); //Die Objektliste wird geleert
         stopMusic(); //Die Musik wird angehalten
         findViewById(R.id.container).post(new Runnable() {
             public void run() {
@@ -711,7 +711,6 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showstartfragment();
                 break;
             case R.id.backtotitle: //start.xml wird aufgerufen (nach Start)
-                Objekt.getListe().clear(); //Die Objektliste wird geleert
                 stopMusic(); //Die Musik wird angehalten
                 showloadfragment();
                 break;
