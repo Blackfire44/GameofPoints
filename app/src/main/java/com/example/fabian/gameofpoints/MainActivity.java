@@ -62,7 +62,7 @@ public class MainActivity extends Activity{
     }
 
     private void startMusic(){ //Die Musik wird gestartet
-       music = MediaPlayer.create(this, R.raw.intro);
+       music = MediaPlayer.create(this, R.raw.start);
        music.start();
     }
 }

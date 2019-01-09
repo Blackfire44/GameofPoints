@@ -74,10 +74,11 @@ public class Engine implements SensorEventListener {
             }else{
                 gameActivity.endGame(false, gameView.getCountdown());
             }
-        }
-        for(int i = 0; i<Objekt.getListe().size(); i++) {
-            if(Objekt.getObjekt(i).getLife()>0&&Objekt.getObjekt(i).getControl()) {
-                setData(i);
+        }else {
+            for (int i = 0; i < Objekt.getListe().size(); i++) {
+                if (Objekt.getObjekt(i).getLife() > 0 && Objekt.getObjekt(i).getControl()) {
+                    setData(i);
+                }
             }
         }
     }
@@ -201,8 +202,6 @@ public class Engine implements SensorEventListener {
                                 touched = 2;
                             }
                         }
-                    }else{
-                        Objekt.getObjekt(i).setDirection(-Objekt.getObjekt(i).getDirection());
                     }
                     if(Objekt.getObjekt(i).getGrow()==2) {
                         Objekt.getObjekt(i).setGrow(1);
