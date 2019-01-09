@@ -29,6 +29,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int anzahlWelten = 7;
     private int timer = 0;
     private boolean win;
+    
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
     private String[] playernamen = {"Kroko", "Lofi", "Gemini", "Kaozi", "Skit", "Blu", "Eggsea", "Enigma" };
