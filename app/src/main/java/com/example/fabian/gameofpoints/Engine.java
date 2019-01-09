@@ -4,14 +4,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class Engine implements SensorEventListener {
     private float impactX, impactY;
@@ -21,6 +16,8 @@ public class Engine implements SensorEventListener {
     private int msPerFrame = 30;
     private int timer;
     private int touched;
+
+    private Objekt a;
 
     private GameView gameView;
     private SensorManager sensorManager;
@@ -84,7 +81,7 @@ public class Engine implements SensorEventListener {
     }
 
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
-        Objekt a = new Objekt(x, y, membership, life, attack, speed, color);
+        a = new Objekt(x, y, membership, life, attack, speed, color);
     }
 
     public void setSelect(int objekt){
@@ -139,7 +136,7 @@ public class Engine implements SensorEventListener {
 
     }
 
-    public void moveObjects(){
+    private void moveObjects(){
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getLife()>0) {
                 float x = Objekt.getObjekt(i).getX();

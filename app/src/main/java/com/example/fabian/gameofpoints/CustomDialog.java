@@ -2,7 +2,6 @@ package com.example.fabian.gameofpoints;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.widget.AdapterView;
 
 public class CustomDialog {
 
