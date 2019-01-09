@@ -14,7 +14,6 @@ public class GameView extends View {
     private int countdown;
 
     private BitmapDrawable color;
-    private BitmapDrawable background;
 
     private Rect viechRect = new Rect();
     private RectF drawRect = new RectF();
@@ -31,10 +30,6 @@ public class GameView extends View {
         paintText.setColor(Color.rgb(255,255,255)); //Die Werte für den "Pinsel" für denText werden gesetzt
         paintText.setTextSize(scale*30);
         paintText.setStyle(Paint.Style.FILL);
-    }
-
-    public void setBackground(int backgroundid){ //Der Hintergrund des GameView wird gesetzt, an der Stelle der mitgegebenen Adresse
-        background = (BitmapDrawable) getResources().getDrawable(backgroundid);
     }
 
     public void setCountdown(){

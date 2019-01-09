@@ -17,6 +17,8 @@ public class Engine implements SensorEventListener {
     private int timer;
     private int touched;
 
+    private Objekt a;
+
     private GameView gameView;
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -79,7 +81,7 @@ public class Engine implements SensorEventListener {
     }
 
     public void createObjekt(int x, int y, int membership, int life, int attack, int speed, int color){
-        Objekt a = new Objekt(x, y, membership, life, attack, speed, color);
+        a = new Objekt(x, y, membership, life, attack, speed, color);
     }
 
     public void setSelect(int objekt){
