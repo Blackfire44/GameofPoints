@@ -136,7 +136,7 @@ public class Engine implements SensorEventListener {
 
     }
 
-    public void moveObjects(){
+    private void moveObjects(){
         for(int i = 0; i<Objekt.getListe().size(); i++){
             if(Objekt.getObjekt(i).getLife()>0) {
                 float x = Objekt.getObjekt(i).getX();
