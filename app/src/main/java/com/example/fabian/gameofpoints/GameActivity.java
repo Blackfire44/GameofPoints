@@ -306,7 +306,9 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 break;
             case 6:showloadfragment();//(in setting.xml)
                 break;
-            case 7:showstopfragment();//(nach Start)
+            case 7:
+                engine.stop(); //Die laufenden Aktionen werden gestoppt
+                showstopfragment();//(nach Start)
                 break;
             case 9:showloadfragment();//(in gamover.xml)
                 break;
