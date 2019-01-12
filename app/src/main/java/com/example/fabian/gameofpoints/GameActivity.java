@@ -29,6 +29,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     private int anzahlWelten = 7;
     private int timer = 0;
     private boolean win;
+    private boolean start = false;
     
     private int playerselection;
     private int[] playerliste = {R.drawable.krokotest, 0, R.drawable.viech1, 100, R.drawable.viech2, 200, R.drawable.viech3, 300,R.drawable.viech4, 500,R.drawable.viech5, 500,R.drawable.viech6, 500,R.drawable.viech7, 500};
@@ -118,9 +119,18 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         engine.setSelect(Objekt.getListe().size()-1); //Der eigene Charakter wird zum Steuern ausgewählt
 
         timer=1000; //Die timer-Variable wird auf einen hohen Wert gesetzt, das ist kein richtiger Timer dient nur für die Funktionen später
-        engine.start(); //Das Spiel wird gestartet
         layout=7; //Das Layout wird gesetzt
         randomMusic(); //Die zufällige Musik wird gestartet
+    }
+
+    private void release(){
+        /*try{
+            Thread.sleep(1000);
+            Thread.sleep(1000);
+            Thread.sleep(1000);
+        }catch(Exception e){
+        }*/
+        engine.start(); //Das Spiel wird gestartet
     }
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
@@ -176,7 +186,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
             e.putBoolean("star" + world + 4, true);
             e.commit();
             pluscoins(100); //Man bekommt zusätzlich 100 Münzen
-            rubine += 10; //Für die Anzeige werden die Rubine gezählt
+            rubine += 100; //Für die Anzeige werden die Rubine gezählt
         }
         fillTextView(R.id.time, "You earned "+rubine); //Es wird angezeigt, wie viele Münzen gewonnen wurden
     }
@@ -509,14 +519,22 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         findViewById(R.id.container).post(new Runnable() {
             public void run() {
                 long l = System.currentTimeMillis(); //Die reelle Zeit wird abgenommen
-                showlevel3fragment(); //Level.xml wird angezeigt
+                if(start){
+                    startGame();
+                }else{
+                    showlevel3fragment();
+                }
                 try {
                     l = System.currentTimeMillis()-l; //Wenn weniger, als 1,5 Sekunden geladen wurde, wird noch bis 1,5 Sekunden gewartet
-                    if(l<1500){
-                        Thread.sleep(1500-l);
+                    if(l<1500) {
+                        Thread.sleep(1500 - l);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+                if(start) {
+                    release();
+                    start = false;
                 }
             }
         });
@@ -833,7 +851,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                 showloadfragment();
                 break;
             case R.id.startgame: //Das Spiel wird gestartet (in settings.xml)
-                    startGame();
+                start = true;
+                    showloadfragment();
                 break;
             case R.id.zuruekLevel2: //stop.xml wird aufgerufen und die laufenden Aktionen der engine werden gestoppt (in game_activity.xml)
                 engine.stop(); //Die laufenden Aktionen werden gestoppt

@@ -193,11 +193,14 @@ public class Engine implements SensorEventListener {
                                     }
                                     testFinish(); //testet, ob gestorbenes Viech das Letzte von einem Stamm war
                                 }
-                                Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI)); //Anhand von einer Vektorreechnung wird die Richtung entgegengesetzt von dem berührten Objekt gesetzt
-                                if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())>0){ //Der Winkel bei der Vektorrechnung hier kann nicht den negativen Bereich angeben, sondern fängt bei 180 Grad an, wieder Richtung 0 Grad zu gehen. Dazu drehe ich, sobeld das andere Objekt unter dem eigenen ist, die Winkel um 180 Grad. Da ich jedoch sowieso die Gegenrichtung zu diesem Objekt haben will, drehe ich die eigentlich richtigen Werte, sodass sie in die Gegenrichtung zeigen. So zeigen auch die eigentlich falschen Werte ohne Veränderung das Richtige an.
+                                Objekt.getObjekt(i).setDirection((int)(Math.acos((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())/(Math.sqrt((Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())*(Objekt.getObjekt(o).getX()-Objekt.getObjekt(i).getX())+(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())*(Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY()))))*180/Math.PI));
+                                if((Objekt.getObjekt(o).getY()-Objekt.getObjekt(i).getY())<0){
                                     Objekt.getObjekt(i).setDirection(-Objekt.getObjekt(i).getDirection());
                                 }
-                                touched = 2;//touched zeigt an, dass es ein Objekt berührt hat
+                                Objekt.getObjekt(i).setDirection(Objekt.getObjekt(i).getDirection()-180);
+                                touched = 2;
+                                Objekt.getObjekt(i).setX((float)(Objekt.getObjekt(o).getX() + Math.cos(Objekt.getObjekt(i).getDirection()*Math.PI/180) * (Objekt.getObjekt(i).getR()/2+Objekt.getObjekt(o).getR()/2))); //Fehler in der direction berechnung
+                                Objekt.getObjekt(i).setY((float)(Objekt.getObjekt(o).getY() + Math.sin(Objekt.getObjekt(i).getDirection()*Math.PI/180) * (Objekt.getObjekt(i).getR()/2+Objekt.getObjekt(o).getR()/2)));
                             }
                         }
                     }
