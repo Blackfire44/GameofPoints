@@ -87,6 +87,14 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/String"
+            android:text="@string/String" />
+
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

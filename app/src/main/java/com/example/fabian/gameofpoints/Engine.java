@@ -175,9 +175,8 @@ public class Engine implements SensorEventListener {
                                             Objekt.getObjekt(i).setPartner(o); //Viechpartner werden gegenseitig gesetzt
                                             Objekt.getObjekt(o).setPartner(i);
                                             Objekt.getObjekt(o).setBreedState(true); //Dem anderen Objekt wird klar gemacht, dass es schon an einer Paarung beteiligt ist
+                                            Objekt.getObjekt(o).setBreedTimer(400); //Wenn dieses Objekt von einem Anderen getroffen wurde, das Andere aber zu erst da war, wird nur der BreedTimer hoch gesetzt
                                         }
-                                    }else {
-                                        Objekt.getObjekt(i).setBreedTimer(400); //Wenn dieses Objekt von einem Anderen getroffen wurde, das Andere aber zu erst da war, wird nur der BreedTimer hoch gesetzt
                                     }
                                 }else {
                                     while(Objekt.getObjekt(i).getLife()>0&&Objekt.getObjekt(o).getLife()>0) { //Wenn Viecher aus unterschiedlichen Stämmen sich treffen, werden so lange Leben nach der Attacke des gegners abgezogen, bis ein Viech von beiden keinen positiven Lebenswert mehr hat

@@ -124,13 +124,41 @@ public class GameActivity extends Activity implements View.OnClickListener, View
     }
 
     private void release(){
-        /*try{
-            Thread.sleep(1000);
-            Thread.sleep(1000);
-            Thread.sleep(1000);
-        }catch(Exception e){
-        }*/
-        engine.start(); //Das Spiel wird gestartet
+        fillTextView(R.id.countdown, "" + 3);
+                findViewById(R.id.container).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        fillTextView(R.id.countdown, "" + 2);
+                        findViewById(R.id.container).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e1) {
+                                    e1.printStackTrace();
+                                }
+                                fillTextView(R.id.countdown, "" + 1);
+                                findViewById(R.id.container).post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                        findViewById(R.id.countdown).setVisibility(View.INVISIBLE);
+                                        engine.start();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
     }
 
     public void setData(float life, int attack, int speed){ //Die Anzeige für die Eigenschaften des Charakters, während eines Spiels, wird aktualisiert
@@ -533,8 +561,8 @@ public class GameActivity extends Activity implements View.OnClickListener, View
                     e.printStackTrace();
                 }
                 if(start) {
-                    release();
                     start = false;
+                    release();
                 }
             }
         });
