@@ -10,6 +10,7 @@ public class Objekt {
     private int attack;
     private int speed;
     private int direction;
+    private int directionChange;
     private int breedTimer;
     private boolean breedState;
     private int partner;
@@ -125,6 +126,10 @@ public class Objekt {
         return grow;
     }
 
+    public int getDirectionChange() {
+        return directionChange;
+    }
+
     public void setLife(float life) {
         this.life = life;
         setNewR(); //Der Radius wird den Leben angepasst
@@ -201,5 +206,9 @@ public class Objekt {
 
     public void setPartner(int partner) {
         this.partner = partner;
+    }
+
+    public void getDirectionChange(int directionChange) {
+        this.directionChange = directionChange;
     }
 }

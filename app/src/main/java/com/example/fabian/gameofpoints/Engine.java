@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Engine implements SensorEventListener {
     private float impactX, impactY;
     private float minX, maxX, minY, maxY;
-    private int directionChange = 44;
+    private int directionChange = 20; //44
     private float scaleA = 100f;
     private int msPerFrame = 30;
     private int timer;
@@ -74,7 +74,7 @@ public class Engine implements SensorEventListener {
             }
         }else {
             for (int i = 0; i < Objekt.getListe().size(); i++) {
-                if (Objekt.getObjekt(i).getLife() > 0 && Objekt.getObjekt(i).getControl()) { //Wenn gute Viecher gewonnen haben
+                if (Objekt.getObjekt(i).getControl()) { //Wenn gute Viecher gewonnen haben
                     setData(i); //Die Werte werden aktualisiert, sollte das Objekt Leben verloren haben, da sihc dann die Anzeige ändern muss
                 }
             }
@@ -94,7 +94,11 @@ public class Engine implements SensorEventListener {
     }
 
     private void setData(int objekt){
-        gameActivity.setData(Objekt.getObjekt(objekt).getLife(), Objekt.getObjekt(objekt).getAttack(), Objekt.getObjekt(objekt).getSpeed()); //gibt Daten von Viech für die Anzeige der Daten in activity_game.xml
+        if(Objekt.getObjekt(objekt).getLife()>0) {
+            gameActivity.setData(Objekt.getObjekt(objekt).getLife(), Objekt.getObjekt(objekt).getAttack(), Objekt.getObjekt(objekt).getSpeed()); //gibt Daten von Viech für die Anzeige der Daten in activity_game.xml
+        }else{
+            gameActivity.setData(0, Objekt.getObjekt(objekt).getAttack(), Objekt.getObjekt(objekt).getSpeed());
+        }
     }
 
     public void setRegion(float minX, float minY, float maxX, float maxY){  //Setzt Randpositionen
@@ -217,6 +221,13 @@ public class Engine implements SensorEventListener {
                         }
                         touched = 0;
                     }
+                    /*if(Objekt.getObjekt(i).getDirection()%360!=Objekt.getObjekt(i).getDirectionChange()){
+                        if(Objekt.getObjekt(i).getDirection()%360>Objekt.getObjekt(i).getDirectionChange()){
+                            if(Objekt.getObjekt(i).getDirection()%360+){
+
+                            }
+                        }
+                    }*/
                 }
                 if(Objekt.getObjekt(i).getBreedTimer()>0&&Objekt.getObjekt(i).getGrow()!=2) { //Wenn nicht ausgewachsen oder noch im Paarungs-Cooldown
                     Objekt.getObjekt(i).setBreedTimer(Objekt.getObjekt(i).getBreedTimer()-1); //Das Objekt wächst etwas weiter

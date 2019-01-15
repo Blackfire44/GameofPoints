@@ -3,6 +3,7 @@ package com.example.fabian.gameofpoints;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -54,7 +55,12 @@ public class GameView extends View {
                 drawRect.set(Vx - (int) Objekt.getObjekt(i).getR() / 2, Vy - (int) Objekt.getObjekt(i).getR() / 2, Vx + (int) Objekt.getObjekt(i).getR() / 2, Vy + (int) Objekt.getObjekt(i).getR() / 2); //Das Rehteck wird auf 4 float Koordinaten in alle 4 Richtungen gesetzt, wobei der Abstand der gegenüberliegenden jeweils den Durchmesser ausmachen, sodass die Koordinaten den mittelpunkt darstellen.
                 color = (BitmapDrawable) getResources().getDrawable(Objekt.getObjekt(i).getColor()); //Das BitmapDrawable holt sich aus dem zu zeichnenden Objekt die Adresse und sucht sich an dieser Stelle das Bild(Drawable)
                 viechRect.set(0,0,color.getBitmap().getWidth(), color.getBitmap().getHeight()); //viechRect setzt ein Rechteck mit den Größen der Bitmap des Drawables
+                canvas.save();
+                canvas.translate(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY());
+                canvas.rotate(Objekt.getObjekt(i).getDirection()+90);
+                canvas.translate(-Objekt.getObjekt(i).getX(),- Objekt.getObjekt(i).getY());
                 canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap); //Die bitmap des Drawables wird geholt, dazu das Rechteck des viechRect, das festlegt, wo innerhalb des drawRect das Bild gesetzt werden soll und letztendlich wird noch paintBitmap hinzugefügt, was definiert, wie Farben für 2D Operationen generiert werden.
+                canvas.restore();
             }
         }
     }
