@@ -224,7 +224,7 @@ public class GameActivity extends Activity implements View.OnClickListener, View
         for(int welt = 0; welt<anzahlWelten; welt++) {
             for (int rubin = 1; rubin < 5; rubin++) {
                 if(sp.getBoolean("star" + (welt+1) + rubin, false)){ //star14 steht kodiert für :4. Stern der 1. Welt
-                    imageStar(R.id.star11+4*welt+rubin-1, rubin-1);
+                    imageStar(R.id.star11 + 4 * welt + rubin - 1, rubin - 1);
                 }
             }
         }

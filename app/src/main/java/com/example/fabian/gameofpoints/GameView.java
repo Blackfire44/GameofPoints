@@ -57,7 +57,7 @@ public class GameView extends View {
                 viechRect.set(0,0,color.getBitmap().getWidth(), color.getBitmap().getHeight()); //viechRect setzt ein Rechteck mit den Größen der Bitmap des Drawables
                 canvas.save();
                 canvas.translate(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY());
-                canvas.rotate(Objekt.getObjekt(i).getDirection()+90);
+                canvas.rotate(Objekt.getObjekt(i).getDirection()+90);//Change
                 canvas.translate(-Objekt.getObjekt(i).getX(),- Objekt.getObjekt(i).getY());
                 canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap); //Die bitmap des Drawables wird geholt, dazu das Rechteck des viechRect, das festlegt, wo innerhalb des drawRect das Bild gesetzt werden soll und letztendlich wird noch paintBitmap hinzugefügt, was definiert, wie Farben für 2D Operationen generiert werden.
                 canvas.restore();

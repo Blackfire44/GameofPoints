@@ -38,6 +38,7 @@ public class Objekt {
         grow = 0;
         setR();
         direction = (int)(Math.random()*360); //Zufällig wird eine Anfangsgradzahl berechnet
+        directionChange = direction;
         liste.add(this);
         anzViech++;
     }
@@ -52,6 +53,7 @@ public class Objekt {
         grow = 1;
         r = 10; //Der Radius bekommt einen Anfangswert, bevor er größer wird
         direction = (int)(Math.random()*360); //Zufällig wird eine Anfangsgradzahl berechnet
+        directionChange = direction;
         liste.add(this);
         anzViech++;
     }
@@ -208,7 +210,7 @@ public class Objekt {
         this.partner = partner;
     }
 
-    public void getDirectionChange(int directionChange) {
+    public void setDirectionChange(int directionChange) {
         this.directionChange = directionChange;
     }
 }

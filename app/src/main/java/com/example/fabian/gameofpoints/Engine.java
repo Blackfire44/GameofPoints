@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Engine implements SensorEventListener {
     private float impactX, impactY;
     private float minX, maxX, minY, maxY;
-    private int directionChange = 20; //44
+    private int directionChange = 44; //44
     private float scaleA = 100f;
     private int msPerFrame = 30;
     private int timer;
@@ -222,10 +222,24 @@ public class Engine implements SensorEventListener {
                         touched = 0;
                     }
                     /*if(Objekt.getObjekt(i).getDirection()%360!=Objekt.getObjekt(i).getDirectionChange()){
-                        if(Objekt.getObjekt(i).getDirection()%360>Objekt.getObjekt(i).getDirectionChange()){
-                            if(Objekt.getObjekt(i).getDirection()%360+){
-
+                        if(Objekt.getObjekt(i).getDirection()%360<Objekt.getObjekt(i).getDirectionChange()) {
+                            if (Math.abs(Objekt.getObjekt(i).getDirection() % 360 - Objekt.getObjekt(i).getDirectionChange()) > Math.abs(Objekt.getObjekt(i).getDirection() % 360 + 360 - Objekt.getObjekt(i).getDirectionChange())) {
+                                Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()+10);
+                            }else{
+                                Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()-10);
                             }
+                        }else{
+                            if (Math.abs(0-360+Objekt.getObjekt(i).getDirection() % 360) > Math.abs(Objekt.getObjekt(i).getDirection() % 360 - Objekt.getObjekt(i).getDirectionChange())) {
+                                Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()+10);
+                            }else{
+                                Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()-10);
+                            }
+                        }
+                        if(Objekt.getObjekt(i).getDirectionChange()>=360){
+                            Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()-360);
+                        }
+                        if(Objekt.getObjekt(i).getDirectionChange()<0){
+                            Objekt.getObjekt(i).setDirectionChange( Objekt.getObjekt(i).getDirectionChange()+360);
                         }
                     }*/
                 }
