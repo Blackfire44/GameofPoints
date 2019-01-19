@@ -35,8 +35,8 @@
                 android:background="@drawable/around"
                 android:contentDescription="@string/String"
                 android:text="turn off"
-                android:textSize="@dimen/game"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/game" />
 
             <TextView
                 android:id="@+id/life"
@@ -45,8 +45,8 @@
                 android:background="@drawable/around"
                 android:contentDescription="@string/String"
                 android:text="TextView"
-                android:textSize="@dimen/game"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/game" />
 
             <TextView
                 android:id="@+id/attack"
@@ -55,8 +55,8 @@
                 android:background="@drawable/around"
                 android:contentDescription="@string/String"
                 android:text="TextView"
-                android:textSize="@dimen/game"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/game" />
 
             <TextView
                 android:id="@+id/speed"
@@ -65,8 +65,8 @@
                 android:background="@drawable/around"
                 android:contentDescription="@string/String"
                 android:text="TextView"
-                android:textSize="@dimen/game"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/game" />
 
         </LinearLayout>
 
@@ -93,7 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/String"
-            android:text="@string/String" />
+            android:text="@string/String"
+            android:textColor="@color/black"/>
 
     </FrameLayout>
 

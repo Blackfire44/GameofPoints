@@ -5,30 +5,30 @@ import java.util.ArrayList;
 public class Objekt {
 
     private int membership;
-    private float life;
-    private int lifeSafe;
-    private int attack;
-    private int speed;
-    private int direction;
-    private int directionChange;
-    private int breedTimer;
-    private boolean breedState;
-    private int partner;
-    private boolean control;
-    private int grow;
-    private static int anzViech = 0;
-    private int color;
+        private float life;
+        private int lifeSafe;
+        private int attack;
+        private int speed;
+        private int direction;
+        private int directionChange;
+        private int breedTimer;
+        private boolean breedState;
+        private int partner;
+        private boolean control;
+        private int grow;
+        private static int anzViech = 0;
+        private int color;
 
-    private float x, y, r;
+        private float x, y, r;
 
-    private static ArrayList<Objekt> liste = new ArrayList<>();
+        private static ArrayList<Objekt> liste = new ArrayList<>();
 
     public Objekt(int x, int y, int membership, int life, int attack, int speed, int color){ //Die Anfangswerte bei der Erschaffung vor dem Spielstart werden gesetzt
-        this.x = x;
-        this.y = y;
-        this.membership = membership;
-        this.life = life;
-        lifeSafe = life;
+            this.x = x;
+            this.y = y;
+            this.membership = membership;
+            this.life = life;
+            lifeSafe = life;
         this.attack = attack;
         this.speed = speed;
         this.color = color;
