@@ -52,14 +52,27 @@ public class GameView extends View {
             if(Objekt.getObjekt(i).getLife()>0){ //Es werden nur lebendige Objekte gezeichnet
                 Vx = Objekt.getObjekt(i).getX(); //Der X-Wert wird geholt
                 Vy = Objekt.getObjekt(i).getY(); //Der Y-Wert wird geholt
-                drawRect.set(Vx - (int) Objekt.getObjekt(i).getR() / 2, Vy - (int) Objekt.getObjekt(i).getR() / 2, Vx + (int) Objekt.getObjekt(i).getR() / 2, Vy + (int) Objekt.getObjekt(i).getR() / 2); //Das Rehteck wird auf 4 float Koordinaten in alle 4 Richtungen gesetzt, wobei der Abstand der gegenüberliegenden jeweils den Durchmesser ausmachen, sodass die Koordinaten den mittelpunkt darstellen.
+                if(Objekt.getObjekt(i).getControl()){
+                    color = (BitmapDrawable) getResources().getDrawable(R.drawable.yellow);
+                    drawRect.set(Vx - (int)( Objekt.getObjekt(i).getR() / 1.9), Vy - (int) ( Objekt.getObjekt(i).getR() / 1.9), Vx + (int) ( Objekt.getObjekt(i).getR() / 1.9), Vy + (int) ( Objekt.getObjekt(i).getR() / 1.9));
+                    viechRect.set(0,0,color.getBitmap().getWidth(), color.getBitmap().getHeight()); //viechRect setzt ein Rechteck mit den Größen der Bitmap des Drawables
+                    canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap);
+                }else {
+                    if (Objekt.getObjekt(i).getBreedTimer() > 200) {
+                        color = (BitmapDrawable) getResources().getDrawable(R.drawable.green);
+                        drawRect.set(Vx - (int) (Objekt.getObjekt(i).getR() / 1.9), Vy - (int) (Objekt.getObjekt(i).getR() / 1.9), Vx + (int) (Objekt.getObjekt(i).getR() / 1.9), Vy + (int) (Objekt.getObjekt(i).getR() / 1.9));
+                        viechRect.set(0, 0, color.getBitmap().getWidth(), color.getBitmap().getHeight()); //viechRect setzt ein Rechteck mit den Größen der Bitmap des Drawables
+                        canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap);
+                    }
+                }
                 color = (BitmapDrawable) getResources().getDrawable(Objekt.getObjekt(i).getColor()); //Das BitmapDrawable holt sich aus dem zu zeichnenden Objekt die Adresse und sucht sich an dieser Stelle das Bild(Drawable)
+                drawRect.set(Vx - (int) Objekt.getObjekt(i).getR() / 2, Vy - (int) Objekt.getObjekt(i).getR() / 2, Vx + (int) Objekt.getObjekt(i).getR() / 2, Vy + (int) Objekt.getObjekt(i).getR() / 2); //Das Rehteck wird auf 4 float Koordinaten in alle 4 Richtungen gesetzt, wobei der Abstand der gegenüberliegenden jeweils den Durchmesser ausmachen, sodass die Koordinaten den mittelpunkt darstellen.
                 viechRect.set(0,0,color.getBitmap().getWidth(), color.getBitmap().getHeight()); //viechRect setzt ein Rechteck mit den Größen der Bitmap des Drawables
                 canvas.save();
                 canvas.translate(Objekt.getObjekt(i).getX(), Objekt.getObjekt(i).getY());
                 canvas.rotate(Objekt.getObjekt(i).getDirection()+90);//Change
                 canvas.translate(-Objekt.getObjekt(i).getX(),- Objekt.getObjekt(i).getY());
-                canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap); //Die bitmap des Drawables wird geholt, dazu das Rechteck des viechRect, das festlegt, wo innerhalb des drawRect das Bild gesetzt werden soll und letztendlich wird noch paintBitmap hinzugefügt, was definiert, wie Farben für 2D Operationen generiert werden.
+                canvas.drawBitmap(color.getBitmap(), viechRect, drawRect, paintBitmap);
                 canvas.restore();
             }
         }
