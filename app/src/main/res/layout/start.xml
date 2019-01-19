@@ -11,17 +11,23 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/mainText"
+        android:background="@drawable/textbutton"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.089" /> <!-- Beim Background immer die nächsten drei Zeilen kopieren-->
 
     <TextView
         android:id="@+id/Tap_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/textbutton"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:text="@string/Tap_to"
         android:textColor="@color/mainText"
         android:textSize="@dimen/credits"
